@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
 import { Reset } from "./reset.styles";
 import { GlobalStyles } from "./global.styles";
@@ -10,7 +11,10 @@ root.render(
   <React.StrictMode>
     <Reset />
     <GlobalStyles />
-    <App />
+
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
