@@ -8,7 +8,6 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     height: 100%;
-    ${({ theme }) => theme?.fonts.neutral("100%", "400", "1.2")};
   }
 
   div#root {

@@ -1,12 +1,13 @@
 import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
+import { Header } from "../../components/header";
 
 function Layout(props) {
   return (
     <Fragment>
-      <header>header</header>
+      <Header />
 
-      <main>
+      <main style={{ minHeight: "1000px" }}>
         <p>main</p>
         <Outlet />
       </main>
