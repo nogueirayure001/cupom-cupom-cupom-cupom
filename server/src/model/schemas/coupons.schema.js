@@ -38,12 +38,4 @@ const couponsSchema = mongoose.Schema({
   },
 });
 
-const MODELS = {
-  allCoupons: mongoose.model("allCoupon", couponsSchema),
-  lomadeeCoupons: mongoose.model("lomadeeCoupon", couponsSchema),
-  otherCoupons: mongoose.model("otherCoupon", couponsSchema),
-  featureCoupons: mongoose.model("featureCoupon", couponsSchema),
-};
-
-export const { allCoupons, lomadeeCoupons, otherCoupons, featureCoupons } =
-  MODELS;
+export default couponsSchema;

@@ -1,11 +1,12 @@
 import axios from "axios";
+import mongoose from "mongoose";
 
-import {
-  allCoupons,
-  lomadeeCoupons,
-  otherCoupons,
-  featureCoupons,
-} from "./mongo/coupons.mongo.js";
+import couponsSchema from "./schemas/coupons.schema.js";
+
+const allCoupons = mongoose.model("allCoupon", couponsSchema);
+const lomadeeCoupons = mongoose.model("lomadeeCoupon", couponsSchema);
+const otherCoupons = mongoose.model("otherCoupon", couponsSchema);
+const featureCoupons = mongoose.model("featureCoupon", couponsSchema);
 
 class CouponsModel {
   constructor() {

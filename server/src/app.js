@@ -1,6 +1,6 @@
 import express, { json } from "express";
 
-import couponsRouter from "./routes/coupons/coupons.router.js";
+import couponsRouter from "./routes/coupons.router.js";
 
 const app = express();
 
