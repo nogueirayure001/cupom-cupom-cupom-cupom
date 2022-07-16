@@ -1,79 +1,83 @@
-const axios = require("axios");
+import axios from "axios";
 
-const {
-  allCouponsModel,
-  lomadeeCouponsModel,
-  miscellaneousCouponsModel,
-} = require("./mongo/coupons.mongo");
+import {
+  allCoupons,
+  lomadeeCoupons,
+  otherCoupons,
+  featureCoupons,
+} from "./mongo/coupons.mongo.js";
 
-const TIME_LIMIT = 3600000;
-const BASE_URL = `https://api.lomadee.com/v2/${process.env.LOMADEE_APP_TOKEN}/coupon/_all?sourceId=${process.env.LOMADEE_SOURCE_ID}`;
+class CouponsModel {
+  constructor() {
+    this.couponsList = [];
+  }
 
-function startCouponsModel() {
-  let allCoupons = [];
-  let miscellaneousCoupons = [];
-
-  const updateCoupons = async () => {
-    let miscCoupons;
-
-    const {
-      data: { lomadeeCoupons },
-    } = await axios.get(BASE_URL, {
-      method: "get",
+  async updateCoupons() {
+    const response = await axios.get(process.env.LOMADEE_COUPONS_URL, {
       responseType: "json",
     });
 
-    if (!miscellaneousCoupons.length) {
-      miscCoupons = await miscellaneousCouponsModel.find({});
+    const { coupons } = response.data;
 
-      miscellaneousCoupons = [...miscCoupons];
-    }
+    await lomadeeCoupons.bulkWrite([
+      {
+        deleteMany: {
+          filter: {},
+        },
+      },
+      ...coupons.map((coupon) => ({
+        insertOne: { document: coupon },
+      })),
+    ]);
 
-    if (lomadeeCoupons) {
-      allCoupons = [...lomadeeCoupons, ...miscellaneousCoupons];
+    const complementCoupons = await otherCoupons.find(
+      {},
+      {
+        _id: 0,
+        __v: 0,
+      }
+    );
 
-      await lomadeeCouponsModel.deleteMany({});
-      await lomadeeCouponsModel.create(coupons);
+    const couponsList = [...coupons, ...complementCoupons];
 
-      await allCouponsModel.deleteMany({});
-      await allCouponsModel.create(coupons);
-    }
-  };
+    await allCoupons.bulkWrite([
+      {
+        deleteMany: {
+          filter: {},
+        },
+      },
+      ...couponsList.map((coupon) => ({
+        insertOne: { document: coupon },
+      })),
+    ]);
 
-  const loadCoupons = async () => await updateCoupons();
+    this.couponsList = couponsList;
+  }
 
-  const getAllCoupons = () => {
-    return allCoupons;
-  };
+  getCouponsNumber() {
+    return this.couponsList.length;
+  }
 
-  const getSearchResults = async (filter, filterValue) => {
-    const VALID_FILTERS = {
-      store: "store.name",
-      category: "category.name",
-    };
+  async getFeatureCoupons() {
+    return await featureCoupons.find(
+      {},
+      {
+        _id: 0,
+        __v: 0,
+      }
+    );
+  }
 
-    let searchResult = [];
+  getPaginatedCoupons(page, limit) {
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
 
-    if (VALID_FILTERS[filter]) {
-      searchResult = await allCouponsModel.find({
-        [VALID_FILTERS[filter]]: new RegExp(filterValue, "i"),
-      });
-    }
-
-    return searchResult;
-  };
-
-  setInterval(updateCoupons, TIME_LIMIT);
-
-  return {
-    loadCoupons,
-    getAllCoupons,
-    getSearchResults,
-  };
+    return this.couponsList.filter(
+      (_, index) => index >= startIndex && index < endIndex
+    );
+  }
 }
 
-const modelFunctions = startCouponsModel();
+const couponsModelHandler = new CouponsModel();
 
-module.exports = {
-  ...modelFunctions,
-};
+export { couponsModelHandler };

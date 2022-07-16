@@ -1,33 +1,28 @@
-const {
-  getAllCoupons,
-  getSearchResults,
-} = require("../../model/coupons.model");
+import { couponsModelHandler } from "../../model/coupons.model.js";
+import { couponsViewHandler } from "../../views/coupons.view.js";
 
-function httpGetAllCoupons(req, res) {
-  const allCoupons = getAllCoupons();
+async function httpGetPaginatedCoupons(req, res) {
+  const { page = 1, limit = 10 } = req.query;
 
-  if (!allCoupons.length) {
-    return res.status(400).json({
-      error: "Could not pull data from database",
-    });
+  const totalCoupons = couponsModelHandler.getCouponsNumber();
+  const totalPages = Math.ceil(totalCoupons / limit);
+
+  const requestState = {
+    page,
+    limit,
+    totalPages,
+  };
+
+  if (page > totalPages || page < 1 || limit < 1) {
+    const DTO = couponsViewHandler.getPaginatedDTO(requestState, null);
+    return res.status(404).json(DTO);
   }
 
-  return res.status(200).json(allCoupons);
+  const responseData = couponsModelHandler.getPaginatedCoupons(page, limit);
+
+  const DTO = couponsViewHandler.getPaginatedDTO(requestState, responseData);
+
+  return res.status(200).json(DTO);
 }
 
-async function httpGetSearchResults(req, res) {
-  const { filter, filterValue } = req.query;
-
-  const searchedCoupons = await getSearchResults(filter, filterValue);
-
-  if (!searchedCoupons) {
-    return res.status(200).json([]);
-  }
-
-  return res.status(200).json(searchedCoupons);
-}
-
-module.exports = {
-  httpGetAllCoupons,
-  httpGetSearchResults,
-};
+export { httpGetPaginatedCoupons };

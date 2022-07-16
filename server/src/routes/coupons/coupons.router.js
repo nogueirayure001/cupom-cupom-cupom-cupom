@@ -1,14 +1,9 @@
-const express = require("express");
+import { Router } from "express";
 
-const {
-  httpGetAllCoupons,
-  httpGetSearchResults,
-} = require("./coupons.controller");
+import { httpGetPaginatedCoupons } from "./coupons.controller.js";
 
-const allCouponsRouter = express.Router();
+const couponsRouter = Router();
 
-allCouponsRouter.get("/all", httpGetAllCoupons);
+couponsRouter.get("/paginated", httpGetPaginatedCoupons);
 
-allCouponsRouter.get("/search", httpGetSearchResults);
-
-module.exports = allCouponsRouter;
+export default couponsRouter;

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const couponsSchema = mongoose.Schema({
   description: {
@@ -39,12 +39,11 @@ const couponsSchema = mongoose.Schema({
 });
 
 const MODELS = {
-  allCouponsModel: mongoose.model("allCoupon", couponsSchema),
-  lomadeeCouponsModel: mongoose.model("lomadeeCoupon", couponsSchema),
-  miscellaneousCouponsModel: mongoose.model(
-    "miscellaneousCoupon",
-    couponsSchema
-  ),
+  allCoupons: mongoose.model("allCoupon", couponsSchema),
+  lomadeeCoupons: mongoose.model("lomadeeCoupon", couponsSchema),
+  otherCoupons: mongoose.model("otherCoupon", couponsSchema),
+  featureCoupons: mongoose.model("featureCoupon", couponsSchema),
 };
 
-module.exports = { ...MODELS };
+export const { allCoupons, lomadeeCoupons, otherCoupons, featureCoupons } =
+  MODELS;
