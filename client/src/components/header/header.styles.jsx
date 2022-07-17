@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { ReactComponent as SearchLogo } from "../../assets/images/search-icon.svg";
-
 export const HeaderContainer = styled.header`
   display: flex;
   flex-direction: column;
@@ -11,13 +9,13 @@ export const HeaderContainer = styled.header`
 export const SitePresentation = styled.div`
   width: 100%;
   padding: 48px 24px;
-  background-image: url(../../assets/images/header-bg-small.jpg);
+  background-image: url(../../assets/images/header-bg.jpg);
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 
   @media screen and (min-width: 768px) {
-    background-image: url(../../assets/images/header-bg-medium.jpg);
-    background-position: bottom;
+    background-position: center;
   }
 `;
 
@@ -26,9 +24,31 @@ export const TextWrapper = styled.div`
   padding: 24px 16px;
   margin: 0 auto;
   text-align: center;
-  color: #191718;
+  color: #f9f7f0;
   border: 3px dashed #f9f7f0;
-  background-color: #f9f7f080;
+  background-color: #181617e6;
+
+  transform: scale(0.1) rotate(3600deg);
+  animation-name: logo-fall;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+
+  @keyframes logo-fall {
+    from {
+      animation-timing-function: cubic-bezier(0.7, 0.22, 0.725, 0.61);
+    }
+    13.33% {
+      animation-timing-function: cubic-bezier(0.16, 0.1875, 0.24, 0.094);
+    }
+    23.66% {
+      animation-timing-function: cubic-bezier(0.234, 0.15, 0.88, 0.85);
+    }
+    65% {
+      animation-timing-function: linear;
+    }
+    100% {
+      transform: scale(1) rotate(0);
+    }
 `;
 
 export const SiteTitle = styled.h1`
@@ -83,17 +103,15 @@ export const NavItem = styled.li`
   display: flex;
   align-items: center;
 
-  &:not(:last-of-type) {
-    border: 2px solid #f9f7f0;
-    border-radius: 6px;
-    transition: all 300ms ease;
+  border: 2px solid #f9f7f0;
+  border-radius: 6px;
+  transition: all 300ms ease;
 
-    &:hover {
-      right: 5px;
-      bottom: 5px;
-      border-color: #f9f7f0;
-      box-shadow: 5px 5px 0 0 #f9f7f0;
-    }
+  &:hover {
+    right: 5px;
+    bottom: 5px;
+    border-color: #f9f7f0;
+    box-shadow: 5px 5px 0 0 #f9f7f0;
   }
 
   a {
@@ -103,20 +121,5 @@ export const NavItem = styled.li`
     @media screen and (min-width: 768px) {
       padding: 12px 16px;
     }
-  }
-`;
-
-export const SearchButton = styled(SearchLogo)`
-  width: 40px;
-  padding: 0 8px;
-  transition: transform 300ms ease;
-
-  @media screen and (min-width: 768px) {
-    width: 44px;
-  }
-
-  &:hover {
-    transform: scale(1.2);
-    cursor: pointer;
   }
 `;

@@ -9,7 +9,6 @@ import {
   Navigation,
   NavList,
   NavItem,
-  SearchButton,
 } from "./index";
 
 function Header(props) {
@@ -29,15 +28,15 @@ function Header(props) {
       <Navigation>
         <NavList>
           <NavItem>
+            <Link to='/coupons'>Coupons</Link>
+          </NavItem>
+
+          <NavItem>
             <Link to='/stores'>Lojas</Link>
           </NavItem>
 
           <NavItem>
             <Link to='/categories'>Categorias</Link>
-          </NavItem>
-
-          <NavItem>
-            <SearchButton />
           </NavItem>
         </NavList>
       </Navigation>
