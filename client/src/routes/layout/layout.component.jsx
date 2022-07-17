@@ -7,8 +7,7 @@ function Layout(props) {
     <Fragment>
       <Header />
 
-      <main style={{ minHeight: "1000px" }}>
-        <p>main</p>
+      <main>
         <Outlet />
       </main>
 
