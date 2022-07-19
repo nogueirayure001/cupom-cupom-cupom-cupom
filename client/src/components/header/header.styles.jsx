@@ -88,6 +88,10 @@ export const SubTitle = styled.p`
   }
 `;
 
+export const Contrast = styled.span`
+  color: #0a62d0;
+`;
+
 export const Navigation = styled.nav`
   width: 100%;
   padding: 12px;
@@ -162,7 +166,7 @@ export const NavItem = styled.li`
   }
 `;
 
-export const HorizontalBar = styled.div`
+const HorizontalBar = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -195,17 +199,12 @@ export const HorizontalBar = styled.div`
   }
 `;
 
-export const MenuButtonAnimation = styled.div`
+const MenuButtonAnimation = styled.div`
   position: relative;
   width: 40px;
   height: 40px;
-  margin: 0 auto;
 
-  @media screen and (min-width: 425px) {
-    display: none;
-  }
-
-  ${({ menuOpen = false }) =>
+  ${({ menuOpen }) =>
     menuOpen &&
     css`
       ${HorizontalBar} {
@@ -220,4 +219,22 @@ export const MenuButtonAnimation = styled.div`
         }
       }
     `}
+`;
+
+const MenuButton = ({ menuOpen, ...otherProps }) => (
+  <button type='button' {...otherProps}>
+    <MenuButtonAnimation menuOpen={menuOpen}>
+      <HorizontalBar />
+    </MenuButtonAnimation>
+  </button>
+);
+
+export const MenuToggler = styled(MenuButton)`
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+
+  @media screen and (min-width: 425px) {
+    display: none;
+  }
 `;

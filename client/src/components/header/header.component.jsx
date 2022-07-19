@@ -10,8 +10,8 @@ import {
   Navigation,
   NavList,
   NavItem,
-  HorizontalBar,
-  MenuButtonAnimation,
+  MenuToggler,
+  Contrast,
 } from "./index";
 
 function Header(props) {
@@ -24,8 +24,12 @@ function Header(props) {
       <SitePresentation>
         <TextWrapper>
           <SiteTitle>
-            <span>CUPOM! CUPOM!</span>
-            <span>CUPOM! CUPOM!</span>
+            <span>
+              CUPOM! <Contrast>CUPOM!</Contrast>
+            </span>
+            <span>
+              <Contrast>CUPOM!</Contrast> CUPOM!
+            </span>
           </SiteTitle>
 
           <SubTitle>Compre tudo que desejar por um precinho especial.</SubTitle>
@@ -33,9 +37,7 @@ function Header(props) {
       </SitePresentation>
 
       <Navigation>
-        <MenuButtonAnimation menuOpen={menuOpen} onClick={menuToggleHandler}>
-          <HorizontalBar />
-        </MenuButtonAnimation>
+        <MenuToggler menuOpen={menuOpen} onClick={menuToggleHandler} />
 
         <NavList menuOpen={menuOpen}>
           <NavItem>
