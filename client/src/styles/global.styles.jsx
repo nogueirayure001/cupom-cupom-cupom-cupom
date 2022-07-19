@@ -12,6 +12,7 @@ export const GlobalStyles = createGlobalStyle`
 
   div#root {
     height: 100%;
+    width: 100%;
   }
 
   *,

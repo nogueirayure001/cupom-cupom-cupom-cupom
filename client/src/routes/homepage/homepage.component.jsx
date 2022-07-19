@@ -1,9 +1,11 @@
 import { Fragment } from "react";
 
+import { FeaturedStoresSlider } from "../../components/slider";
+
 function Homepage(props) {
   return (
     <Fragment>
-      <h1>homepage</h1>
+      <FeaturedStoresSlider />
     </Fragment>
   );
 }
