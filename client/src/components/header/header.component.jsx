@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -9,9 +10,15 @@ import {
   Navigation,
   NavList,
   NavItem,
+  HorizontalBar,
+  MenuButtonAnimation,
 } from "./index";
 
 function Header(props) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const menuToggleHandler = () => setMenuOpen(!menuOpen);
+
   return (
     <HeaderContainer>
       <SitePresentation>
@@ -26,7 +33,11 @@ function Header(props) {
       </SitePresentation>
 
       <Navigation>
-        <NavList>
+        <MenuButtonAnimation menuOpen={menuOpen} onClick={menuToggleHandler}>
+          <HorizontalBar />
+        </MenuButtonAnimation>
+
+        <NavList menuOpen={menuOpen}>
           <NavItem>
             <Link to='/coupons'>Coupons</Link>
           </NavItem>
