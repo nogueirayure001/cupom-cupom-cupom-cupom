@@ -7,55 +7,72 @@ export const HeaderContainer = styled.header`
 `;
 
 export const SitePresentation = styled.div`
+  position: relative;
   width: 100%;
-  padding: 48px 24px;
-  background-image: url(../../assets/images/header-bg.jpg);
-  background-size: cover;
-  background-position: center;
+  padding: 24px 16px;
+  background-image: url(../../assets/images/header-bg.png);
+  background-color: #c3cbd6;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center right;
   overflow: hidden;
 
+  @media screen and (min-width: 425px) {
+    background-position: center left;
+  }
+
   @media screen and (min-width: 768px) {
-    background-position: center;
+    padding: 32px 16px;
+  }
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: " ";
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 0%, 100%, 40%);
+    backdrop-filter: blur(0.6px);
+
+    @media screen and (min-width: 425px) {
+      display: none;
+    }
   }
 `;
 
 export const TextWrapper = styled.div`
-  max-width: 400px;
+  position: relative;
+  max-width: 300px;
   padding: 24px 16px;
   margin: 0 auto;
   text-align: center;
-  color: #f9f7f0;
-  border: 3px dashed #f9f7f0;
-  background-color: #181617e6;
+  color: #344648;
+  z-index: 3;
 
-  transform: scale(0.1) rotate(3600deg);
-  animation-name: logo-fall;
-  animation-duration: 2.5s;
-  animation-fill-mode: forwards;
+  @media screen and (min-width: 425px) {
+    margin: 0 0 0 auto;
+    text-align: right;
+  }
 
-  @keyframes logo-fall {
-    from {
-      animation-timing-function: cubic-bezier(0.7, 0.22, 0.725, 0.61);
-    }
-    13.33% {
-      animation-timing-function: cubic-bezier(0.16, 0.1875, 0.24, 0.094);
-    }
-    23.66% {
-      animation-timing-function: cubic-bezier(0.234, 0.15, 0.88, 0.85);
-    }
-    65% {
-      animation-timing-function: linear;
-    }
-    100% {
-      transform: scale(1) rotate(0);
-    }
+  @media screen and (min-width: 768px) {
+    max-width: 400px;
+
+    text-align: right;
+  }
+
+  @media screen and (min-width: 1024px) {
+    max-width: 600px;
+  }
 `;
 
 export const SiteTitle = styled.h1`
   display: flex;
   flex-direction: column;
-  font-family: "Abril Fatface", cursive;
-  font-size: 1.5rem;
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
 
   @media screen and (min-width: 768px) {
     font-size: 2rem;

@@ -18,7 +18,7 @@ function Header(props) {
         <TextWrapper>
           <SiteTitle>
             <span>CUPOM! CUPOM!</span>
-            <span>CUPOM!</span>
+            <span>CUPOM! CUPOM!</span>
           </SiteTitle>
 
           <SubTitle>Compre tudo que desejar por um precinho especial.</SubTitle>
