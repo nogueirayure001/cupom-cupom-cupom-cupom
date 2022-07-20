@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     height: 100%;
+    font: 100%/1.2 "Poppins", sans-serif;
   }
 
   div#root {

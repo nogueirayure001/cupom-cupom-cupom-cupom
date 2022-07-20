@@ -81,7 +81,6 @@ export const SiteTitle = styled.h1`
 
 export const SubTitle = styled.p`
   margin-top: 16px;
-  font-family: "Poppins", sans-serif;
 
   @media screen and (min-width: 768px) {
     font-size: 1.2rem;
@@ -96,7 +95,6 @@ export const Navigation = styled.nav`
   width: 100%;
   padding: 12px;
   background-color: #191718;
-  font-family: "Poppins", sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   color: #f9f7f0;

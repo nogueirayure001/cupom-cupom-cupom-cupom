@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 
-import { FeaturedStoresSlider } from "../../components/slider";
+import { FeaturedStoresCarousel } from "../../components/featured-carousel";
 
 function Homepage(props) {
   return (
     <Fragment>
-      <FeaturedStoresSlider />
+      <FeaturedStoresCarousel />
     </Fragment>
   );
 }

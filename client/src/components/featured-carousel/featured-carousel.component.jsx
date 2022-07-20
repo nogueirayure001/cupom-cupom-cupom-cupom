@@ -13,7 +13,7 @@ import { StyledSwiper, StyledLink } from "./index";
 
 import { DATA } from "../../assets/data";
 
-function FeaturedStoresSlider() {
+function FeaturedStoresCarousel() {
   const width = useWidthObserver();
   const [configs, setConfigs] = useState(DEFAULT_CONFIGS);
 
@@ -46,4 +46,4 @@ function FeaturedStoresSlider() {
   );
 }
 
-export default FeaturedStoresSlider;
+export default FeaturedStoresCarousel;

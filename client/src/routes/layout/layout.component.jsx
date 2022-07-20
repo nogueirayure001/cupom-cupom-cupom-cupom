@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
+
 import { Header } from "../../components/header";
+import { Footer } from "../../components/footer";
 
 function Layout(props) {
   return (
@@ -11,7 +13,7 @@ function Layout(props) {
         <Outlet />
       </main>
 
-      <footer>footer</footer>
+      <Footer />
     </Fragment>
   );
 }
