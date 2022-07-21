@@ -60,6 +60,7 @@ export const StoreImage = styled.div`
 `;
 
 export const CouponCodeContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,6 +99,29 @@ export const CouponCodeLabel = styled.label`
   margin-top: 6px;
   font-size: 0.8rem;
   color: black;
+`;
+
+export const CopySuccessSign = styled.span`
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  border-radius: 6px;
+  background-color: #23c552;
+
+  &::after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    content: "";
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 16px solid #23c552;
+  }
 `;
 
 export const OtherInfo = styled.div`
