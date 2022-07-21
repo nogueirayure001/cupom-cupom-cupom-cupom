@@ -3,15 +3,16 @@ import { Outlet } from "react-router-dom";
 
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
+import { Main } from "./index";
 
 function Layout(props) {
   return (
     <Fragment>
       <Header />
 
-      <main style={{ width: "100%" }}>
+      <Main>
         <Outlet />
-      </main>
+      </Main>
 
       <Footer />
     </Fragment>
