@@ -37,7 +37,7 @@ function FeaturedStoresCarousel() {
     >
       {DATA.map((store) => {
         return (
-          <SwiperSlide>
+          <SwiperSlide key={store.name}>
             <StyledLink to='/' image={store.image} />
           </SwiperSlide>
         );

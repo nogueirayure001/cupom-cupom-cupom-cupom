@@ -15,4 +15,5 @@ export const Title = styled.h3`
   margin-bottom: 12px;
   font-weight: 700;
   font-size: 1.1rem;
+  text-align: center;
 `;

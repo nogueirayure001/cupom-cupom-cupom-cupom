@@ -1,8 +1,8 @@
 import { ArticleContainer, Title } from "./index";
 
-function FooterArticle({ children, title }) {
+function Article({ children, title, ...otherProps }) {
   return (
-    <ArticleContainer>
+    <ArticleContainer {...otherProps}>
       <Title>{title}</Title>
 
       {children}
@@ -10,4 +10,4 @@ function FooterArticle({ children, title }) {
   );
 }
 
-export default FooterArticle;
+export default Article;

@@ -25,7 +25,8 @@ export const Subdivision = styled.div`
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: center;
-    gap: 48px;
+    align-items: flex-start;
+    gap: 80px;
   }
 `;
 

@@ -6,20 +6,7 @@ export const StyledSwiper = styled(Swiper)`
   height: ${({ windowWidth, rows, slidesPerView }) => {
     return `calc(${(0.65 * windowWidth * rows) / slidesPerView}px + 30px)`;
   }};
-  padding: 15px 0;
-  margin: 20px 12px 0;
-
-  @media screen and (min-width: 425px) {
-    margin: 20px 24px 0;
-  }
-
-  @media screen and (min-width: 1024px) {
-    margin: 20px 48px 0;
-  }
-
-  @media screen and (min-width: 1440px) {
-    margin: 20px 64px 0;
-  }
+  padding: 5px 0 25px;
 
   .swiper-pagination {
     bottom: 0;

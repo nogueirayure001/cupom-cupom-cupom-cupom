@@ -6,20 +6,20 @@ function LinksList({ list, horizontal }) {
   const items = list.map(({ linkType, labelType, to, label }) => {
     if (linkType === "inner" && labelType === "normal") {
       return (
-        <NormalItem>
+        <NormalItem key={label}>
           <Link to={to}>{label}</Link>
         </NormalItem>
       );
     } else {
       if (labelType === "normal") {
         return (
-          <NormalItem>
+          <NormalItem key={label}>
             <a href={to}>{label}</a>
           </NormalItem>
         );
       } else if (labelType === "icon") {
         return (
-          <IconItem>
+          <IconItem key={label}>
             <a href={to}>{label}</a>
           </IconItem>
         );

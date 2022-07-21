@@ -1,15 +1,9 @@
-import { FooterArticle } from "../footer-article";
-import {
-  NewsletterContainer,
-  Title,
-  Paragraph,
-  Form,
-  SubscribeButton,
-} from "./index";
+import { Article } from "../article";
+import { Paragraph, Form, SubscribeButton } from "./index";
 
 function Newsletter() {
   return (
-    <FooterArticle title='Newsletter'>
+    <Article title='Newsletter'>
       <Paragraph>
         Assine nossa newsletter e fique informado das melhores ofertas e cupons!
       </Paragraph>
@@ -19,7 +13,7 @@ function Newsletter() {
 
         <SubscribeButton>assinar</SubscribeButton>
       </Form>
-    </FooterArticle>
+    </Article>
   );
 }
 
