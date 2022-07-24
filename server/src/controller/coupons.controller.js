@@ -1,4 +1,8 @@
-import { couponsModelHandler } from "../model/coupons.model.js";
+import {
+  getCouponsNumber,
+  getPaginatedCoupons,
+  getFeaturedCoupons,
+} from "../model/coupons.model.js";
 import { couponsViewHandler } from "../views/coupons.view.js";
 
 async function httpGetPaginatedCoupons(req, res) {
@@ -7,7 +11,7 @@ async function httpGetPaginatedCoupons(req, res) {
   page = Number(page);
   limit = Number(limit);
 
-  const totalCoupons = couponsModelHandler.getCouponsNumber();
+  const totalCoupons = getCouponsNumber();
   const totalPages = Math.ceil(totalCoupons / limit);
 
   const requestState = {
@@ -21,7 +25,7 @@ async function httpGetPaginatedCoupons(req, res) {
     return res.status(404).json(DTO);
   }
 
-  const responseData = couponsModelHandler.getPaginatedCoupons(page, limit);
+  const responseData = getPaginatedCoupons(page, limit);
 
   const DTO = couponsViewHandler.getPaginatedDTO(requestState, responseData);
 
@@ -29,7 +33,7 @@ async function httpGetPaginatedCoupons(req, res) {
 }
 
 async function httpGetFeaturedCoupons(req, res) {
-  const responseData = await couponsModelHandler.getFeatureCoupons();
+  const responseData = await getFeaturedCoupons();
 
   if (!responseData) {
     const DTO = couponsViewHandler.getFeaturedDTO(responseData);

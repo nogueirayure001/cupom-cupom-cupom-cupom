@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 
-import { wait } from "./utils/wait.js";
+import { wait } from "../utils/wait.js";
 
 const MONGODB_URL = process.env.MONGODB_URL;
-// in seconds
 const BASE_TIME = 2;
 
 async function connectDatabase(tries = 1) {
@@ -18,7 +17,7 @@ async function connectDatabase(tries = 1) {
 
     console.error(e);
 
-    await wait(BASE_TIME ** tries * 1000);
+    await wait(1000 * BASE_TIME ** tries);
 
     return connectDatabase(tries + 1);
   }
