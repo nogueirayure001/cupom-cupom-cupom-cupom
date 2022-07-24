@@ -1,10 +1,10 @@
-import { createServer } from "http";
-import "dotenv/config";
+import { createServer } from 'http';
+import 'dotenv/config';
 
-import app from "./app.js";
-import { connectDatabase } from "./services/mongo.service.js";
-import { updateCoupons } from "./model/coupons.model.js";
-import { updateStores } from "./model/stores.model.js";
+import app from './app.js';
+import { connectDatabase } from './services/mongo.service.js';
+import { updateCoupons } from './model/coupons.model.js';
+import { updateStores } from './model/stores.model.js';
 
 const PORT = process.env.PORT || 8000;
 

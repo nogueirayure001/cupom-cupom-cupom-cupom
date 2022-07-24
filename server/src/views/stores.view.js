@@ -10,14 +10,14 @@ class StoresView {
       return {
         requestInfo: {
           success: false,
-          message: "Invalid page number",
+          message: 'Invalid page number',
         },
       };
     } else if (!data) {
       return {
         requestInfo: {
           success: false,
-          message: "Invalid limit number",
+          message: 'Invalid limit number',
         },
       };
     }
@@ -66,7 +66,7 @@ class StoresView {
       return {
         requestInfo: {
           success: false,
-          message: "Could not fetch featured stores",
+          message: 'Could not fetch featured stores',
         },
       };
     }

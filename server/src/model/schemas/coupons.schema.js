@@ -1,41 +1,58 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const couponsSchema = mongoose.Schema({
-  description: {
-    type: String,
-    required: true,
-  },
-  code: {
-    type: String,
-    required: true,
-  },
-  store: {
-    name: {
+const couponsSchema = mongoose.Schema(
+  {
+    id: {
       type: String,
-      required: true,
+      required: true
     },
-    image: {
+    description: {
       type: String,
+      required: true
+    },
+    code: {
+      type: String,
+      required: true
+    },
+    store: {
+      name: {
+        type: String,
+        required: true
+      },
+      image: {
+        type: String
+      },
+      link: {
+        type: String
+      }
+    },
+    category: {
+      name: {
+        type: String,
+        required: true
+      }
+    },
+    vigency: {
+      type: String
     },
     link: {
-      type: String,
+      type: String
     },
-  },
-  category: {
-    name: {
+    new: {
+      type: Boolean
+    },
+    source: {
       type: String,
       required: true,
+      default: 'Lomadee'
     },
+    featured: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
   },
-  vigency: {
-    type: String,
-  },
-  link: {
-    type: String,
-  },
-  new: {
-    type: Boolean,
-  },
-});
+  { timestamps: true }
+);
 
 export default couponsSchema;

@@ -2,8 +2,8 @@ import {
   getCouponsNumber,
   getPaginatedCoupons,
   getFeaturedCoupons,
-} from "../model/coupons.model.js";
-import { couponsViewHandler } from "../views/coupons.view.js";
+} from '../model/coupons.model.js';
+import { couponsViewHandler } from '../views/coupons.view.js';
 
 async function httpGetPaginatedCoupons(req, res) {
   let { page = 1, limit = 10 } = req.query;

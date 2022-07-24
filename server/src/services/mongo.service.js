@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import { wait } from "../utils/wait.js";
+import { wait } from '../utils/wait.js';
 
 const MONGODB_URL = process.env.MONGODB_URL;
 const BASE_TIME = 2;
@@ -9,7 +9,7 @@ async function connectDatabase(tries = 1) {
   try {
     await mongoose.connect(MONGODB_URL);
 
-    console.log("MongoDB connected");
+    console.log('MongoDB connected');
   } catch (e) {
     console.log(
       `An error occurred while trying to connect to MongoDB. Connection will be tried again soon.`

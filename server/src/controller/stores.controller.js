@@ -1,9 +1,5 @@
-import {
-  getStoresNumber,
-  getPaginatedStores,
-  getFeaturedStores,
-} from "../model/stores.model.js";
-import { storesViewHandler } from "../views/stores.view.js";
+import { getStoresNumber, getPaginatedStores, getFeaturedStores } from '../model/stores.model.js';
+import { storesViewHandler } from '../views/stores.view.js';
 
 async function httpGetPaginatedStores(req, res) {
   let { page = 1, limit = 10 } = req.query;

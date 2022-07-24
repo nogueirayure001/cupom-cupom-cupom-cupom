@@ -10,15 +10,15 @@ class CouponsView {
       return {
         requestInfo: {
           success: false,
-          message: "Invalid page number",
-        },
+          message: 'Invalid page number'
+        }
       };
     } else if (!data) {
       return {
         requestInfo: {
           success: false,
-          message: "Invalid limit number",
-        },
+          message: 'Invalid limit number'
+        }
       };
     }
 
@@ -26,58 +26,57 @@ class CouponsView {
       return {
         requestInfo: {
           success: true,
-          message: null,
+          message: null
         },
         pagination: {
           previous: `${this.PAGINATED_URL}?page=${page - 1}&limit=${limit}`,
-          next: null,
+          next: null
         },
-        data: data,
+        data: data
       };
     } else if (page == 1) {
       return {
         requestInfo: {
           success: true,
-          message: null,
+          message: null
         },
         pagination: {
           previous: null,
-          next: `${this.PAGINATED_URL}?page=${page + 1}&limit=${limit}`,
+          next: `${this.PAGINATED_URL}?page=${page + 1}&limit=${limit}`
         },
-        data: data,
+        data: data
       };
     }
 
     return {
       requestInfo: {
         success: true,
-        message: null,
+        message: null
       },
       pagination: {
         previous: `${this.PAGINATED_URL}?page=${page - 1}&limit=${limit}`,
-        next: `${this.PAGINATED_URL}?page=${page + 1}&limit=${limit}`,
+        next: `${this.PAGINATED_URL}?page=${page + 1}&limit=${limit}`
       },
-      data: data,
+      data: data
     };
   }
 
   getFeaturedDTO(data) {
-    console.log(data);
     if (!data || !data.length) {
       return {
         requestInfo: {
           success: false,
-          message: "Could not fetch featured coupons",
-        },
+          message: 'Could not fetch featured coupons'
+        }
       };
     }
 
     return {
       requestInfo: {
         success: true,
-        message: null,
+        message: null
       },
-      data: data,
+      data: data
     };
   }
 }

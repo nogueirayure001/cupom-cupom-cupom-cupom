@@ -1,20 +1,18 @@
-import mongoose from "mongoose";
-import axios from "axios";
+import mongoose from 'mongoose';
+import axios from 'axios';
 
-import storesSchema from "./schemas/stores.schema.js";
+import storesSchema from './schemas/stores.schema.js';
 
-const allStoresModel = mongoose.model("allStore", storesSchema);
-const lomadeeStoresModel = mongoose.model("lomadeeStore", storesSchema);
-const otherStoresModel = mongoose.model("otherStore", storesSchema);
-const featuredStoresModel = mongoose.model("featuredStore", storesSchema);
+const storesModel = mongoose.model('store', storesSchema);
 
 const LOMADEE_STORES_URL = process.env.LOMADEE_STORES_URL;
+const TIME_LIMIT = 60 * 60 * 1000;
 
-let storesList = null;
+let storesList = [];
 
 async function getUpdatedLomadeeStores() {
   const response = await axios.get(LOMADEE_STORES_URL, {
-    responseType: "json",
+    responseType: 'json'
   });
 
   const { stores } = response.data;
@@ -23,39 +21,60 @@ async function getUpdatedLomadeeStores() {
 }
 
 async function saveLomadeeStores(stores) {
-  await lomadeeStoresModel.bulkWrite([
-    {
-      deleteMany: {
-        filter: {},
-      },
-    },
-    ...stores.map((store) => ({
-      insertOne: { document: store },
-    })),
+  const schemaKeys = Object.keys(storesSchema.paths);
+
+  await storesModel.bulkWrite([
+    ...stores.map((store) => {
+      const storeKeys = Object.keys(store);
+
+      let filters = schemaKeys.reduce((appliedFilters, currentKey) => {
+        if (storeKeys.includes(currentKey)) {
+          return {
+            ...appliedFilters,
+            [currentKey]: store[currentKey]
+          };
+        }
+
+        return appliedFilters;
+      }, {});
+
+      return {
+        updateOne: {
+          filter: { ...filters },
+          update: {},
+          upsert: true
+        }
+      };
+    })
   ]);
 }
 
-async function getComplementStores() {
-  return await otherStoresModel.find(
-    {},
-    {
-      _id: 0,
-      __v: 0,
-    }
-  );
+async function deleteOutdatedLomadeeStores() {
+  const lomadeeStores = await storesModel.find({ source: 'Lomadee' });
+
+  const operations = lomadeeStores
+    .map((store) => {
+      const timeElapsedSinceUpdate = Date.now() - new Date(store.updatedAt);
+
+      if (timeElapsedSinceUpdate > TIME_LIMIT) {
+        return {
+          deleteOne: {
+            filter: { name: store.name }
+          }
+        };
+      }
+
+      return null;
+    })
+    .filter(Boolean);
+
+  await storesModel.bulkWrite([...operations]);
 }
 
-async function saveAllStores(allStores) {
-  await allStoresModel.bulkWrite([
-    {
-      deleteMany: {
-        filter: {},
-      },
-    },
-    ...allStores.map((store) => ({
-      insertOne: { document: store },
-    })),
-  ]);
+async function cacheAllStores() {
+  const stores = await storesModel.find({}, { _id: 0, __v: 0 });
+
+  storesList = stores;
 }
 
 async function updateStores() {
@@ -63,13 +82,9 @@ async function updateStores() {
 
   await saveLomadeeStores(lomadeeStores);
 
-  const complementStores = await getComplementStores();
+  await deleteOutdatedLomadeeStores();
 
-  const allStores = [...lomadeeStores, ...complementStores];
-
-  await saveAllStores(allStores);
-
-  storesList = allStores;
+  await cacheAllStores();
 }
 
 function getStoresNumber() {
@@ -77,11 +92,11 @@ function getStoresNumber() {
 }
 
 async function getFeaturedStores() {
-  return await featuredStoresModel.find(
-    {},
+  return await storesModel.find(
+    { featured: true },
     {
       _id: 0,
-      __v: 0,
+      __v: 0
     }
   );
 }
