@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -11,7 +11,7 @@ export const SitePresentation = styled.div`
   width: 100%;
   padding: 24px 16px;
   background-image: url(../../assets/images/header-bg.png);
-  background-color: #c3cbd6;
+  background-color: ${({ theme }) => theme.primary_II};
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center right;
@@ -30,7 +30,7 @@ export const SitePresentation = styled.div`
     top: 0;
     left: 0;
     display: block;
-    content: " ";
+    content: ' ';
     width: 100%;
     height: 100%;
     background-color: hsla(0, 0%, 100%, 40%);
@@ -48,7 +48,7 @@ export const TextWrapper = styled.div`
   padding: 24px 16px;
   margin: 0 auto;
   text-align: center;
-  color: #344648;
+  color: ${({ theme }) => theme.neutral_I};
   z-index: 3;
 
   @media screen and (min-width: 425px) {
@@ -70,7 +70,7 @@ export const TextWrapper = styled.div`
 export const SiteTitle = styled.h1`
   display: flex;
   flex-direction: column;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 1.75rem;
 
@@ -88,16 +88,16 @@ export const SubTitle = styled.p`
 `;
 
 export const Contrast = styled.span`
-  color: #0a62d0;
+  color: ${({ theme }) => theme.primary_I};
 `;
 
 export const Navigation = styled.nav`
   width: 100%;
   padding: 12px;
-  background-color: #191718;
+  background-color: ${({ theme }) => theme.secondary_I};
   font-weight: 600;
   text-transform: uppercase;
-  color: #f9f7f0;
+  color: ${({ theme }) => theme.neutral_II};
 
   @media screen and (min-width: 768px) {
     padding: 20px;
@@ -114,7 +114,7 @@ export const NavList = styled.ul`
   width: 190px;
   padding: 0 30px;
   margin: 0 auto;
-  height: ${({ menuOpen }) => (menuOpen ? "180px" : "0")};
+  height: ${({ menuOpen }) => (menuOpen ? '180px' : '0')};
   overflow: hidden;
   transition: height 300ms ease;
 
@@ -137,7 +137,7 @@ export const NavItem = styled.li`
   display: flex;
   align-items: center;
   width: 100%;
-  border: 2px solid #f9f7f0;
+  border: 2px solid ${({ theme }) => theme.neutral_II};
   border-radius: 6px;
   transition: all 300ms ease;
 
@@ -149,7 +149,7 @@ export const NavItem = styled.li`
     right: 5px;
     bottom: 5px;
     border-color: #f9f7f0;
-    box-shadow: 5px 5px 0 0 #f9f7f0;
+    box-shadow: 5px 5px 0 0 ${({ theme }) => theme.neutral_II};
   }
 
   a {
@@ -172,19 +172,19 @@ const HorizontalBar = styled.div`
   width: 40px;
   height: 6px;
   border-radius: 40px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.neutral_II};
   transition: all 200ms ease;
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     width: 40px;
     height: 8px;
-    border: 2px solid white;
+    border: 2px solid ${({ theme }) => theme.neutral_II};
     border-radius: 40px;
-    background-color: white;
+    background-color: ${({ theme }) => theme.neutral_II};
     transition: all 500ms ease;
   }
 

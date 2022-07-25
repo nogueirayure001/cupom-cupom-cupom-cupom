@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const FooterContainer = styled.footer`
-  color: white;
   display: flex;
   flex-direction: column;
   gap: 32px;
   width: 100%;
   padding: 32px 20px;
-  background-color: #191718;
+  color: ${({ theme }) => theme.neutral_II};
+  background-color: ${({ theme }) => theme.secondary_I};
 
   @media screen and (min-width: 768px) {
     padding: 48px 32px;
@@ -32,4 +32,5 @@ export const Subdivision = styled.div`
 
 export const Paragraph = styled.p`
   text-align: center;
+  opacity: 0.8;
 `;

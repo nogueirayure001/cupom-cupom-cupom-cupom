@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const List = styled.ul`
   ${({ horizontal }) =>
@@ -12,6 +12,14 @@ export const List = styled.ul`
 `;
 
 export const NormalItem = styled.li`
+  color: ${({ theme }) => theme.neutral_II};
+  opacity: 0.8;
+  transition: opacity 300ms ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
   &:not(:first-of-type) {
     margin-top: 6px;
   }
@@ -28,18 +36,18 @@ export const IconItem = styled.li`
     margin: 0 auto;
     text-indent: -9999px;
     border-radius: 50%;
-    background-color: black;
-    background-image: url(${"../../assets/images/icons.svg"});
+    background-color: ${({ theme }) => theme.secondary_II};
+    background-image: url(${'../../assets/images/icons.svg'});
     background-size: 570%;
     background-position: 0 0;
     background-repeat: no-repeat;
-    box-shadow: 0 0 0 0 white;
+    box-shadow: 0 0 0 0 ${({ theme }) => theme.neutral_II};
     transition: all 300ms ease;
 
     &:hover {
       top: -3px;
       left: -3px;
-      box-shadow: 3px 3px 0 0 white;
+      box-shadow: 3px 3px 0 0 ${({ theme }) => theme.neutral_II};
     }
   }
 

@@ -1,15 +1,14 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Article } from "../article";
+import { Article } from '../article';
 
 export const StyledArticle = styled(Article)`
   width: 100%;
   padding: 20px 16px;
-  border: 3px solid black;
+  border: 3px solid ${({ theme }) => theme.secondary_II};
   border-radius: 6px;
-  background-color: #c3cbd6;
-  background-color: #0a62d0;
-  background-image: url(${"../../assets/images/discount.svg"});
+  background-color: ${({ theme }) => theme.primary_I};
+  background-image: url(${'../../assets/images/discount.svg'});
   background-repeat: no-repeat;
   background-position: 12px 95%;
 
@@ -44,7 +43,7 @@ export const StoreImage = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: white;
+  background-color: ${({ theme }) => theme.detail};
   overflow: hidden;
 
   @media screen and (min-width: 768px) {
@@ -66,7 +65,7 @@ export const CouponCodeContainer = styled.div`
   align-items: center;
 `;
 
-export const CouponCode = styled.input.attrs({ type: "button" })`
+export const CouponCode = styled.input.attrs({ type: 'button' })`
   position: relative;
   top: 0;
   left: 0;
@@ -76,11 +75,11 @@ export const CouponCode = styled.input.attrs({ type: "button" })`
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: black;
-  border: 3px solid black;
+  color: ${({ theme }) => theme.secondary_II};
+  border: 3px solid ${({ theme }) => theme.secondary_II};
   border-radius: 6px;
-  background-color: #c3cbd6;
-  box-shadow: 0 0 0 0 black;
+  background-color: ${({ theme }) => theme.primary_II};
+  box-shadow: 0 0 0 0 ${({ theme }) => theme.secondary_II};
   cursor: pointer;
   transition: all 300ms ease;
 
@@ -91,14 +90,14 @@ export const CouponCode = styled.input.attrs({ type: "button" })`
   &:hover {
     top: -3px;
     left: -3px;
-    box-shadow: 3px 3px 0 0 black;
+    box-shadow: 3px 3px 0 0 ${({ theme }) => theme.secondary_II};
   }
 `;
 
 export const CouponCodeLabel = styled.label`
   margin-top: 6px;
   font-size: 0.8rem;
-  color: black;
+  color: ${({ theme }) => theme.secondary_II};
 `;
 
 export const CopySuccessSign = styled.span`
@@ -110,17 +109,17 @@ export const CopySuccessSign = styled.span`
   font-weight: 600;
   color: white;
   border-radius: 6px;
-  background-color: #23c552;
+  background-color: ${({ theme }) => theme.alert_I};
 
   &::after {
     position: absolute;
     top: 100%;
     left: 50%;
-    content: "";
+    content: '';
     width: 0;
     height: 0;
     border: 10px solid transparent;
-    border-top: 16px solid #23c552;
+    border-top: 16px solid ${({ theme }) => theme.alert_I};
   }
 `;
 
@@ -138,7 +137,7 @@ export const OtherInfo = styled.div`
 
 export const StoreLink = styled.a`
   padding: 8px 16px;
-  color: white;
+  color: ${({ theme }) => theme.neutral_II};
   font-size: 1.2rem;
   font-weight: 700;
   border-radius: 999px;
@@ -146,13 +145,13 @@ export const StoreLink = styled.a`
   transition: all 300ms ease;
 
   &:hover {
-    color: #c3cbd6;
-    background-color: #191718;
+    color: ${({ theme }) => theme.primary_II};
+    background-color: ${({ theme }) => theme.secondary_I};
   }
 `;
 
 export const Category = styled.p`
-  color: white;
+  color: ${({ theme }) => theme.neutral_II};
   font-size: 0.95rem;
   font-weight: 400;
 `;
