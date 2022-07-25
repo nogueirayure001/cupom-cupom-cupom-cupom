@@ -1,24 +1,24 @@
 const SLIDER_CONFIGS = {
   SMALL_SCREEN: {
     slidesPerView: 2,
-    rows: 2,
+    rows: 2
   },
   SMALL_TO_MID_SCREEN: {
     slidesPerView: 3,
-    rows: 2,
+    rows: 2
   },
   MEDIUM_SCREEN: {
     slidesPerView: 4,
-    rows: 3,
+    rows: 3
   },
   LARGE_SCREEN: {
     slidesPerView: 6,
-    rows: 3,
-  },
+    rows: 2
+  }
 };
 
 export const DEFAULT_CONFIGS = {
-  ...SLIDER_CONFIGS.SMALL_SCREEN,
+  ...SLIDER_CONFIGS.SMALL_SCREEN
 };
 
 export function setScreenSize(width, setterCallback) {

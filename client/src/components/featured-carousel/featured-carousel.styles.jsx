@@ -71,6 +71,7 @@ export const StyledSwiper = styled(Swiper)`
     height: ${({ rows }) => `
       calc((100% + 15px -  ${(rows - 1) * 30}px) / ${rows});
     `};
+    padding: 5px;
   }
 `;
 
@@ -80,7 +81,7 @@ export const StyledLink = styled(Link)`
   bottom: 0;
   display: block;
   height: 100%;
-  border: 3px solid ${({ theme }) => theme.secondary_II};
+  border: 2px solid ${({ theme }) => theme.secondary_II};
   border-radius: 6px;
   background-size: contain;
   background-repeat: no-repeat;

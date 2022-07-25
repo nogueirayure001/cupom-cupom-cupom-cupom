@@ -6,7 +6,7 @@ const storesSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    thumbnail: {
+    image: {
       type: String,
       required: true
     },

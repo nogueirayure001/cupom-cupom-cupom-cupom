@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { Reset, GlobalStyles } from './styles';
 import { ThemeContextProvider } from './contexts';
+import { FeaturedStoresContextProvider } from './contexts';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,7 +15,9 @@ root.render(
       <GlobalStyles />
 
       <BrowserRouter>
-        <App />
+        <FeaturedStoresContextProvider>
+          <App />
+        </FeaturedStoresContextProvider>
       </BrowserRouter>
     </ThemeContextProvider>
   </React.StrictMode>
