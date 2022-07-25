@@ -5,7 +5,7 @@ import { Article } from '../article';
 export const StyledArticle = styled(Article)`
   width: 100%;
   padding: 20px 16px;
-  border: 3px solid ${({ theme }) => theme.secondary_II};
+  border: 2px solid ${({ theme }) => theme.secondary_II};
   border-radius: 6px;
   background-color: ${({ theme }) => theme.primary_I};
   background-image: url(${'../../assets/images/discount.svg'});
@@ -76,7 +76,7 @@ export const CouponCode = styled.input.attrs({ type: 'button' })`
   font-weight: 700;
   letter-spacing: 1.5px;
   color: ${({ theme }) => theme.secondary_II};
-  border: 3px solid ${({ theme }) => theme.secondary_II};
+  border: 2px solid ${({ theme }) => theme.secondary_II};
   border-radius: 6px;
   background-color: ${({ theme }) => theme.primary_II};
   box-shadow: 0 0 0 0 ${({ theme }) => theme.secondary_II};

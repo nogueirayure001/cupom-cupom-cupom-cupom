@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Main = styled.main`
   display: flex;
@@ -7,6 +7,7 @@ export const Main = styled.main`
   gap: 32px;
   width: 100%;
   padding: 32px 16px;
+  background-color: ${({ theme }) => theme.neutral_II};
 
   @media screen and (min-width: 768px) {
     padding: 32px;
