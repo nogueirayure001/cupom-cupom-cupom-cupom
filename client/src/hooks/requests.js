@@ -6,4 +6,10 @@ async function httpGetFeaturedStores() {
   return await response.json();
 }
 
-export { httpGetFeaturedStores };
+async function httpGetFeaturedCoupons() {
+  const response = await fetch(`${API_URL}/coupons/featured`);
+
+  return await response.json();
+}
+
+export { httpGetFeaturedStores, httpGetFeaturedCoupons };

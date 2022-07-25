@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 import {
   StyledArticle,
@@ -10,11 +10,13 @@ import {
   CopySuccessSign,
   OtherInfo,
   StoreLink,
-  Category,
-} from "./index";
+  Category
+} from './index';
 
 function CouponCard({ coupon }) {
   const [showCopySuccess, setCopySuccess] = useState(false);
+
+  console.log(coupon);
 
   const { description, store, code, category } = coupon;
 

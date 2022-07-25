@@ -38,7 +38,11 @@ async function saveLomadeeCoupons(coupons) {
         return appliedFilters;
       }, {});
 
-      filters = { ...filters, store: coupon.store };
+      filters = {
+        ...filters,
+        store: coupon.store,
+        category: coupon.category
+      };
 
       return {
         updateOne: {

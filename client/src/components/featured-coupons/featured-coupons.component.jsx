@@ -1,12 +1,15 @@
-import { CouponCard } from "../coupon-card";
-import { FeaturedCouponsContainer } from "./index";
+import { useContext } from 'react';
 
-import { COUPONS_TEST } from "../../assets/data";
+import { CouponCard } from '../coupon-card';
+import { FeaturedCouponsContainer } from './index';
+import { FeaturedCouponsContext } from '../../contexts';
 
 function FeaturedCoupons(props) {
+  const coupons = useContext(FeaturedCouponsContext);
+
   return (
     <FeaturedCouponsContainer>
-      {COUPONS_TEST.map((coupon) => (
+      {coupons.map((coupon) => (
         <CouponCard key={coupon.code} coupon={coupon} />
       ))}
     </FeaturedCouponsContainer>
