@@ -1,13 +1,15 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 
-import { Layout } from "./routes/layout";
-import { Homepage } from "./routes/homepage";
+import { Layout } from './routes/layout';
+import { Homepage } from './routes/homepage';
+import { Coupons } from './routes/coupons';
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route index element={<Homepage />} />
+        <Route path='coupons' element={<Coupons />} />
       </Route>
     </Routes>
   );
