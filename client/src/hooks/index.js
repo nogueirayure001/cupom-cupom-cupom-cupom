@@ -1,4 +1,3 @@
 export { default as useWidthObserver } from './useWidthObserver';
-export { default as useFeaturedStores } from './useFeaturedStores';
-export { default as useFeaturedCoupons } from './useFeaturedCoupons';
+export { default as useFetchAPIResource } from './useFetchAPIResource';
 export * from './requests';

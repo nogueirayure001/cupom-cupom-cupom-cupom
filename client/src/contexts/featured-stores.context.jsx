@@ -1,12 +1,14 @@
 import { createContext } from 'react';
-import { useFeaturedStores } from '../hooks';
+
+import { useFetchAPIResource } from '../hooks';
 
 const DEFAULT_FEATURED_STORES = [];
 
 const FeaturedStoresContext = createContext(DEFAULT_FEATURED_STORES);
 
 function FeaturedStoresContextProvider({ children }) {
-  const stores = useFeaturedStores();
+  const resourcePath = '/stores/featured';
+  const stores = useFetchAPIResource(resourcePath);
 
   return (
     <FeaturedStoresContext.Provider value={stores}>
