@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   HeaderContainer,
@@ -11,11 +11,12 @@ import {
   NavList,
   NavItem,
   MenuToggler,
-  Contrast,
-} from "./index";
+  Contrast
+} from './index';
 
 function Header(props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { pathname } = useLocation();
 
   const menuToggleHandler = () => setMenuOpen(!menuOpen);
 
@@ -40,15 +41,23 @@ function Header(props) {
         <MenuToggler menuOpen={menuOpen} onClick={menuToggleHandler} />
 
         <NavList menuOpen={menuOpen}>
-          <NavItem>
+          <NavItem active={pathname === '/'}>
+            <Link to='/'>Inicio</Link>
+          </NavItem>
+
+          <NavItem active={pathname === '/coupons'}>
             <Link to='/coupons'>Coupons</Link>
           </NavItem>
 
-          <NavItem>
+          <NavItem active={pathname === '/offers'}>
+            <Link to='/offers'>Ofertas</Link>
+          </NavItem>
+
+          <NavItem active={pathname === '/stores'}>
             <Link to='/stores'>Lojas</Link>
           </NavItem>
 
-          <NavItem>
+          <NavItem active={pathname === '/categories'}>
             <Link to='/categories'>Categorias</Link>
           </NavItem>
         </NavList>

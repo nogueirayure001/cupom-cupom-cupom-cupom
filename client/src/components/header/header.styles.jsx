@@ -114,11 +114,11 @@ export const NavList = styled.ul`
   width: 190px;
   padding: 0 30px;
   margin: 0 auto;
-  height: ${({ menuOpen }) => (menuOpen ? '180px' : '0')};
+  height: ${({ menuOpen }) => (menuOpen ? '285px' : '0')};
   overflow: hidden;
   transition: height 300ms ease;
 
-  @media screen and (min-width: 425px) {
+  @media screen and (min-width: 640px) {
     flex-direction: row;
     height: auto;
     width: 100%;
@@ -137,19 +137,20 @@ export const NavItem = styled.li`
   display: flex;
   align-items: center;
   width: 100%;
-  border: 2px solid ${({ theme }) => theme.neutral_II};
+  border: 2px solid
+    ${({ theme, active }) => (active ? theme.primary_I : theme.neutral_II)};
   border-radius: 6px;
   transition: all 300ms ease;
 
-  @media screen and (min-width: 425px) {
+  @media screen and (min-width: 640px) {
     width: auto;
   }
 
   &:hover {
     right: 5px;
     bottom: 5px;
-    border-color: #f9f7f0;
-    box-shadow: 5px 5px 0 0 ${({ theme }) => theme.neutral_II};
+    box-shadow: 5px 5px 0 0
+      ${({ theme, active }) => (active ? theme.primary_I : theme.neutral_II)};
   }
 
   a {
@@ -232,7 +233,7 @@ export const MenuToggler = styled(MenuButton)`
   margin: 0 auto;
   cursor: pointer;
 
-  @media screen and (min-width: 425px) {
+  @media screen and (min-width: 640px) {
     display: none;
   }
 `;
