@@ -1,15 +1,12 @@
 import {
   getCouponsNumber,
   getPaginatedCoupons,
-  getFeaturedCoupons,
+  getFeaturedCoupons
 } from '../model/coupons.model.js';
-import { couponsViewHandler } from '../views/coupons.view.js';
+import DTO from '../views/DTO.view.js';
 
 async function httpGetPaginatedCoupons(req, res) {
-  let { page = 1, limit = 10 } = req.query;
-
-  page = Number(page);
-  limit = Number(limit);
+  let { page, limit } = req.query;
 
   const totalCoupons = getCouponsNumber();
   const totalPages = Math.ceil(totalCoupons / limit);
@@ -18,32 +15,34 @@ async function httpGetPaginatedCoupons(req, res) {
     page,
     limit,
     totalPages,
+    action: DTO.ACTIONS.paginated
   };
 
-  if (page > totalPages || page < 1 || limit < 1) {
-    const DTO = couponsViewHandler.getPaginatedDTO(requestState, null);
-    return res.status(404).json(DTO);
+  if (page > totalPages) {
+    return res.status(400).json(new DTO(requestState));
   }
 
-  const responseData = getPaginatedCoupons(page, limit);
+  try {
+    const data = getPaginatedCoupons(page, limit);
 
-  const DTO = couponsViewHandler.getPaginatedDTO(requestState, responseData);
-
-  return res.status(200).json(DTO);
+    return res.status(200).json(new DTO({ ...requestState, data }));
+  } catch (e) {
+    return res.status(500).json(new DTO({ ...requestState, data: null }));
+  }
 }
 
 async function httpGetFeaturedCoupons(req, res) {
-  const responseData = await getFeaturedCoupons();
+  const requestState = {
+    action: DTO.ACTIONS.featured
+  };
 
-  if (!responseData) {
-    const DTO = couponsViewHandler.getFeaturedDTO(responseData);
+  try {
+    const data = await getFeaturedCoupons();
 
-    return res.status(404).json(DTO);
+    return res.status(200).json(new DTO({ ...requestState, data }));
+  } catch (e) {
+    return res.status(500).json(new DTO({ ...requestState, data: null }));
   }
-
-  const DTO = couponsViewHandler.getFeaturedDTO(responseData);
-
-  return res.status(200).json(DTO);
 }
 
 export { httpGetPaginatedCoupons, httpGetFeaturedCoupons };

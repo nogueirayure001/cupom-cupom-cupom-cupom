@@ -1,11 +1,12 @@
-import { getStoresNumber, getPaginatedStores, getFeaturedStores } from '../model/stores.model.js';
-import { storesViewHandler } from '../views/stores.view.js';
+import {
+  getStoresNumber,
+  getPaginatedStores,
+  getFeaturedStores
+} from '../model/stores.model.js';
+import DTO from '../views/DTO.view.js';
 
 async function httpGetPaginatedStores(req, res) {
-  let { page = 1, limit = 10 } = req.query;
-
-  page = Number(page);
-  limit = Number(limit);
+  let { page, limit } = req.query;
 
   const totalStores = getStoresNumber();
   const totalPages = Math.ceil(totalStores / limit);
@@ -14,32 +15,34 @@ async function httpGetPaginatedStores(req, res) {
     page,
     limit,
     totalPages,
+    action: DTO.ACTIONS.paginated
   };
 
-  if (page > totalPages || page < 1 || limit < 1) {
-    const DTO = storesViewHandler.getPaginatedDTO(requestState, null);
-    return res.status(404).json(DTO);
+  if (page > totalPages) {
+    return res.status(400).json(new DTO(requestState));
   }
 
-  const responseData = getPaginatedStores(page, limit);
+  try {
+    const data = getPaginatedStores(page, limit);
 
-  const DTO = storesViewHandler.getPaginatedDTO(requestState, responseData);
-
-  return res.status(200).json(DTO);
+    return res.status(200).json(new DTO({ ...requestState, data }));
+  } catch (e) {
+    return res.status(500).json(new DTO({ ...requestState, data: null }));
+  }
 }
 
 async function httpGetFeaturedStores(req, res) {
-  const responseData = await getFeaturedStores();
+  const requestState = {
+    action: DTO.ACTIONS.featured
+  };
 
-  if (!responseData) {
-    const DTO = storesViewHandler.getFeaturedDTO(responseData);
+  try {
+    const data = await getFeaturedStores();
 
-    return res.status(404).json(DTO);
+    return res.status(200).json(new DTO({ ...requestState, data }));
+  } catch (e) {
+    return res.status(500).json(new DTO({ ...requestState, data: null }));
   }
-
-  const DTO = storesViewHandler.getFeaturedDTO(responseData);
-
-  return res.status(200).json(DTO);
 }
 
 export { httpGetPaginatedStores, httpGetFeaturedStores };
