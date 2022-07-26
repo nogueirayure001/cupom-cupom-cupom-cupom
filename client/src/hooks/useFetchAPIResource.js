@@ -9,7 +9,7 @@ function useFetchAPIResource(resourceRelativePath) {
     const response = await httpFetchAPIResource(resourceRelativePath);
 
     if (response.requestInfo.success) {
-      saveResource(response.data);
+      saveResource(response);
     }
   }, [resourceRelativePath]);
 

@@ -16,8 +16,6 @@ import {
 function CouponCard({ coupon }) {
   const [showCopySuccess, setCopySuccess] = useState(false);
 
-  console.log(coupon);
-
   const { description, store, code, category } = coupon;
 
   const blinkSuccessSign = (time) => {

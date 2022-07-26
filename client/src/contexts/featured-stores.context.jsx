@@ -8,7 +8,9 @@ const FeaturedStoresContext = createContext(DEFAULT_FEATURED_STORES);
 
 function FeaturedStoresContextProvider({ children }) {
   const resourcePath = '/stores/featured';
-  const stores = useFetchAPIResource(resourcePath);
+  const resource = useFetchAPIResource(resourcePath);
+
+  const stores = resource.data || [];
 
   return (
     <FeaturedStoresContext.Provider value={stores}>

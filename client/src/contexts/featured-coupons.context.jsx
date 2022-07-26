@@ -8,7 +8,9 @@ const FeaturedCouponsContext = createContext(DEFAULT_FEATURED_COUPONS);
 
 function FeaturedCouponsContextProvider({ children }) {
   const resourcePath = '/coupons/featured';
-  const coupons = useFetchAPIResource(resourcePath);
+  const resource = useFetchAPIResource(resourcePath);
+
+  const coupons = resource.data || [];
 
   return (
     <FeaturedCouponsContext.Provider value={coupons}>

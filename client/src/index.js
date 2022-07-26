@@ -6,7 +6,8 @@ import { Reset, GlobalStyles } from './styles';
 import { ThemeContextProvider } from './contexts';
 import {
   FeaturedStoresContextProvider,
-  FeaturedCouponsContextProvider
+  FeaturedCouponsContextProvider,
+  PaginatedCouponsContextProvider
 } from './contexts';
 import App from './App';
 
@@ -20,7 +21,9 @@ root.render(
       <BrowserRouter>
         <FeaturedStoresContextProvider>
           <FeaturedCouponsContextProvider>
-            <App />
+            <PaginatedCouponsContextProvider>
+              <App />
+            </PaginatedCouponsContextProvider>
           </FeaturedCouponsContextProvider>
         </FeaturedStoresContextProvider>
       </BrowserRouter>
