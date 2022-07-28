@@ -1,24 +1,30 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
-import { useFetchAPIResource } from '../hooks';
+import { httpFetchAPIResource } from '../utils';
 
-const DEFAULT_PAGINATED_COUPONS = {
+const PaginatedCouponsContext = createContext({
   coupons: [],
-  pagination: {}
-};
-
-const PaginatedCouponsContext = createContext(DEFAULT_PAGINATED_COUPONS);
+  pagination: {},
+  changePage: () => {}
+});
 
 function PaginatedCouponsContextProvider({ children }) {
-  const resourcePath = '/coupons/paginated';
-  const resource = useFetchAPIResource(resourcePath);
+  const [coupons, setCoupons] = useState([]);
+  const [pagination, setPagination] = useState({});
 
-  const coupons = resource.data || [];
-  const pagination = resource.pagination || { previous: null, next: null };
+  const changePage = async (newPage) => {
+    const { pagination, data } = await httpFetchAPIResource(
+      `/coupons/paginated?page=${newPage}`
+    );
+
+    setCoupons(data);
+    setPagination(pagination);
+  };
 
   const value = {
-    coupons,
-    pagination
+    coupons: coupons,
+    pagination: pagination,
+    changePage: changePage
   };
 
   return (

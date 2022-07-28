@@ -45,19 +45,19 @@ function Header(props) {
             <Link to='/'>Inicio</Link>
           </NavItem>
 
-          <NavItem active={pathname === '/coupons'}>
+          <NavItem active={pathname.startsWith('/coupons')}>
             <Link to='/coupons'>Coupons</Link>
           </NavItem>
 
-          <NavItem active={pathname === '/offers'}>
+          <NavItem active={pathname.startsWith('/offers')}>
             <Link to='/offers'>Ofertas</Link>
           </NavItem>
 
-          <NavItem active={pathname === '/stores'}>
+          <NavItem active={pathname.startsWith('/stores')}>
             <Link to='/stores'>Lojas</Link>
           </NavItem>
 
-          <NavItem active={pathname === '/categories'}>
+          <NavItem active={pathname.startsWith('/categories')}>
             <Link to='/categories'>Categorias</Link>
           </NavItem>
         </NavList>

@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import { nanoid } from 'nanoid';
 import { SwiperSlide } from 'swiper/react';
 import { Grid, Pagination, Navigation, Autoplay } from 'swiper';
 import 'swiper/css';
@@ -37,7 +38,7 @@ function FeaturedStoresCarousel() {
     >
       {stores.map((store) => {
         return (
-          <SwiperSlide key={store.name}>
+          <SwiperSlide key={nanoid()}>
             <StyledLink to='/' image={store.image} />
           </SwiperSlide>
         );

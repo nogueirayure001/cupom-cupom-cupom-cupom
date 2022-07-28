@@ -1,16 +1,22 @@
-import { createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-import { useFetchAPIResource } from '../hooks';
+import { httpFetchAPIResource } from '../utils';
 
-const DEFAULT_FEATURED_COUPONS = [];
-
-const FeaturedCouponsContext = createContext(DEFAULT_FEATURED_COUPONS);
+const FeaturedCouponsContext = createContext([]);
 
 function FeaturedCouponsContextProvider({ children }) {
-  const resourcePath = '/coupons/featured';
-  const resource = useFetchAPIResource(resourcePath);
+  const [coupons, setCoupons] = useState([]);
 
-  const coupons = resource.data || [];
+  useEffect(() => {
+    const getFeaturedCoupons = async () => {
+      const resourcePath = '/coupons/featured';
+      const { data } = await httpFetchAPIResource(resourcePath);
+
+      setCoupons(data);
+    };
+
+    getFeaturedCoupons();
+  }, []);
 
   return (
     <FeaturedCouponsContext.Provider value={coupons}>

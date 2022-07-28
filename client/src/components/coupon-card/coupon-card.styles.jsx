@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Article } from '../article';
+import { Button } from '../button';
 
 export const StyledArticle = styled(Article)`
   width: 100%;
@@ -65,32 +66,11 @@ export const CouponCodeContainer = styled.div`
   align-items: center;
 `;
 
-export const CouponCode = styled.input.attrs({ type: 'button' })`
-  position: relative;
-  top: 0;
-  left: 0;
-  padding: 12px 16px;
+export const CouponCode = styled(Button)`
   margin-top: 16px;
-  font-family: inherit;
-  font-size: 1.2rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: ${({ theme }) => theme.secondary_II};
-  border: 2px solid ${({ theme }) => theme.secondary_II};
-  border-radius: 6px;
-  background-color: ${({ theme }) => theme.primary_II};
-  box-shadow: 0 0 0 0 ${({ theme }) => theme.secondary_II};
-  cursor: pointer;
-  transition: all 300ms ease;
 
   @media screen and (min-width: 768px) {
     margin: 0;
-  }
-
-  &:hover {
-    top: -3px;
-    left: -3px;
-    box-shadow: 3px 3px 0 0 ${({ theme }) => theme.secondary_II};
   }
 `;
 

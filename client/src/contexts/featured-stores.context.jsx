@@ -1,16 +1,22 @@
-import { createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-import { useFetchAPIResource } from '../hooks';
+import { httpFetchAPIResource } from '../utils';
 
-const DEFAULT_FEATURED_STORES = [];
-
-const FeaturedStoresContext = createContext(DEFAULT_FEATURED_STORES);
+const FeaturedStoresContext = createContext([]);
 
 function FeaturedStoresContextProvider({ children }) {
-  const resourcePath = '/stores/featured';
-  const resource = useFetchAPIResource(resourcePath);
+  const [stores, setStores] = useState([]);
 
-  const stores = resource.data || [];
+  useEffect(() => {
+    const getFeaturedStores = async () => {
+      const resourcePath = '/stores/featured';
+      const { data } = await httpFetchAPIResource(resourcePath);
+
+      setStores(data);
+    };
+
+    getFeaturedStores();
+  }, []);
 
   return (
     <FeaturedStoresContext.Provider value={stores}>

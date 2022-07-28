@@ -48,7 +48,9 @@ function CouponCard({ coupon }) {
         </StoreImage>
 
         <CouponCodeContainer>
-          <CouponCode id={code} value={code} onClick={copyToClipboardHandler} />
+          <CouponCode id={code} onClick={copyToClipboardHandler}>
+            {code}
+          </CouponCode>
 
           <CouponCodeLabel htmlFor={code}>
             *clique para copiar o código
