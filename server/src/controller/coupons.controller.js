@@ -1,7 +1,8 @@
 import {
   getCouponsNumber,
   getPaginatedCoupons,
-  getFeaturedCoupons
+  getFeaturedCoupons,
+  getSearchedCoupons
 } from '../model/coupons.model.js';
 import DTO from '../views/DTO.view.js';
 
@@ -45,4 +46,24 @@ async function httpGetFeaturedCoupons(req, res) {
   }
 }
 
-export { httpGetPaginatedCoupons, httpGetFeaturedCoupons };
+async function httpGetSearchedCoupons(req, res) {
+  const { searchTerm } = req.query;
+
+  const requestState = {
+    action: DTO.ACTIONS.search
+  };
+
+  try {
+    const data = await getSearchedCoupons(searchTerm);
+
+    return res.status(200).json(new DTO({ ...requestState, data }));
+  } catch (e) {
+    return res.status(500).json(new DTO({ ...requestState, data: null }));
+  }
+}
+
+export {
+  httpGetPaginatedCoupons,
+  httpGetFeaturedCoupons,
+  httpGetSearchedCoupons
+};

@@ -116,9 +116,21 @@ function getPaginatedCoupons(page, limit) {
   );
 }
 
+async function getSearchedCoupons(searchTerm) {
+  const term = new RegExp(searchTerm, 'i');
+
+  return await couponsModel.find(
+    {
+      $or: [{ 'store.name': term }, { 'category.name': term }]
+    },
+    { _id: 0, __v: 0 }
+  );
+}
+
 export {
   updateCoupons,
   getCouponsNumber,
   getFeaturedCoupons,
-  getPaginatedCoupons
+  getPaginatedCoupons,
+  getSearchedCoupons
 };

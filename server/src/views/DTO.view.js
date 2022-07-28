@@ -21,6 +21,10 @@ class DTO {
         this.setFeaturedDTO(data);
         break;
 
+      case ACTIONS.search:
+        this.setSearchDTO(data);
+        break;
+
       default:
         console.log('Action not allowed');
     }
@@ -41,6 +45,13 @@ class DTO {
 
   setFeaturedDTO(data) {
     const overallOperationSucess = this.setFeaturedRequestInfo(data);
+    if (!overallOperationSucess) return;
+
+    this.data = data;
+  }
+
+  setSearchDTO(data) {
+    const overallOperationSucess = this.setSearchRequestInfo(data);
     if (!overallOperationSucess) return;
 
     this.data = data;
@@ -68,6 +79,20 @@ class DTO {
   }
 
   setFeaturedRequestInfo(data) {
+    if (!data) {
+      this.requestInfo.success = false;
+      this.requestInfo.message = 'Server failed to deliver data';
+
+      return false;
+    }
+
+    this.requestInfo.success = true;
+    this.requestInfo.message = 'Request was sucessful';
+
+    return true;
+  }
+
+  setSearchRequestInfo(data) {
     if (!data) {
       this.requestInfo.success = false;
       this.requestInfo.message = 'Server failed to deliver data';
