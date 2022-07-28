@@ -8,7 +8,7 @@ export const Title = styled.h2`
   position: relative;
   width: auto;
   padding-bottom: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
@@ -18,7 +18,7 @@ export const Title = styled.h2`
   letter-spacing: 1px;
 
   @media screen and (min-width: 768px) {
-    margin-bottom: 32px;
+    margin-bottom: 48px;
     font-size: 1.75rem;
   }
 

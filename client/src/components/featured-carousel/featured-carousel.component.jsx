@@ -36,10 +36,10 @@ function FeaturedStoresCarousel() {
       navigation
       modules={[Pagination, Grid, Navigation, Autoplay]}
     >
-      {stores.map((store) => {
+      {stores.map(({ name, image }) => {
         return (
           <SwiperSlide key={nanoid()}>
-            <StyledLink to='/' image={store.image} />
+            <StyledLink to={`/coupons/search/${name}`} image={image} />
           </SwiperSlide>
         );
       })}

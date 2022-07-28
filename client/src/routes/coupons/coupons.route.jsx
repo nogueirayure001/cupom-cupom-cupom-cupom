@@ -1,11 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Coupons } from './index';
+import { CouponsPaginated, CouponsSearch } from './index';
 
 function CouponsRoute() {
   return (
     <Routes>
       <Route index element={<Navigate to='1' />} />
-      <Route path='/:page' element={<Coupons />} />
+      <Route path='/:page' element={<CouponsPaginated />} />
+      <Route path='/search/:searchTerm' element={<CouponsSearch />} />
     </Routes>
   );
 }

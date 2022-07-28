@@ -1,5 +1,6 @@
-import { Article } from "../article";
-import { Paragraph, Form, SubscribeButton } from "./index";
+import { Article } from '../article';
+import { SingleFieldForm } from '../single-field-form';
+import { Paragraph } from './index';
 
 function Newsletter() {
   return (
@@ -8,11 +9,11 @@ function Newsletter() {
         Assine nossa newsletter e fique informado das melhores ofertas e cupons!
       </Paragraph>
 
-      <Form>
-        <input type='email' placeholder='email@exemplo.com' />
-
-        <SubscribeButton>assinar</SubscribeButton>
-      </Form>
+      <SingleFieldForm
+        type='email'
+        fieldLabel='email@exemplo.com'
+        buttonLabel='assinar'
+      />
     </Article>
   );
 }
