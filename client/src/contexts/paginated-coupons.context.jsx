@@ -13,8 +13,12 @@ function PaginatedCouponsContextProvider({ children }) {
   const [pagination, setPagination] = useState({});
 
   const changePage = async (newPage) => {
+    const relativePath = `/coupons/paginated`;
+    const queryParams = { page: newPage };
+
     const { pagination, data } = await httpFetchAPIResource(
-      `/coupons/paginated?page=${newPage}`
+      relativePath,
+      queryParams
     );
 
     setCoupons(data);

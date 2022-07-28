@@ -10,6 +10,7 @@ function FeaturedStoresContextProvider({ children }) {
   useEffect(() => {
     const getFeaturedStores = async () => {
       const resourcePath = '/stores/featured';
+
       const { data } = await httpFetchAPIResource(resourcePath);
 
       setStores(data);

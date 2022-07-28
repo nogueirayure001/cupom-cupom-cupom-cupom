@@ -10,6 +10,7 @@ function FeaturedCouponsContextProvider({ children }) {
   useEffect(() => {
     const getFeaturedCoupons = async () => {
       const resourcePath = '/coupons/featured';
+
       const { data } = await httpFetchAPIResource(resourcePath);
 
       setCoupons(data);
