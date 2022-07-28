@@ -110,4 +110,21 @@ function getPaginatedStores(page, limit) {
   );
 }
 
-export { updateStores, getStoresNumber, getFeaturedStores, getPaginatedStores };
+async function getSearchedStores(searchTerm) {
+  const term = new RegExp(searchTerm, 'i');
+
+  return await storesModel.find(
+    {
+      name: term
+    },
+    { _id: 0, __v: 0 }
+  );
+}
+
+export {
+  updateStores,
+  getStoresNumber,
+  getFeaturedStores,
+  getPaginatedStores,
+  getSearchedStores
+};

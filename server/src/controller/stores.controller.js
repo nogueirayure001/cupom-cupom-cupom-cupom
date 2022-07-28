@@ -1,7 +1,8 @@
 import {
   getStoresNumber,
   getPaginatedStores,
-  getFeaturedStores
+  getFeaturedStores,
+  getSearchedStores
 } from '../model/stores.model.js';
 import DTO from '../views/DTO.view.js';
 
@@ -45,4 +46,20 @@ async function httpGetFeaturedStores(req, res) {
   }
 }
 
-export { httpGetPaginatedStores, httpGetFeaturedStores };
+async function httpGetSearchedStores(req, res) {
+  const { searchTerm } = req.query;
+
+  const requestState = {
+    action: DTO.ACTIONS.search
+  };
+
+  try {
+    const data = await getSearchedStores(searchTerm);
+
+    return res.status(200).json(new DTO({ ...requestState, data }));
+  } catch (e) {
+    return res.status(500).json(new DTO({ ...requestState, data: null }));
+  }
+}
+
+export { httpGetPaginatedStores, httpGetFeaturedStores, httpGetSearchedStores };
