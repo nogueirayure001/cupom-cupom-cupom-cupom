@@ -5,7 +5,7 @@ import {
   httpGetFeaturedCoupons,
   httpGetSearchedCoupons,
   httpGetActiveCouponCategories
-} from '../controller/coupons.controller.js';
+} from '../controllers/coupons.controller.js';
 import paginationFormat from '../middlewares/paginationFormat.middleware.js';
 
 const couponsRouter = Router();

@@ -4,7 +4,7 @@ import {
   httpGetPaginatedStores,
   httpGetFeaturedStores,
   httpGetSearchedStores
-} from '../controller/stores.controller.js';
+} from '../controllers/stores.controller.js';
 import paginationFormat from '../middlewares/paginationFormat.middleware.js';
 
 const storesRouter = Router();
