@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 function useWidthObserver() {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    window.addEventListener("resize", () => setWidth(window.innerWidth));
+    window.addEventListener('resize', () => setWidth(window.innerWidth));
 
-    return window.removeEventListener("resize", () =>
+    return window.removeEventListener('resize', () =>
       setWidth(window.innerWidth)
     );
   });

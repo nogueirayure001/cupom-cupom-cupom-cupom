@@ -1,6 +1,8 @@
 function createPaginationArray(page, totalPages, buttonsQuantity) {
   const pagesArray = [];
 
+  if (buttonsQuantity > totalPages) buttonsQuantity = totalPages;
+
   let lowerQuantity, upperQuantity;
 
   const evenQuantity = !(buttonsQuantity % 2);

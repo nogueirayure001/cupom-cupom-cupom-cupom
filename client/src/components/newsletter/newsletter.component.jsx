@@ -1,6 +1,5 @@
 import { Article } from '../article';
-import { SingleFieldForm } from '../single-field-form';
-import { Paragraph } from './index';
+import { Paragraph, UserEmailField } from './index';
 
 function Newsletter() {
   return (
@@ -9,7 +8,7 @@ function Newsletter() {
         Assine nossa newsletter e fique informado das melhores ofertas e cupons!
       </Paragraph>
 
-      <SingleFieldForm
+      <UserEmailField
         type='email'
         fieldLabel='email@exemplo.com'
         buttonLabel='assinar'

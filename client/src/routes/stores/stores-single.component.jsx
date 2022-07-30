@@ -1,24 +1,27 @@
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { PaginatedCouponsContext } from '../../contexts';
 import { Section } from '../../components/section';
 import { SearchForm } from './index';
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
-import { PaginationController } from '../../components/pagination-controller';
+import { httpFetchAPIResource } from '../../utils';
 
-function CouponsPaginated() {
-  const { coupons, pagination, changePage } = useContext(
-    PaginatedCouponsContext
-  );
-
+function StoresSingle() {
+  const [coupons, setCoupons] = useState([]);
+  const { store } = useParams();
   const navigate = useNavigate();
 
-  const { page } = useParams();
-
   useEffect(() => {
-    changePage(+page);
-  }, [page]);
+    const getSearchResults = async () => {
+      const { data } = await httpFetchAPIResource('/coupons/search', {
+        searchTerm: store
+      });
+
+      setCoupons(data);
+    };
+
+    getSearchResults();
+  }, [store]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -36,18 +39,16 @@ function CouponsPaginated() {
       <SearchForm
         darkBorder
         type='search'
-        fieldLabel='O que está procurando?'
+        fieldLabel='Que loja está procurando?'
         buttonLabel='buscar'
         onSubmit={submitHandler}
       />
 
-      <Section title='Confira todos os cupons disponíveis'>
+      <Section title={store}>
         <CouponsDisplayboard coupons={coupons} />
-
-        <PaginationController {...pagination} basePathName='coupons' />
       </Section>
     </Fragment>
   );
 }
 
-export default CouponsPaginated;
+export default StoresSingle;

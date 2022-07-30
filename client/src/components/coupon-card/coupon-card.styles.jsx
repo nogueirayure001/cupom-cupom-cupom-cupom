@@ -8,10 +8,19 @@ export const StyledArticle = styled(Article)`
   padding: 20px 16px;
   border: 2px solid ${({ theme }) => theme.secondary_II};
   border-radius: 6px;
-  background-color: ${({ theme }) => theme.primary_I};
-  background-image: url(${'../../assets/images/discount.svg'});
-  background-repeat: no-repeat;
-  background-position: 12px 95%;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    45deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(10, 98, 208, 1) 75%
+  );
+
+  @media screen and (min-width: 425px) {
+    background: url(${'../../assets/images/discount.svg'}),
+      linear-gradient(45deg, rgba(2, 0, 36, 1) 0%, rgba(10, 98, 208, 1) 75%);
+    background-repeat: no-repeat;
+    background-position: 12px 95%, 0 0;
+  }
 
   @media screen and (min-width: 768px) {
     max-width: 80%;
@@ -31,6 +40,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 16px;
   width: 100%;
 
   @media screen and (min-width: 768px) {
@@ -44,7 +54,7 @@ export const StoreImage = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.detail};
+  background-color: ${({ theme }) => theme.detail_I};
   overflow: hidden;
 
   @media screen and (min-width: 768px) {
@@ -68,9 +78,15 @@ export const CouponCodeContainer = styled.div`
 
 export const CouponCode = styled(Button)`
   margin-top: 16px;
+  min-width: 200px;
 
   @media screen and (min-width: 768px) {
+    min-width: none;
     margin: 0;
+  }
+
+  @media screen and (min-width: 1024px) {
+    min-width: 200px;
   }
 `;
 
@@ -120,6 +136,7 @@ export const StoreLink = styled.a`
   color: ${({ theme }) => theme.neutral_II};
   font-size: 1.2rem;
   font-weight: 700;
+  text-align: center;
   border-radius: 999px;
   background-color: black;
   transition: all 300ms ease;

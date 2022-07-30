@@ -8,6 +8,10 @@ export const Main = styled.main`
   width: 100%;
   padding: 32px 16px;
   background-color: ${({ theme }) => theme.neutral_II};
+  background-color: #f6f4e8;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
   @media screen and (min-width: 768px) {
     padding: 32px;

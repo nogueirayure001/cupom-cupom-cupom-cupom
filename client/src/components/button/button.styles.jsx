@@ -10,10 +10,10 @@ export const StyledButton = styled.button`
   font-weight: 700;
   letter-spacing: 1.5px;
   color: ${({ theme, selected }) =>
-    selected ? theme.primary_I : theme.secondary_II};
+    selected ? theme.primary_II : theme.neutral_II};
   border: 2px solid ${({ theme }) => theme.secondary_II};
   border-radius: 6px;
-  background-color: ${({ theme }) => theme.primary_II};
+  background-color: ${({ theme }) => theme.detail_II};
   box-shadow: 0 0 0 0 ${({ theme }) => theme.secondary_II};
   cursor: pointer;
   transition: all 300ms ease;

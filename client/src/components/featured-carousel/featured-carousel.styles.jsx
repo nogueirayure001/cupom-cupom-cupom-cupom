@@ -2,6 +2,18 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Swiper } from 'swiper/react';
 
+export const CarouselContainer = styled.div`
+  position: relative;
+  left: ${({ offset }) => `-${offset}px`};
+  width: ${({ offset }) => `calc(100% + 2 * ${offset}px)`};
+  padding: 32px 16px 24px;
+  background-color: ${({ theme }) => theme.detail_II};
+
+  @media screen and (min-width: 768px) {
+    padding: 32px 24px;
+  }
+`;
+
 export const StyledSwiper = styled(Swiper)`
   height: ${({ windowWidth, rows, slidesPerView }) => {
     return `calc(${(0.65 * windowWidth * rows) / slidesPerView}px + 30px)`;
@@ -86,7 +98,7 @@ export const StyledLink = styled(Link)`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: ${({ theme }) => theme.detail};
+  background-color: ${({ theme }) => theme.detail_I};
   background-image: ${({ image }) => `url(${image})`};
   transition: all 300ms ease;
 

@@ -3,21 +3,21 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { Section } from '../../components/section';
 import { SearchForm } from './index';
-import { CouponsDisplayboard } from '../../components/coupons-displayboard';
+import { StoresDisplayboard } from '../../components/stores-displayboard';
 import { httpFetchAPIResource } from '../../utils';
 
-function CouponsSearch() {
-  const [coupons, setCoupons] = useState([]);
+function StoresSearch() {
+  const [stores, setStores] = useState([]);
   const { searchTerm } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const getSearchResults = async () => {
-      const { data } = await httpFetchAPIResource('/coupons/search', {
+      const { data } = await httpFetchAPIResource('/stores/search', {
         searchTerm
       });
 
-      setCoupons(data);
+      setStores(data);
     };
 
     getSearchResults();
@@ -39,16 +39,16 @@ function CouponsSearch() {
       <SearchForm
         darkBorder
         type='search'
-        fieldLabel='O que está procurando?'
+        fieldLabel='Que loja está procurando?'
         buttonLabel='buscar'
         onSubmit={submitHandler}
       />
 
       <Section title='Resultados da busca'>
-        <CouponsDisplayboard coupons={coupons} />
+        <StoresDisplayboard stores={stores} />
       </Section>
     </Fragment>
   );
 }
 
-export default CouponsSearch;
+export default StoresSearch;

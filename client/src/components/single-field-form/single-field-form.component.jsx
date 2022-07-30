@@ -6,7 +6,7 @@ function SingleFieldForm({
   type,
   fieldLabel,
   buttonLabel,
-  inverted,
+  darkBorder,
   ...otherProps
 }) {
   const [value, setValue] = useState('');
@@ -18,16 +18,16 @@ function SingleFieldForm({
   };
 
   return (
-    <Form {...otherProps} inverted={inverted}>
+    <Form {...otherProps} darkBorder={darkBorder}>
       <input
-        inverted={inverted}
+        darkBorder={darkBorder}
         type={type}
         value={value}
         placeholder={fieldLabel}
         onChange={changeHandler}
       />
 
-      <Button inverted={inverted} type='submit'>
+      <Button darkBorder={darkBorder} type='submit'>
         {buttonLabel}
       </Button>
     </Form>

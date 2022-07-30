@@ -1,3 +1,3 @@
-export { default as FeaturedStoresCarousel } from "./featured-carousel.component";
-export * from "./helpers";
-export * from "./featured-carousel.styles";
+export { default as FeaturedCarousel } from './featured-carousel.component';
+export * from './helpers';
+export * from './featured-carousel.styles';

@@ -49,10 +49,6 @@ function Header(props) {
             <Link to='/coupons'>Coupons</Link>
           </NavItem>
 
-          <NavItem active={pathname.startsWith('/offers')}>
-            <Link to='/offers'>Ofertas</Link>
-          </NavItem>
-
           <NavItem active={pathname.startsWith('/stores')}>
             <Link to='/stores'>Lojas</Link>
           </NavItem>

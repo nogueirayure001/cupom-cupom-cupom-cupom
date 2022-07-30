@@ -2,7 +2,7 @@ import { Fragment, useContext } from 'react';
 
 import { FeaturedCouponsContext } from '../../contexts';
 import { Section } from '../../components/section';
-import { FeaturedStoresCarousel } from '../../components/featured-carousel';
+import { FeaturedCarousel } from '../../components/featured-carousel';
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
 
 function Homepage(props) {
@@ -11,7 +11,7 @@ function Homepage(props) {
   return (
     <Fragment>
       <Section title='Lojas em Destaque'>
-        <FeaturedStoresCarousel />
+        <FeaturedCarousel />
       </Section>
 
       <Section title='Melhores Coupons'>

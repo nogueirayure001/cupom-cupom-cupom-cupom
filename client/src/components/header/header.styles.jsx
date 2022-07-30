@@ -12,16 +12,17 @@ export const SitePresentation = styled.div`
   padding: 24px 16px;
   background-image: url(../../assets/images/header-bg.png);
   background-color: ${({ theme }) => theme.primary_II};
-  background-size: contain;
+  background-size: 40%;
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: center right;
   overflow: hidden;
 
   @media screen and (min-width: 425px) {
-    background-position: center left;
+    background-position: 5% center;
   }
 
   @media screen and (min-width: 768px) {
+    background-size: contain;
     padding: 32px 16px;
   }
 
@@ -33,7 +34,8 @@ export const SitePresentation = styled.div`
     content: ' ';
     width: 100%;
     height: 100%;
-    background-color: hsla(0, 0%, 100%, 40%);
+    background-color: hsla(0, 0%, 100%, 30%);
+
     backdrop-filter: blur(0.6px);
 
     @media screen and (min-width: 425px) {
@@ -54,6 +56,7 @@ export const TextWrapper = styled.div`
   @media screen and (min-width: 425px) {
     margin: 0 0 0 auto;
     text-align: right;
+    color: ${({ theme }) => theme.neutral_I};
   }
 
   @media screen and (min-width: 768px) {
@@ -70,6 +73,7 @@ export const TextWrapper = styled.div`
 export const SiteTitle = styled.h1`
   display: flex;
   flex-direction: column;
+  gap: 8px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 1.75rem;
@@ -81,6 +85,11 @@ export const SiteTitle = styled.h1`
 
 export const SubTitle = styled.p`
   margin-top: 16px;
+  color: ${({ theme }) => theme.neutral_I};
+
+  @media screen and (min-width: 425px) {
+    color: ${({ theme }) => theme.neutral_II};
+  }
 
   @media screen and (min-width: 768px) {
     font-size: 1.2rem;
@@ -88,7 +97,7 @@ export const SubTitle = styled.p`
 `;
 
 export const Contrast = styled.span`
-  color: ${({ theme }) => theme.primary_I};
+  color: ${({ theme }) => theme.neutral_II};
 `;
 
 export const Navigation = styled.nav`
@@ -114,7 +123,7 @@ export const NavList = styled.ul`
   width: 190px;
   padding: 0 30px;
   margin: 0 auto;
-  height: ${({ menuOpen }) => (menuOpen ? '285px' : '0')};
+  height: ${({ menuOpen }) => (menuOpen ? '245px' : '0')};
   overflow: hidden;
   transition: height 300ms ease;
 
@@ -138,7 +147,7 @@ export const NavItem = styled.li`
   align-items: center;
   width: 100%;
   border: 2px solid
-    ${({ theme, active }) => (active ? theme.primary_I : theme.neutral_II)};
+    ${({ theme, active }) => (active ? theme.primary_II : theme.neutral_II)};
   border-radius: 6px;
   transition: all 300ms ease;
 
@@ -150,7 +159,7 @@ export const NavItem = styled.li`
     right: 5px;
     bottom: 5px;
     box-shadow: 5px 5px 0 0
-      ${({ theme, active }) => (active ? theme.primary_I : theme.neutral_II)};
+      ${({ theme, active }) => (active ? theme.primary_II : theme.neutral_II)};
   }
 
   a {

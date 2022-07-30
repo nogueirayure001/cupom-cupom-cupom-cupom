@@ -7,7 +7,7 @@ import {
   createPaginationArray
 } from './index';
 
-function PaginationController({ page, totalPages }) {
+function PaginationController({ page, totalPages, basePathName }) {
   const navigate = useNavigate();
 
   const width = useWidthObserver();
@@ -20,7 +20,7 @@ function PaginationController({ page, totalPages }) {
     paginationControlsQt
   );
 
-  const changePage = (newPage) => navigate(`/coupons/${newPage}`);
+  const changePage = (newPage) => navigate(`/${basePathName}/${newPage}`);
 
   const previousPageHandler = () => changePage(page - 1);
 

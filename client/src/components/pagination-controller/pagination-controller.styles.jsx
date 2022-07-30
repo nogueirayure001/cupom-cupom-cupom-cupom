@@ -14,9 +14,14 @@ export const PaginationContainer = styled.div`
 `;
 
 export const StyledButton = styled(Button)`
+  width: 50px;
+  height: 50px;
   font-size: 0.75rem;
+  border-radius: 50%;
 
   @media screen and (min-width: 768px) {
+    width: 60px;
+    height: 60px;
     font-size: 0.9rem;
   }
 
