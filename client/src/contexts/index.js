@@ -3,3 +3,4 @@ export * from './featured-stores.context';
 export * from './featured-coupons.context';
 export * from './paginated-coupons.context';
 export * from './paginated-stores.context';
+export * from './categories.context';

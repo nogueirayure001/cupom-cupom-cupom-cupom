@@ -8,7 +8,8 @@ import {
   FeaturedStoresContextProvider,
   FeaturedCouponsContextProvider,
   PaginatedCouponsContextProvider,
-  PaginatedStoresContextProvider
+  PaginatedStoresContextProvider,
+  CategoriesContextProvider
 } from './contexts';
 import App from './App';
 
@@ -24,7 +25,9 @@ root.render(
           <FeaturedCouponsContextProvider>
             <PaginatedCouponsContextProvider>
               <PaginatedStoresContextProvider>
-                <App />
+                <CategoriesContextProvider>
+                  <App />
+                </CategoriesContextProvider>
               </PaginatedStoresContextProvider>
             </PaginatedCouponsContextProvider>
           </FeaturedCouponsContextProvider>

@@ -108,13 +108,9 @@ export const Navigation = styled.nav`
   width: 100%;
   padding: 12px;
   background-color: ${({ theme }) => theme.secondary_I};
-  font-weight: 600;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.neutral_II};
 
   @media screen and (min-width: 768px) {
     padding: 20px;
-    font-size: 1.1rem;
   }
 `;
 
@@ -127,7 +123,7 @@ export const NavList = styled.ul`
   width: 190px;
   padding: 0 30px;
   margin: 0 auto;
-  height: ${({ menuOpen }) => (menuOpen ? '245px' : '0')};
+  height: ${({ menuOpen }) => (menuOpen ? '186px' : '0')};
   overflow: hidden;
   transition: height 300ms ease;
 
@@ -150,6 +146,11 @@ export const NavItem = styled.li`
   display: flex;
   align-items: center;
   width: 100%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: ${({ theme }) => theme.neutral_II};
   border: 2px solid
     ${({ theme, active }) => (active ? theme.primary_II : theme.neutral_II)};
   border-radius: 6px;
@@ -186,7 +187,7 @@ const HorizontalBar = styled.div`
   width: 40px;
   height: 6px;
   border-radius: 40px;
-  background-color: ${({ theme }) => theme.neutral_II};
+  background-color: ${({ theme }) => theme.primary_II};
   transition: all 200ms ease;
 
   &::before,
@@ -220,7 +221,7 @@ const MenuButtonAnimation = styled.div`
     menuOpen &&
     css`
       ${HorizontalBar} {
-        width: 0%;
+        background-color: ${({ theme }) => theme.secondary_I};
 
         &::before {
           transform: translateY(0) rotate(45deg);

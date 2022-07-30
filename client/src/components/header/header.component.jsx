@@ -52,10 +52,6 @@ function Header(props) {
           <NavItem active={pathname.startsWith('/stores')}>
             <Link to='/stores'>Lojas</Link>
           </NavItem>
-
-          <NavItem active={pathname.startsWith('/categories')}>
-            <Link to='/categories'>Categorias</Link>
-          </NavItem>
         </NavList>
       </Navigation>
     </HeaderContainer>
