@@ -4,7 +4,8 @@ class DTO {
   static ACTIONS = Object.freeze({
     paginated: 'paginated',
     featured: 'featured',
-    search: 'search'
+    search: 'search',
+    categories: 'categories'
   });
 
   constructor({ page, limit, totalPages, data, action }) {
@@ -23,6 +24,10 @@ class DTO {
 
       case ACTIONS.search:
         this.setSearchDTO(data);
+        break;
+
+      case ACTIONS.categories:
+        this.setCategoriesDTO(data);
         break;
 
       default:
@@ -52,6 +57,13 @@ class DTO {
 
   setSearchDTO(data) {
     const overallOperationSucess = this.setSearchRequestInfo(data);
+    if (!overallOperationSucess) return;
+
+    this.data = data;
+  }
+
+  setCategoriesDTO(data) {
+    const overallOperationSucess = this.setCategoriesRequestInfo(data);
     if (!overallOperationSucess) return;
 
     this.data = data;
@@ -93,6 +105,20 @@ class DTO {
   }
 
   setSearchRequestInfo(data) {
+    if (!data) {
+      this.requestInfo.success = false;
+      this.requestInfo.message = 'Server failed to deliver data';
+
+      return false;
+    }
+
+    this.requestInfo.success = true;
+    this.requestInfo.message = 'Request was sucessful';
+
+    return true;
+  }
+
+  setCategoriesRequestInfo(data) {
     if (!data) {
       this.requestInfo.success = false;
       this.requestInfo.message = 'Server failed to deliver data';

@@ -64,9 +64,17 @@ async function httpGetSearchedCoupons(req, res) {
 }
 
 async function httpGetActiveCouponCategories(req, res) {
-  const categories = await getActiveCouponCategories();
+  const requestState = {
+    action: DTO.ACTIONS.categories
+  };
 
-  res.status(200).json(categories);
+  try {
+    const data = await getActiveCouponCategories();
+
+    return res.status(200).json(new DTO({ ...requestState, data }));
+  } catch (e) {
+    return res.status(500).json(new DTO({ ...requestState, data: null }));
+  }
 }
 
 export {
