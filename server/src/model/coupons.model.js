@@ -121,7 +121,11 @@ async function getSearchedCoupons(searchTerm) {
 
   return await couponsModel.find(
     {
-      $or: [{ 'store.name': term }, { 'category.name': term }]
+      $or: [
+        { 'store.name': term },
+        { 'category.name': term },
+        { description: term }
+      ]
     },
     { _id: 0, __v: 0 }
   );
