@@ -22,8 +22,11 @@ export const SitePresentation = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    background-size: contain;
     padding: 32px 16px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    background-size: 30%;
   }
 
   &::after {
@@ -46,14 +49,14 @@ export const SitePresentation = styled.div`
 
 export const TextWrapper = styled.div`
   position: relative;
-  max-width: 300px;
-  padding: 24px 16px;
+  max-width: 280px;
   margin: 0 auto;
   text-align: center;
   color: ${({ theme }) => theme.neutral_I};
   z-index: 3;
 
   @media screen and (min-width: 425px) {
+    padding: 24px 12px;
     margin: 0 0 0 auto;
     text-align: right;
     color: ${({ theme }) => theme.neutral_I};
@@ -85,6 +88,7 @@ export const SiteTitle = styled.h1`
 
 export const SubTitle = styled.p`
   margin-top: 16px;
+  font-weight: 700;
   color: ${({ theme }) => theme.neutral_I};
 
   @media screen and (min-width: 425px) {
