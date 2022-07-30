@@ -2,7 +2,8 @@ import {
   getCouponsNumber,
   getPaginatedCoupons,
   getFeaturedCoupons,
-  getSearchedCoupons
+  getSearchedCoupons,
+  getActiveCouponCategories
 } from '../model/coupons.model.js';
 import DTO from '../views/DTO.view.js';
 
@@ -62,8 +63,15 @@ async function httpGetSearchedCoupons(req, res) {
   }
 }
 
+async function httpGetActiveCouponCategories(req, res) {
+  const categories = await getActiveCouponCategories();
+
+  res.status(200).json(categories);
+}
+
 export {
   httpGetPaginatedCoupons,
   httpGetFeaturedCoupons,
-  httpGetSearchedCoupons
+  httpGetSearchedCoupons,
+  httpGetActiveCouponCategories
 };

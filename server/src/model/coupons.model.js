@@ -9,6 +9,7 @@ const LOMADEE_COUPONS_URL = process.env.LOMADEE_COUPONS_URL;
 const TIME_LIMIT = 60 * 60 * 1000;
 
 let couponsList = [];
+let categories = [];
 
 async function getUpdatedLomadeeCoupons() {
   const response = await axios.get(LOMADEE_COUPONS_URL, {
@@ -131,10 +132,21 @@ async function getSearchedCoupons(searchTerm) {
   );
 }
 
+async function getActiveCouponCategories() {
+  if (categories.length) return categories;
+
+  const result = await couponsModel.distinct('category.name', {});
+
+  if (result.length) categories = result;
+
+  return result;
+}
+
 export {
   updateCoupons,
   getCouponsNumber,
   getFeaturedCoupons,
   getPaginatedCoupons,
-  getSearchedCoupons
+  getSearchedCoupons,
+  getActiveCouponCategories
 };
