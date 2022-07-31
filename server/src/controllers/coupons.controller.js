@@ -5,7 +5,7 @@ import {
   getSearchedCoupons,
   getActiveCouponCategories
 } from '../model/coupons.model.js';
-import DTO from '../views/DTO.view.js';
+import CouponsDTO from '../views/coupons.view.js';
 
 async function httpGetPaginatedCoupons(req, res) {
   let { page, limit } = req.query;
@@ -17,33 +17,37 @@ async function httpGetPaginatedCoupons(req, res) {
     page,
     limit,
     totalPages,
-    action: DTO.ACTIONS.paginated
+    data: null
   };
 
   if (page > totalPages) {
-    return res.status(400).json(new DTO(requestState));
+    return res.status(400).json(new CouponsDTO(requestState));
   }
 
   try {
     const data = getPaginatedCoupons(page, limit);
 
-    return res.status(200).json(new DTO({ ...requestState, data }));
+    requestState.data = data;
+
+    return res.status(200).json(new CouponsDTO(requestState));
   } catch (e) {
-    return res.status(500).json(new DTO({ ...requestState, data: null }));
+    return res.status(500).json(new CouponsDTO(requestState));
   }
 }
 
 async function httpGetFeaturedCoupons(req, res) {
   const requestState = {
-    action: DTO.ACTIONS.featured
+    data: null
   };
 
   try {
     const data = await getFeaturedCoupons();
 
-    return res.status(200).json(new DTO({ ...requestState, data }));
+    requestState.data = data;
+
+    return res.status(200).json(new CouponsDTO(requestState));
   } catch (e) {
-    return res.status(500).json(new DTO({ ...requestState, data: null }));
+    return res.status(500).json(new CouponsDTO(requestState));
   }
 }
 
@@ -51,29 +55,33 @@ async function httpGetSearchedCoupons(req, res) {
   const { searchTerm } = req.query;
 
   const requestState = {
-    action: DTO.ACTIONS.search
+    data: null
   };
 
   try {
     const data = await getSearchedCoupons(searchTerm);
 
-    return res.status(200).json(new DTO({ ...requestState, data }));
+    requestState.data = data;
+
+    return res.status(200).json(new CouponsDTO(requestState));
   } catch (e) {
-    return res.status(500).json(new DTO({ ...requestState, data: null }));
+    return res.status(500).json(new CouponsDTO(requestState));
   }
 }
 
 async function httpGetActiveCouponCategories(req, res) {
   const requestState = {
-    action: DTO.ACTIONS.categories
+    data: null
   };
 
   try {
     const data = await getActiveCouponCategories();
 
-    return res.status(200).json(new DTO({ ...requestState, data }));
+    requestState.data = data;
+
+    return res.status(200).json(new CouponsDTO(requestState));
   } catch (e) {
-    return res.status(500).json(new DTO({ ...requestState, data: null }));
+    return res.status(500).json(new CouponsDTO(requestState));
   }
 }
 

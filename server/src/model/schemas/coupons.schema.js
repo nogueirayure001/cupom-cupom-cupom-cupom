@@ -20,7 +20,8 @@ const couponsSchema = mongoose.Schema(
         required: true
       },
       image: {
-        type: String
+        type: String,
+        required: true
       },
       link: {
         type: String
@@ -36,7 +37,8 @@ const couponsSchema = mongoose.Schema(
       type: String
     },
     link: {
-      type: String
+      type: String,
+      required: true
     },
     new: {
       type: Boolean

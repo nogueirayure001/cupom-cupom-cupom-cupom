@@ -4,7 +4,7 @@ import {
   getFeaturedStores,
   getSearchedStores
 } from '../model/stores.model.js';
-import DTO from '../views/DTO.view.js';
+import StoresDTO from '../views/stores.view.js';
 
 async function httpGetPaginatedStores(req, res) {
   let { page, limit } = req.query;
@@ -15,34 +15,37 @@ async function httpGetPaginatedStores(req, res) {
   const requestState = {
     page,
     limit,
-    totalPages,
-    action: DTO.ACTIONS.paginated
+    totalPages
   };
 
   if (page > totalPages) {
-    return res.status(400).json(new DTO(requestState));
+    return res.status(400).json(new StoresDTO(requestState));
   }
 
   try {
     const data = getPaginatedStores(page, limit);
 
-    return res.status(200).json(new DTO({ ...requestState, data }));
+    requestState.data = data;
+
+    return res.status(200).json(new StoresDTO(requestState));
   } catch (e) {
-    return res.status(500).json(new DTO({ ...requestState, data: null }));
+    return res.status(500).json(new StoresDTO(requestState));
   }
 }
 
 async function httpGetFeaturedStores(req, res) {
   const requestState = {
-    action: DTO.ACTIONS.featured
+    data: null
   };
 
   try {
     const data = await getFeaturedStores();
 
-    return res.status(200).json(new DTO({ ...requestState, data }));
+    requestState.data = data;
+
+    return res.status(200).json(new StoresDTO(requestState));
   } catch (e) {
-    return res.status(500).json(new DTO({ ...requestState, data: null }));
+    return res.status(500).json(new StoresDTO(requestState));
   }
 }
 
@@ -50,15 +53,17 @@ async function httpGetSearchedStores(req, res) {
   const { searchTerm } = req.query;
 
   const requestState = {
-    action: DTO.ACTIONS.search
+    data: null
   };
 
   try {
     const data = await getSearchedStores(searchTerm);
 
-    return res.status(200).json(new DTO({ ...requestState, data }));
+    requestState.data = data;
+
+    return res.status(200).json(new StoresDTO(requestState));
   } catch (e) {
-    return res.status(500).json(new DTO({ ...requestState, data: null }));
+    return res.status(500).json(new StoresDTO(requestState));
   }
 }
 
