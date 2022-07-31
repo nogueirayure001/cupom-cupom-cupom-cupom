@@ -142,6 +142,28 @@ async function getActiveCouponCategories() {
   return result;
 }
 
+async function addCoupons(coupons) {
+  const writes = coupons.map((coupon) => ({
+    updateOne: {
+      filter: coupon,
+      update: {},
+      upsert: true
+    }
+  }));
+
+  return await couponsModel.bulkWrite(writes);
+}
+
+async function deleteCoupons(coupons) {
+  const writes = coupons.map((coupon) => ({
+    deleteOne: {
+      filter: coupon
+    }
+  }));
+
+  return await couponsModel.bulkWrite(writes);
+}
+
 export {
   updateCoupons,
   getCouponsNumber,
