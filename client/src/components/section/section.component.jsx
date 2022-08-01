@@ -1,9 +1,9 @@
-import { SectionContainer, Title } from "./index";
+import { SectionContainer, Title } from './index';
 
-function Section({ children, title }) {
+function Section({ children, title, titleLevel = 'h2', ...otherProps }) {
   return (
-    <SectionContainer>
-      <Title>{title}</Title>
+    <SectionContainer {...otherProps}>
+      <Title as={titleLevel}>{title}</Title>
 
       {children}
     </SectionContainer>

@@ -1,4 +1,4 @@
-import { ArticleContainer, Title } from "./index";
+import { ArticleContainer, Title } from './index';
 
 function Article({ children, title, ...otherProps }) {
   return (

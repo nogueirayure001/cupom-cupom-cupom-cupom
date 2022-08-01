@@ -7,6 +7,8 @@ function SingleFieldForm({
   fieldLabel,
   buttonLabel,
   darkBorder,
+  onSubmit,
+  clearAfterSubmit,
   ...otherProps
 }) {
   const [value, setValue] = useState('');
@@ -17,8 +19,14 @@ function SingleFieldForm({
     setValue(value);
   };
 
+  const submitHandler = (e) => {
+    onSubmit(e);
+
+    clearAfterSubmit && setValue('');
+  };
+
   return (
-    <Form {...otherProps} darkBorder={darkBorder}>
+    <Form {...otherProps} darkBorder={darkBorder} onSubmit={submitHandler}>
       <input
         darkBorder={darkBorder}
         type={type}

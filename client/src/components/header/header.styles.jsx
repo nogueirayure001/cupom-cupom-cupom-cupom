@@ -38,7 +38,6 @@ export const SitePresentation = styled.div`
     width: 100%;
     height: 100%;
     background-color: hsla(0, 0%, 100%, 30%);
-
     backdrop-filter: blur(0.6px);
 
     @media screen and (min-width: 425px) {
