@@ -132,6 +132,31 @@ async function getSearchedCoupons(searchTerm) {
   );
 }
 
+async function getFilteredSearchedCoupons(searchTerm, searchFilters) {
+  const term = new RegExp(searchTerm, 'i');
+
+  const FILTER_VALUES = {
+    store: { 'store.name': term },
+    category: { 'category.name': term },
+    keyword: { description: term }
+  };
+
+  const appliedFilters = [];
+
+  for (const filter in searchFilters) {
+    if (searchFilters[filter] && FILTER_VALUES.hasOwnProperty(filter)) {
+      appliedFilters.push(FILTER_VALUES[filter]);
+    }
+  }
+
+  return await couponsModel.find(
+    {
+      $or: appliedFilters
+    },
+    { _id: 0, __v: 0 }
+  );
+}
+
 async function getActiveCouponCategories() {
   if (categories.length) return categories;
 
@@ -142,7 +167,11 @@ async function getActiveCouponCategories() {
   return result;
 }
 
-async function addCoupons(coupons) {
+async function adminGetCoupons() {
+  return await couponsModel.find({}, { __v: 0 });
+}
+
+async function adminAddCoupons(coupons) {
   const writes = coupons.map((coupon) => ({
     updateOne: {
       filter: coupon,
@@ -154,10 +183,21 @@ async function addCoupons(coupons) {
   return await couponsModel.bulkWrite(writes);
 }
 
-async function deleteCoupons(coupons) {
-  const writes = coupons.map((coupon) => ({
+async function adminDeleteCoupons(couponsIds) {
+  const writes = couponsIds.map((id) => ({
     deleteOne: {
-      filter: coupon
+      filter: { _id: id }
+    }
+  }));
+
+  return await couponsModel.bulkWrite(writes);
+}
+
+async function adminUpdateCoupons(updateData) {
+  const writes = updateData.map(({ id, update }) => ({
+    updateOne: {
+      filter: { _id: id },
+      update: update
     }
   }));
 
@@ -170,5 +210,6 @@ export {
   getFeaturedCoupons,
   getPaginatedCoupons,
   getSearchedCoupons,
+  getFilteredSearchedCoupons,
   getActiveCouponCategories
 };
