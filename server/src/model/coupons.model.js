@@ -117,22 +117,7 @@ function getPaginatedCoupons(page, limit) {
   );
 }
 
-async function getSearchedCoupons(searchTerm) {
-  const term = new RegExp(searchTerm, 'i');
-
-  return await couponsModel.find(
-    {
-      $or: [
-        { 'store.name': term },
-        { 'category.name': term },
-        { description: term }
-      ]
-    },
-    { _id: 0, __v: 0 }
-  );
-}
-
-async function getFilteredSearchedCoupons(searchTerm, searchFilters) {
+async function getSearchedCoupons(searchTerm, searchFilters = '') {
   const term = new RegExp(searchTerm, 'i');
 
   const FILTER_VALUES = {
@@ -141,17 +126,17 @@ async function getFilteredSearchedCoupons(searchTerm, searchFilters) {
     keyword: { description: term }
   };
 
-  const appliedFilters = [];
+  const searchFiltersArr = searchFilters.toLowerCase().split(',');
 
-  for (const filter in searchFilters) {
-    if (searchFilters[filter] && FILTER_VALUES.hasOwnProperty(filter)) {
-      appliedFilters.push(FILTER_VALUES[filter]);
-    }
-  }
+  const FILTER_KEYS = Object.keys(FILTER_VALUES);
+
+  const appliedFilters = searchFiltersArr
+    .filter((filter) => FILTER_KEYS.includes(filter))
+    .map((filter) => FILTER_VALUES[filter]);
 
   return await couponsModel.find(
     {
-      $or: appliedFilters
+      $or: appliedFilters.length ? appliedFilters : Object.values(FILTER_VALUES)
     },
     { _id: 0, __v: 0 }
   );
@@ -210,6 +195,5 @@ export {
   getFeaturedCoupons,
   getPaginatedCoupons,
   getSearchedCoupons,
-  getFilteredSearchedCoupons,
   getActiveCouponCategories
 };

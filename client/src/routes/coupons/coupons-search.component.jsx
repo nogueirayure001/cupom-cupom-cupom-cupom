@@ -29,7 +29,7 @@ function CouponsSearch() {
         searchFilters
       });
 
-      setCoupons(data);
+      if (data) setCoupons(data);
     };
 
     getSearchResults();

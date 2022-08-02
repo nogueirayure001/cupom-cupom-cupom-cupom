@@ -52,14 +52,14 @@ async function httpGetFeaturedCoupons(req, res) {
 }
 
 async function httpGetSearchedCoupons(req, res) {
-  const { searchTerm } = req.query;
+  const { searchTerm, searchFilters } = req.query;
 
   const requestState = {
     data: null
   };
 
   try {
-    const data = await getSearchedCoupons(searchTerm);
+    const data = await getSearchedCoupons(searchTerm, searchFilters);
 
     requestState.data = data;
 

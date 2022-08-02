@@ -17,7 +17,7 @@ function StoresSearch() {
         searchTerm
       });
 
-      setStores(data);
+      if (data) setStores(data);
     };
 
     getSearchResults();

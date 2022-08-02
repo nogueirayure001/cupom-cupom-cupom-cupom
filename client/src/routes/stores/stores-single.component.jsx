@@ -17,7 +17,7 @@ function StoresSingle() {
         searchTerm: store
       });
 
-      setCoupons(data);
+      if (data) setCoupons(data);
     };
 
     getSearchResults();

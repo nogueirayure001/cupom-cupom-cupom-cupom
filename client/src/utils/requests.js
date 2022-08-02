@@ -9,14 +9,14 @@ async function httpFetchAPIResource(
   queryParams = {},
   configs = DEFAULT_CONFIGS
 ) {
-  let queryString = '';
+  let query = [];
 
   for (const [key, value] of Object.entries(queryParams)) {
-    queryString += `${key}=${value}`;
+    query.push(`${key}=${value}`);
   }
 
-  const fullPath = queryString
-    ? `${API_URL}${resourceRelativePath}?${queryString}`
+  const fullPath = query.length
+    ? `${API_URL}${resourceRelativePath}?${query.join('&')}`
     : `${API_URL}${resourceRelativePath}`;
 
   const response = await fetch(fullPath, configs);
