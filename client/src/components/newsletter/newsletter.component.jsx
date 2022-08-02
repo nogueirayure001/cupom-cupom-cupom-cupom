@@ -18,9 +18,7 @@ function Newsletter() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    const form = e.target;
-
-    const children = Array.from(form.children);
+    const children = Array.from(e.target);
     const [inputField] = children.filter((child) => child.nodeName === 'INPUT');
 
     const email = inputField.value;

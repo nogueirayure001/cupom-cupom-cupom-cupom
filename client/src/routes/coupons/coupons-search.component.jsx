@@ -1,53 +1,44 @@
-import { Fragment, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
+import { CouponsSearchFiltersContext } from '../../contexts';
 import { Section } from '../../components/section';
-import { SearchForm } from './index';
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
 import { httpFetchAPIResource } from '../../utils';
 
 function CouponsSearch() {
   const [coupons, setCoupons] = useState([]);
+  const [searchFilters, setSearchFilters] = useState('');
+  const { filters } = useContext(CouponsSearchFiltersContext);
   const { searchTerm } = useParams();
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const updatedSearchFilters = [];
+
+    for (const [key, value] of Object.entries(filters)) {
+      if (value) updatedSearchFilters.push(key);
+    }
+
+    setSearchFilters(updatedSearchFilters.join(','));
+  }, [filters]);
 
   useEffect(() => {
     const getSearchResults = async () => {
       const { data } = await httpFetchAPIResource('/coupons/search', {
-        searchTerm
+        searchTerm,
+        searchFilters
       });
 
       setCoupons(data);
     };
 
     getSearchResults();
-  }, [searchTerm]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const children = Array.from(e.target.children);
-    const [inputField] = children.filter((child) => child.nodeName === 'INPUT');
-
-    const searchTerm = inputField.value;
-
-    navigate(`../search/${searchTerm}`);
-  };
+  }, [searchTerm, searchFilters]);
 
   return (
-    <Fragment>
-      <SearchForm
-        darkBorder
-        type='search'
-        fieldLabel='O que está procurando?'
-        buttonLabel='buscar'
-        onSubmit={submitHandler}
-      />
-
-      <Section title='Resultados da busca'>
-        <CouponsDisplayboard coupons={coupons} />
-      </Section>
-    </Fragment>
+    <Section title='Resultados da busca'>
+      <CouponsDisplayboard coupons={coupons} />
+    </Section>
   );
 }
 

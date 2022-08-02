@@ -22,7 +22,7 @@ function StoresPaginated() {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const children = Array.from(e.target.children);
+    const children = Array.from(e.target);
     const [inputField] = children.filter((child) => child.nodeName === 'INPUT');
 
     const searchTerm = inputField.value;

@@ -9,11 +9,13 @@ export const Paragraph = styled.p`
 `;
 
 export const UserEmailField = styled(SingleFieldForm)`
-  width: 100%;
-  max-width: none;
-
-  @media screen and (min-width: 768px) {
+  & > *:first-child {
     width: 100%;
     max-width: none;
+
+    @media screen and (min-width: 768px) {
+      width: 100%;
+      max-width: none;
+    }
   }
 `;
