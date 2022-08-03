@@ -1,18 +1,18 @@
 import { createSelector } from 'reselect';
 
-const selectFeaturedStores = (store) => store.featuredStores;
-
-export const selectAll = createSelector(
-  selectFeaturedStores,
-  (featuredStores) => featuredStores
-);
+export const selectAll = (store) => store.featuredStores;
 
 export const selectStores = createSelector(
-  selectFeaturedStores,
+  selectAll,
   (featuredStores) => featuredStores.stores
 );
 
 export const selectLoadingState = createSelector(
-  selectFeaturedStores,
+  selectAll,
   (featuredStores) => featuredStores.isLoading
+);
+
+export const selectError = createSelector(
+  selectAll,
+  (featuredStores) => featuredStores.error
 );

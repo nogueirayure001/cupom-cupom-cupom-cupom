@@ -41,15 +41,7 @@ function FeaturedStoresCarousel() {
     dispatch(loadFeaturedStoresAsync);
   }, []);
 
-  const LoadedStoresContent = stores.map(({ name, image }) => {
-    return (
-      <SwiperSlide key={nanoid()}>
-        <StyledLink to={`/stores/store/${name}`} image={image} />
-      </SwiperSlide>
-    );
-  });
-
-  const LoadingStoresContent = emptyArrayCreator(
+  const LoadingStores = emptyArrayCreator(
     configs.rows * configs.slidesPerView
   ).map(() => (
     <SwiperSlide>
@@ -58,6 +50,14 @@ function FeaturedStoresCarousel() {
       </Placeholder>
     </SwiperSlide>
   ));
+
+  const LoadedStores = stores.map(({ name, image }) => {
+    return (
+      <SwiperSlide key={nanoid()}>
+        <StyledLink to={`/stores/store/${name}`} image={image} />
+      </SwiperSlide>
+    );
+  });
 
   return (
     <CarouselContainer offset={offset} ref={containerRef}>
@@ -76,7 +76,7 @@ function FeaturedStoresCarousel() {
         navigation
         modules={[Pagination, Grid, Navigation, Autoplay]}
       >
-        {isLoading ? LoadingStoresContent : LoadedStoresContent}
+        {isLoading ? LoadingStores : LoadedStores}
       </StyledSwiper>
     </CarouselContainer>
   );

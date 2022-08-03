@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import {
   StyledArticle,
+  Placeholder,
+  Loader,
   Content,
   StoreImage,
   CouponCodeContainer,
@@ -13,10 +15,8 @@ import {
   Category
 } from './index';
 
-function CouponCard({ coupon }) {
+function CouponCard({ coupon, showPlaceholder }) {
   const [showCopySuccess, setCopySuccess] = useState(false);
-
-  const { description, store, code, category } = coupon;
 
   const blinkSuccessSign = (time) => {
     setCopySuccess(true);
@@ -39,6 +39,16 @@ function CouponCard({ coupon }) {
       console.error(error);
     }
   };
+
+  if (showPlaceholder) {
+    return (
+      <Placeholder>
+        <Loader />
+      </Placeholder>
+    );
+  }
+
+  const { description, store, code, category } = coupon;
 
   return (
     <StyledArticle title={description}>

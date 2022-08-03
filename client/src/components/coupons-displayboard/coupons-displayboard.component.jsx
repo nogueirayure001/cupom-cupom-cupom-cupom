@@ -1,14 +1,21 @@
 import { nanoid } from 'nanoid';
 
+import { emptyArrayCreator } from '../../utils';
 import { CouponCard } from '../coupon-card';
 import { DisplayboardContainer } from './index';
 
-function CouponsDisplayboard({ coupons }) {
+function CouponsDisplayboard({ coupons, isLoading, defaultUnits = 10 }) {
+  const loadingCoupons = emptyArrayCreator(defaultUnits).map(() => (
+    <CouponCard showPlaceholder />
+  ));
+
+  const loadedCoupons = coupons.map((coupon) => (
+    <CouponCard key={nanoid()} coupon={coupon} />
+  ));
+
   return (
     <DisplayboardContainer>
-      {coupons.map((coupon) => (
-        <CouponCard key={nanoid()} coupon={coupon} />
-      ))}
+      {isLoading ? loadingCoupons : loadedCoupons}
     </DisplayboardContainer>
   );
 }

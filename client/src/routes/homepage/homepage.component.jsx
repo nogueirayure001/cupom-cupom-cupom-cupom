@@ -1,13 +1,22 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { FeaturedCouponsContext } from '../../contexts';
+import {
+  selectAll,
+  loadFeaturedCouponsAsync
+} from '../../store/featured-coupons';
 import { Section } from '../../components/section';
 import { FeaturedCarousel } from '../../components/featured-carousel';
 import { CategoriesDisplayboard } from '../../components/categories-displayboard';
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
 
 function Homepage(props) {
-  const featuredCoupons = useContext(FeaturedCouponsContext);
+  const { coupons: featuredCoupons, isLoading } = useSelector(selectAll);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadFeaturedCouponsAsync);
+  }, []);
 
   return (
     <Fragment>
@@ -20,7 +29,7 @@ function Homepage(props) {
       </Section>
 
       <Section title='Os melhores coupons do momento'>
-        <CouponsDisplayboard coupons={featuredCoupons} />
+        <CouponsDisplayboard coupons={featuredCoupons} isLoading={isLoading} />
       </Section>
     </Fragment>
   );

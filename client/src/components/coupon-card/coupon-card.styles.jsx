@@ -36,6 +36,97 @@ export const StyledArticle = styled(Article)`
   }
 `;
 
+export const Placeholder = styled(Article)`
+  width: 100%;
+  height: 430px;
+  padding: 20px 16px;
+  border: 2px solid ${({ theme }) => theme.secondary_II};
+  border-radius: 6px;
+  background-color: ${({ theme }) => theme.detail_I};
+  overflow: hidden;
+
+  @media screen and (min-width: 375px) {
+    height: 410px;
+  }
+
+  @media screen and (min-width: 768px) {
+    max-width: 80%;
+    height: 300px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    height: 270px;
+  }
+`;
+
+export const Loader = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 00%;
+    transform: rotate(30deg) scaleY(2);
+    width: 5px;
+    height: 100%;
+    background-color: ${({ theme }) => theme.detail_II};
+    box-shadow: 0 0 15px 20px ${({ theme }) => theme.detail_II};
+    opacity: 0.3;
+    animation-name: slide;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    @keyframes slide {
+      from {
+        left: -100%;
+        right: none;
+      }
+      to {
+        left: 300%;
+      }
+    }
+
+    @media screen and (min-width: 375px) {
+      @keyframes slide {
+        from {
+          left: -100%;
+          right: none;
+        }
+        to {
+          left: 250%;
+        }
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      @keyframes slide {
+        from {
+          left: -100%;
+          right: none;
+        }
+        to {
+          left: 200%;
+        }
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      @keyframes slide {
+        from {
+          left: -100%;
+          right: none;
+        }
+        to {
+          left: 120%;
+        }
+      }
+    }
+  }
+`;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;

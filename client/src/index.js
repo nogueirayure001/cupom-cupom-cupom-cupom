@@ -7,7 +7,6 @@ import { Reset, GlobalStyles } from './styles';
 import { store } from './store';
 import { ThemeContextProvider } from './contexts';
 import {
-  FeaturedCouponsContextProvider,
   PaginatedCouponsContextProvider,
   PaginatedStoresContextProvider,
   CategoriesContextProvider,
@@ -24,17 +23,15 @@ root.render(
         <GlobalStyles />
 
         <BrowserRouter>
-          <FeaturedCouponsContextProvider>
-            <PaginatedCouponsContextProvider>
-              <PaginatedStoresContextProvider>
-                <CategoriesContextProvider>
-                  <CouponsSearchFiltersContextProvider>
-                    <App />
-                  </CouponsSearchFiltersContextProvider>
-                </CategoriesContextProvider>
-              </PaginatedStoresContextProvider>
-            </PaginatedCouponsContextProvider>
-          </FeaturedCouponsContextProvider>
+          <PaginatedCouponsContextProvider>
+            <PaginatedStoresContextProvider>
+              <CategoriesContextProvider>
+                <CouponsSearchFiltersContextProvider>
+                  <App />
+                </CouponsSearchFiltersContextProvider>
+              </CategoriesContextProvider>
+            </PaginatedStoresContextProvider>
+          </PaginatedCouponsContextProvider>
         </BrowserRouter>
       </ThemeContextProvider>
     </Provider>
