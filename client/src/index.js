@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import { Reset, GlobalStyles } from './styles';
+import { store } from './store';
 import { ThemeContextProvider } from './contexts';
 import {
-  FeaturedStoresContextProvider,
   FeaturedCouponsContextProvider,
   PaginatedCouponsContextProvider,
   PaginatedStoresContextProvider,
@@ -17,12 +18,12 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeContextProvider>
-      <Reset />
-      <GlobalStyles />
+    <Provider store={store}>
+      <ThemeContextProvider>
+        <Reset />
+        <GlobalStyles />
 
-      <BrowserRouter>
-        <FeaturedStoresContextProvider>
+        <BrowserRouter>
           <FeaturedCouponsContextProvider>
             <PaginatedCouponsContextProvider>
               <PaginatedStoresContextProvider>
@@ -34,9 +35,9 @@ root.render(
               </PaginatedStoresContextProvider>
             </PaginatedCouponsContextProvider>
           </FeaturedCouponsContextProvider>
-        </FeaturedStoresContextProvider>
-      </BrowserRouter>
-    </ThemeContextProvider>
+        </BrowserRouter>
+      </ThemeContextProvider>
+    </Provider>
   </React.StrictMode>
 );
 

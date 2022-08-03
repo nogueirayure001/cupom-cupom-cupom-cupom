@@ -8,9 +8,9 @@ function CategoriesDisplayboard(props) {
 
   return (
     <CategoriesDisplayboardContainer>
-      {categories.map((categorie) => (
-        <StyledLink to={`/coupons/search/${categorie.replace('/', '%2F')}`}>
-          {categorie}
+      {categories.map((category) => (
+        <StyledLink to={`/coupons/search/${category.replace('/', '%2F')}`}>
+          {category}
         </StyledLink>
       ))}
     </CategoriesDisplayboardContainer>

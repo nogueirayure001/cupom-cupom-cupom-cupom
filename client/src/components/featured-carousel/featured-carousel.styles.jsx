@@ -108,3 +108,46 @@ export const StyledLink = styled(Link)`
     box-shadow: 5px 5px 0 0 ${({ theme }) => theme.secondary_II};
   }
 `;
+
+export const Placeholder = styled.div`
+  position: relative;
+  right: 0;
+  bottom: 0;
+  display: block;
+  height: 100%;
+  border: 2px solid ${({ theme }) => theme.secondary_II};
+  border-radius: 6px;
+  background-color: ${({ theme }) => theme.detail_I};
+  overflow: hidden;
+`;
+
+export const Loader = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 00%;
+    transform: rotate(30deg) scaleY(2);
+    width: 5px;
+    height: 100%;
+    background-color: ${({ theme }) => theme.detail_II};
+    box-shadow: 0 0 15px 20px ${({ theme }) => theme.detail_II};
+    opacity: 0.3;
+    animation-name: slide;
+    animation-duration: 1.8s;
+    animation-iteration-count: infinite;
+
+    @keyframes slide {
+      from {
+        left: -100%;
+        right: none;
+      }
+      to {
+        left: 200%;
+      }
+    }
+  }
+`;
