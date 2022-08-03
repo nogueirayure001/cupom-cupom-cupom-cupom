@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import useOutsideClickCloser from '../../hooks/useOutsideClickCloser';
 
 import {
   HeaderContainer,
@@ -16,9 +17,14 @@ import {
 
 function Header(props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef();
   const { pathname } = useLocation();
 
-  const menuToggleHandler = () => setMenuOpen(!menuOpen);
+  useOutsideClickCloser(navRef, setMenuOpen);
+
+  const menuToggleHandler = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   return (
     <HeaderContainer>
@@ -37,7 +43,7 @@ function Header(props) {
         </TextWrapper>
       </SitePresentation>
 
-      <Navigation>
+      <Navigation ref={navRef}>
         <MenuToggler menuOpen={menuOpen} onClick={menuToggleHandler} />
 
         <NavList menuOpen={menuOpen}>

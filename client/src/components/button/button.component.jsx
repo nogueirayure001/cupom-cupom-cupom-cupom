@@ -1,8 +1,8 @@
 import { StyledButton } from './index';
 
-function Button({ children, ...otherProps }) {
+function Button({ children, innerRef, ...otherProps }) {
   return (
-    <StyledButton type='button' {...otherProps}>
+    <StyledButton type='button' {...otherProps} ref={innerRef}>
       {children}
     </StyledButton>
   );

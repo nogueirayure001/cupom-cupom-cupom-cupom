@@ -70,9 +70,11 @@ function Newsletter() {
         clearAfterSubmit
       />
 
-      {modal.show && (
-        <Modal clickHandler={clickHandler} message={modal.message} />
-      )}
+      <Modal
+        clickHandler={clickHandler}
+        show={modal.show}
+        message={modal.message}
+      />
     </Article>
   );
 }

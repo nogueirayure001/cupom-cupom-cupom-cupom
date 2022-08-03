@@ -107,6 +107,7 @@ export const Navigation = styled.nav`
   width: 100%;
   padding: 12px;
   background-color: ${({ theme }) => theme.secondary_I};
+  z-index: 999;
 
   @media screen and (min-width: 768px) {
     padding: 20px;
