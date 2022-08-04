@@ -1,7 +1,8 @@
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { CouponsSearchFiltersContext } from '../../contexts';
+import { updateQuery, selectQuery } from '../../store/searched-coupons';
 import {
   SearchForm,
   FiltersSet,
@@ -12,9 +13,11 @@ import {
   Checkbox
 } from './index';
 
-function CouponsLayout() {
+function CouponsLayout(props) {
   const [showFilters, setShowFilters] = useState(false);
-  const { updateFilters } = useContext(CouponsSearchFiltersContext);
+  const { filters, searchTerm } = useSelector(selectQuery);
+  const { store, category, keyword } = filters;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
@@ -24,9 +27,9 @@ function CouponsLayout() {
     const [inputField] = children.filter((child) => child.type === 'search');
     const searchTerm = inputField.value;
 
-    const URL = `../search/${searchTerm}`;
+    const relativePath = `../search/${searchTerm}`;
 
-    navigate(URL);
+    navigate(relativePath);
   };
 
   const showFiltersHandler = () => {
@@ -36,7 +39,12 @@ function CouponsLayout() {
   const changeHandler = (e) => {
     const { value, checked } = e.target;
 
-    updateFilters(value, checked);
+    const newQuery = {
+      searchTerm,
+      filters: { ...filters, [value]: checked }
+    };
+
+    dispatch(updateQuery(newQuery));
   };
 
   return (
@@ -61,6 +69,7 @@ function CouponsLayout() {
               type='checkbox'
               value='store'
               label='Loja'
+              checked={store}
               onChange={changeHandler}
             />
 
@@ -68,6 +77,7 @@ function CouponsLayout() {
               type='checkbox'
               value='category'
               label='Categoria'
+              checked={category}
               onChange={changeHandler}
             />
 
@@ -75,6 +85,7 @@ function CouponsLayout() {
               type='checkbox'
               value='keyword'
               label='Palavra-chave'
+              checked={keyword}
               onChange={changeHandler}
             />
           </CheckboxesContainer>

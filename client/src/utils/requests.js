@@ -5,21 +5,21 @@ const DEFAULT_CONFIGS = {
 };
 
 async function httpFetchAPIResource(
-  resourceRelativePath,
-  queryParams = {},
+  resourcePath,
+  query = {},
   configs = DEFAULT_CONFIGS
 ) {
-  let query = [];
+  let queryString = Object.entries(query)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
 
-  for (const [key, value] of Object.entries(queryParams)) {
-    query.push(`${key}=${value}`);
-  }
+  const URL = queryString
+    ? `${API_URL}${resourcePath}?${queryString}`
+    : `${API_URL}${resourcePath}`;
 
-  const fullPath = query.length
-    ? `${API_URL}${resourceRelativePath}?${query.join('&')}`
-    : `${API_URL}${resourceRelativePath}`;
+  console.log(URL);
 
-  const response = await fetch(fullPath, configs);
+  const response = await fetch(URL, configs);
 
   return await response.json();
 }

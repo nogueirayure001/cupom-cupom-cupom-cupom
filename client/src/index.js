@@ -5,12 +5,11 @@ import { Provider } from 'react-redux';
 
 import { Reset, GlobalStyles } from './styles';
 import { store } from './store';
-import { ThemeContextProvider } from './contexts';
 import {
+  ThemeContextProvider,
   PaginatedCouponsContextProvider,
   PaginatedStoresContextProvider,
-  CategoriesContextProvider,
-  CouponsSearchFiltersContextProvider
+  CategoriesContextProvider
 } from './contexts';
 import App from './App';
 
@@ -26,9 +25,7 @@ root.render(
           <PaginatedCouponsContextProvider>
             <PaginatedStoresContextProvider>
               <CategoriesContextProvider>
-                <CouponsSearchFiltersContextProvider>
-                  <App />
-                </CouponsSearchFiltersContextProvider>
+                <App />
               </CategoriesContextProvider>
             </PaginatedStoresContextProvider>
           </PaginatedCouponsContextProvider>

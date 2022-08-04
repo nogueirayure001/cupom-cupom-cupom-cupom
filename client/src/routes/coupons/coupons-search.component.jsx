@@ -1,43 +1,36 @@
-import { useState, useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { CouponsSearchFiltersContext } from '../../contexts';
+import {
+  selectAll,
+  updateQuery,
+  loadSearchResultsAsync
+} from '../../store/searched-coupons';
+import { useSelector, useDispatch } from 'react-redux';
 import { Section } from '../../components/section';
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
-import { httpFetchAPIResource } from '../../utils';
+import { Spinner } from '../../components/spinner';
 
 function CouponsSearch() {
-  const [coupons, setCoupons] = useState([]);
-  const [searchFilters, setSearchFilters] = useState('');
-  const { filters } = useContext(CouponsSearchFiltersContext);
+  const dispatch = useDispatch();
+  const { searchResults, query, isLoading } = useSelector(selectAll);
   const { searchTerm } = useParams();
 
   useEffect(() => {
-    const updatedSearchFilters = [];
-
-    for (const [key, value] of Object.entries(filters)) {
-      if (value) updatedSearchFilters.push(key);
-    }
-
-    setSearchFilters(updatedSearchFilters.join(','));
-  }, [filters]);
+    dispatch(updateQuery({ ...query, searchTerm }));
+  }, [searchTerm]);
 
   useEffect(() => {
-    const getSearchResults = async () => {
-      const { data } = await httpFetchAPIResource('/coupons/search', {
-        searchTerm,
-        searchFilters
-      });
-
-      if (data) setCoupons(data);
-    };
-
-    getSearchResults();
-  }, [searchTerm, searchFilters]);
+    if (query.searchTerm) dispatch(loadSearchResultsAsync(query));
+  }, [query]);
 
   return (
     <Section title='Resultados da busca'>
-      <CouponsDisplayboard coupons={coupons} />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <CouponsDisplayboard coupons={searchResults} />
+      )}
     </Section>
   );
 }
