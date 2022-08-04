@@ -6,8 +6,7 @@ function CouponsRoute() {
   return (
     <Routes>
       <Route path='/' element={<CouponsLayout />}>
-        <Route index element={<Navigate to='1' />} />
-
+        <Route index element={<CouponsPaginated />} />
         <Route path='/:page' element={<CouponsPaginated />} />
         <Route path='/search/:searchTerm' element={<CouponsSearch />} />
       </Route>
