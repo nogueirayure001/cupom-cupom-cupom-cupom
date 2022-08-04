@@ -7,9 +7,8 @@ import {
   createPaginationArray
 } from './index';
 
-function PaginationController({ page, totalPages, basePathName }) {
+function PaginationController({ page, totalPages, basePath }) {
   const navigate = useNavigate();
-
   const width = useWidthObserver();
 
   const paginationControlsQt = width < 425 ? 3 : width < 768 ? 5 : 8;
@@ -20,11 +19,17 @@ function PaginationController({ page, totalPages, basePathName }) {
     paginationControlsQt
   );
 
-  const changePage = (newPage) => navigate(`/${basePathName}/${newPage}`);
+  const changePage = (newPage) => {
+    navigate(`/${basePath}/${newPage}`);
+  };
 
-  const previousPageHandler = () => changePage(page - 1);
+  const previousPageHandler = () => {
+    changePage(page - 1);
+  };
 
-  const nextPageHandler = () => changePage(page + 1);
+  const nextPageHandler = () => {
+    changePage(page + 1);
+  };
 
   const changePageHandler = (e) => {
     const { value } = e.target;
