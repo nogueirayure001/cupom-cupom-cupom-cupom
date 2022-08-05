@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Form, SingleFieldContainer, Button } from './index';
+import { Form, SingleFieldContainer, Button, StyledSpinner } from './index';
 
 function SingleFieldForm(props) {
   const {
@@ -12,6 +12,7 @@ function SingleFieldForm(props) {
     onSubmit,
     clearAfterSubmit,
     insideRef,
+    isLoading,
     ...otherProps
   } = props;
 
@@ -41,7 +42,7 @@ function SingleFieldForm(props) {
         />
 
         <Button darkBorder={darkBorder} type='submit'>
-          {buttonLabel}
+          {isLoading ? <StyledSpinner mini /> : buttonLabel}
         </Button>
       </SingleFieldContainer>
 

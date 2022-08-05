@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Spinner } from '../spinner';
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -73,5 +75,13 @@ export const Button = styled.button`
 
   @media screen and (min-width: 768px) {
     font-size: 1.1rem;
+  }
+`;
+
+export const StyledSpinner = styled(Spinner)`
+  background-color: ${({ theme }) => theme.secondary_II};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondary_I};
   }
 `;

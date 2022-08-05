@@ -7,6 +7,7 @@ import { PaginatedCouponsReducer } from './paginated-coupons';
 import { PaginatedStoresReducer } from './paginated-stores';
 import { SearchedStoresReducer } from './searched-stores';
 import { CategoriesReducer } from './categories';
+import { NewsletterReducer } from './newsletter';
 
 export const rootReducer = combineReducers({
   featuredStores: FeaturedStoresReducer,
@@ -15,5 +16,6 @@ export const rootReducer = combineReducers({
   searchedCoupons: SearchedCouponsReducer,
   paginatedStores: PaginatedStoresReducer,
   paginatedCoupons: PaginatedCouponsReducer,
-  categories: CategoriesReducer
+  categories: CategoriesReducer,
+  newsletter: NewsletterReducer
 });
