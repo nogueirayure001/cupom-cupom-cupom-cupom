@@ -1,8 +1,8 @@
 import { SpinnerContainer, SpinnerCircle } from './index';
 
-function Spinner() {
+function Spinner({ fullpage, ...otherProps }) {
   return (
-    <SpinnerContainer>
+    <SpinnerContainer fullpage={fullpage} {...otherProps}>
       <SpinnerCircle>loading content</SpinnerCircle>
     </SpinnerContainer>
   );

@@ -1,16 +1,24 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const SpinnerContainer = styled.div`
+const fullPageSpinner = css`
   position: fixed;
   top: 0;
   left: 0;
+  height: 100%;
+  z-index: 9999;
+`;
+
+export const SpinnerContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 30vh;
   background-color: ${({ theme }) => theme.neutral_II};
-  z-index: 9999;
+  overflow: hidden;
+
+  ${({ fullpage }) => fullpage && fullPageSpinner}
 `;
 
 export const SpinnerCircle = styled.p`

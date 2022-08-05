@@ -11,7 +11,7 @@ import { CategoriesDisplayboard } from '../../components/categories-displayboard
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
 
 function Homepage(props) {
-  const { coupons: featuredCoupons, isLoading } = useSelector(selectAll);
+  const { coupons, isLoading } = useSelector(selectAll);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function Homepage(props) {
       </Section>
 
       <Section title='Os melhores coupons do momento'>
-        <CouponsDisplayboard coupons={featuredCoupons} isLoading={isLoading} />
+        <CouponsDisplayboard coupons={coupons} isLoading={isLoading} />
       </Section>
     </Fragment>
   );

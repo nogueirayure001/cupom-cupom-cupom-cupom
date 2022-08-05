@@ -6,19 +6,19 @@ export const CarouselContainer = styled.div`
   position: relative;
   left: ${({ offset }) => `-${offset}px`};
   width: ${({ offset }) => `calc(100% + 2 * ${offset}px)`};
-  padding: 32px 16px 24px;
+  padding: 24px 16px 16px;
   background-color: ${({ theme }) => theme.detail_II};
 
   @media screen and (min-width: 768px) {
-    padding: 32px 24px;
+    padding: 32px 24px 16px;
   }
 `;
 
 export const StyledSwiper = styled(Swiper)`
   height: ${({ windowWidth, rows, slidesPerView }) => {
-    return `calc(${(0.65 * windowWidth * rows) / slidesPerView}px + 30px)`;
+    return `calc(${(0.7 * windowWidth * rows) / slidesPerView}px + 20px)`;
   }};
-  padding: 5px 0 25px;
+  padding: 5px 0 15px;
 
   .swiper-pagination {
     bottom: 0;
@@ -129,7 +129,7 @@ export const Loader = styled.div`
   &::after {
     content: '';
     position: absolute;
-    left: 00%;
+    left: 0;
     transform: rotate(30deg) scaleY(2);
     width: 5px;
     height: 100%;

@@ -26,7 +26,11 @@ function CouponsSearch() {
 
   return (
     <Section title='Resultados da busca'>
-      {isLoading ? <Spinner /> : <CouponsDisplayboard coupons={coupons} />}
+      {isLoading ? (
+        <Spinner fullpage />
+      ) : (
+        <CouponsDisplayboard coupons={coupons} />
+      )}
     </Section>
   );
 }

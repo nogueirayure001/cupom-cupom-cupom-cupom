@@ -3,14 +3,15 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  selectSearchedCoupons,
+  selectAll,
   loadSearchedCouponsAsync
 } from '../../store/searched-coupons';
+import { Spinner } from '../../components/spinner';
 import { Section } from '../../components/section';
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
 
 function StoresSingle() {
-  const coupons = useSelector(selectSearchedCoupons);
+  const { coupons, isLoading } = useSelector(selectAll);
   const dispatch = useDispatch();
   const { store } = useParams();
 
@@ -27,10 +28,14 @@ function StoresSingle() {
     dispatch(loadSearchedCouponsAsync(query));
   }, [store]);
 
+  const loadingContent = <Spinner fullpage />;
+
+  const loadedContent = <CouponsDisplayboard coupons={coupons} />;
+
   return (
     <Fragment>
       <Section title={store}>
-        <CouponsDisplayboard coupons={coupons} />
+        {isLoading ? loadingContent : loadedContent}
       </Section>
     </Fragment>
   );

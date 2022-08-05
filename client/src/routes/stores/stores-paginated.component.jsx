@@ -13,7 +13,7 @@ import { StoresDisplayboard } from '../../components/stores-displayboard';
 import { PaginationController } from '../../components/pagination-controller';
 
 function StoresPaginated() {
-  const { stores, pagination } = useSelector(selectAll);
+  const { stores, pagination, isLoading } = useSelector(selectAll);
   const dispatch = useDispatch();
   const { page } = useParams();
   const containerRef = useRef();
@@ -27,7 +27,7 @@ function StoresPaginated() {
     <Fragment>
       <Section title='Confira todas as lojas disponíveis'>
         <StoresDisplayContainer offset={offset} ref={containerRef}>
-          <StoresDisplayboard stores={stores} />
+          <StoresDisplayboard stores={stores} isLoading={isLoading} />
         </StoresDisplayContainer>
 
         <PaginationController {...pagination} basePath='stores' />

@@ -6,11 +6,12 @@ import {
   selectAll,
   loadSearchedStoresAsync
 } from '../../store/searched-stores';
+import { Spinner } from '../../components/spinner';
 import { Section } from '../../components/section';
 import { StoresDisplayboard } from '../../components/stores-displayboard';
 
 function StoresSearch() {
-  const { stores } = useSelector(selectAll);
+  const { stores, isLoading } = useSelector(selectAll);
   const dispatch = useDispatch();
   const { searchTerm } = useParams();
 
@@ -18,10 +19,14 @@ function StoresSearch() {
     dispatch(loadSearchedStoresAsync(searchTerm));
   }, [searchTerm]);
 
+  const loadingContent = <Spinner fullpage />;
+
+  const loadedContent = <StoresDisplayboard stores={stores} />;
+
   return (
     <Fragment>
       <Section title='Resultados da busca'>
-        <StoresDisplayboard stores={stores} />
+        {isLoading ? loadingContent : loadedContent}
       </Section>
     </Fragment>
   );

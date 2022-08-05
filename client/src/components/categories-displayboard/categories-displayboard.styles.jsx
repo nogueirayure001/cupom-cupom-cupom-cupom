@@ -6,6 +6,7 @@ export const CategoriesDisplayboardContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
+  width: 100%;
 `;
 
 export const StyledLink = styled(Link)`
