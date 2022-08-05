@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import {
   selectAll,
   updateQuery,
-  loadSearchResultsAsync
+  loadSearchedCouponsAsync
 } from '../../store/searched-coupons';
 import { useSelector, useDispatch } from 'react-redux';
 import { Section } from '../../components/section';
@@ -13,7 +13,7 @@ import { Spinner } from '../../components/spinner';
 
 function CouponsSearch() {
   const dispatch = useDispatch();
-  const { searchResults, query, isLoading } = useSelector(selectAll);
+  const { coupons, query, isLoading } = useSelector(selectAll);
   const { searchTerm } = useParams();
 
   useEffect(() => {
@@ -21,16 +21,12 @@ function CouponsSearch() {
   }, [searchTerm]);
 
   useEffect(() => {
-    if (query.searchTerm) dispatch(loadSearchResultsAsync(query));
+    if (query.searchTerm) dispatch(loadSearchedCouponsAsync(query));
   }, [query]);
 
   return (
     <Section title='Resultados da busca'>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <CouponsDisplayboard coupons={searchResults} />
-      )}
+      {isLoading ? <Spinner /> : <CouponsDisplayboard coupons={coupons} />}
     </Section>
   );
 }

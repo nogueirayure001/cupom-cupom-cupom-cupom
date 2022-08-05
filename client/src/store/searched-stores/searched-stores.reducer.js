@@ -11,7 +11,10 @@ export function SearchedStoresReducer(state = DEFAULT_STATE, action) {
 
   switch (type) {
     case ACTION_TYPES.LOAD_DATA_START:
-      return { ...state, isLoading: true };
+      return {
+        ...state,
+        isLoading: true
+      };
 
     case ACTION_TYPES.LOAD_DATA_SUCCESS:
       return {
@@ -22,8 +25,8 @@ export function SearchedStoresReducer(state = DEFAULT_STATE, action) {
 
     case ACTION_TYPES.LOAD_DATA_FAIL:
       return {
+        ...state,
         error: payload,
-        stores: [],
         isLoading: false
       };
 

@@ -9,7 +9,7 @@ export const selectQuery = createSelector(
 
 export const selectSearchedCoupons = createSelector(
   selectAll,
-  (searchedCoupons) => searchedCoupons.searchResults
+  (searchedCoupons) => searchedCoupons.coupons
 );
 
 export const selectLoadingState = createSelector(

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   selectSearchedCoupons,
-  loadSearchResultsAsync
+  loadSearchedCouponsAsync
 } from '../../store/searched-coupons';
 import { Section } from '../../components/section';
 import { CouponsDisplayboard } from '../../components/coupons-displayboard';
@@ -24,7 +24,7 @@ function StoresSingle() {
       searchTerm: store
     };
 
-    dispatch(loadSearchResultsAsync(query));
+    dispatch(loadSearchedCouponsAsync(query));
   }, [store]);
 
   return (

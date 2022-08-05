@@ -20,28 +20,28 @@ export function updateQuery(updatedQuery) {
   return createAction(ACTION_TYPES.UPDATE_QUERY, updatedQuery);
 }
 
-function loadSearchResultsStart() {
+function loadSearchedCouponsStart() {
   return createAction(ACTION_TYPES.LOAD_DATA_START);
 }
 
-function loadSearchResultsSuccess(searchResults) {
+function loadSearchedCouponsSuccess(searchResults) {
   return createAction(ACTION_TYPES.LOAD_DATA_SUCCESS, searchResults);
 }
 
-function loadSearchResultsFail(error) {
+function loadSearchedCouponsFail(error) {
   return createAction(ACTION_TYPES.LOAD_DATA_FAIL, error);
 }
 
-export function loadSearchResultsAsync(query) {
+export function loadSearchedCouponsAsync(query) {
   return async (dispatch) => {
-    dispatch(loadSearchResultsStart());
+    dispatch(loadSearchedCouponsStart());
 
     try {
       const searchResults = await getSearchedCoupons(query);
 
-      dispatch(loadSearchResultsSuccess(searchResults));
+      dispatch(loadSearchedCouponsSuccess(searchResults));
     } catch (e) {
-      dispatch(loadSearchResultsFail(e));
+      dispatch(loadSearchedCouponsFail(e));
     }
   };
 }

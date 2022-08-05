@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
     },
     searchTerm: ''
   },
-  searchResults: [],
+  coupons: [],
   isLoading: false,
   error: false
 };
@@ -19,15 +19,21 @@ export function SearchedCouponsReducer(state = DEFAULT_STATE, action) {
 
   switch (type) {
     case ACTION_TYPES.UPDATE_QUERY:
-      return { ...state, query: payload };
+      return {
+        ...state,
+        query: payload
+      };
 
     case ACTION_TYPES.LOAD_DATA_START:
-      return { ...state, isLoading: true };
+      return {
+        ...state,
+        isLoading: true
+      };
 
     case ACTION_TYPES.LOAD_DATA_SUCCESS:
       return {
         ...state,
-        searchResults: payload,
+        coupons: payload,
         error: null,
         isLoading: false
       };
@@ -36,7 +42,6 @@ export function SearchedCouponsReducer(state = DEFAULT_STATE, action) {
       return {
         ...state,
         error: payload,
-        searchResults: [],
         isLoading: false
       };
 

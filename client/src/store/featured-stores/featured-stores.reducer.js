@@ -11,13 +11,25 @@ export function FeaturedStoresReducer(state = DEFAULT_STATE, action) {
 
   switch (type) {
     case ACTION_TYPES.LOAD_DATA_START:
-      return { ...state, isLoading: true };
+      return {
+        ...state,
+        isLoading: true
+      };
 
     case ACTION_TYPES.LOAD_DATA_SUCCESS:
-      return { ...state, stores: payload, isLoading: false };
+      return {
+        ...state,
+        error: null,
+        stores: payload,
+        isLoading: false
+      };
 
     case ACTION_TYPES.LOAD_DATA_FAIL:
-      return { ...state, error: payload, isLoading: false };
+      return {
+        ...state,
+        error: payload,
+        isLoading: false
+      };
 
     default:
       return state;
