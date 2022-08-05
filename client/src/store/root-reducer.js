@@ -5,11 +5,15 @@ import { FeaturedCouponsReducer } from './featured-coupons';
 import { SearchedCouponsReducer } from './searched-coupons';
 import { PaginatedCouponsReducer } from './paginated-coupons';
 import { PaginatedStoresReducer } from './paginated-stores';
+import { SearchedStoresReducer } from './searched-stores';
+import { CategoriesReducer } from './categories';
 
 export const rootReducer = combineReducers({
   featuredStores: FeaturedStoresReducer,
   featuredCoupons: FeaturedCouponsReducer,
+  searchedStores: SearchedStoresReducer,
   searchedCoupons: SearchedCouponsReducer,
+  paginatedStores: PaginatedStoresReducer,
   paginatedCoupons: PaginatedCouponsReducer,
-  paginatedStores: PaginatedStoresReducer
+  categories: CategoriesReducer
 });

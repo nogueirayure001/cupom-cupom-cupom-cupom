@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import { Reset, GlobalStyles } from './styles';
 import { store } from './store';
-import { ThemeContextProvider, CategoriesContextProvider } from './contexts';
+import { ThemeContextProvider } from './contexts';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,9 +17,7 @@ root.render(
         <GlobalStyles />
 
         <BrowserRouter>
-          <CategoriesContextProvider>
-            <App />
-          </CategoriesContextProvider>
+          <App />
         </BrowserRouter>
       </ThemeContextProvider>
     </Provider>

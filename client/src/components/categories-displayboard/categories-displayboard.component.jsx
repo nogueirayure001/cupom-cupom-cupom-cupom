@@ -1,10 +1,16 @@
-import { useContext } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { CategoriesContext } from '../../contexts';
+import { selectAll, loadCategoriesAsync } from '../../store/categories';
 import { CategoriesDisplayboardContainer, StyledLink } from './index';
 
 function CategoriesDisplayboard(props) {
-  const categories = useContext(CategoriesContext);
+  const { categories } = useSelector(selectAll);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadCategoriesAsync);
+  }, []);
 
   return (
     <CategoriesDisplayboardContainer>
