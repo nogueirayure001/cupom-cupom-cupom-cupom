@@ -12,19 +12,21 @@ import {
   CheckboxesContainer,
   Checkbox
 } from './index';
-
 function CouponsLayout(props) {
   const [showFilters, setShowFilters] = useState(false);
   const { filters, searchTerm } = useSelector(selectQuery);
   const { store, category, keyword } = filters;
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const children = Array.from(e.target);
-    const [inputField] = children.filter((child) => child.type === 'search');
+    const [inputField] = Array.from(e.target).filter(
+      (child) => child.type === 'search'
+    );
+
     const searchTerm = inputField.value;
 
     const relativePath = `../search/${searchTerm}`;
