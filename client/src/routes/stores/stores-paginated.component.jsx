@@ -1,51 +1,36 @@
-import { Fragment, useContext, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Fragment, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { PaginatedStoresContext } from '../../contexts';
+import {
+  selectAll,
+  loadPaginatedStoresDataAsync
+} from '../../store/paginated-stores';
 import { useOffsetObserver } from '../../hooks';
 import { Section } from '../../components/section';
-import { SearchForm, StoresDisplayContainer } from './index';
+import { StoresDisplayContainer } from './index';
 import { StoresDisplayboard } from '../../components/stores-displayboard';
 import { PaginationController } from '../../components/pagination-controller';
 
 function StoresPaginated() {
-  const { stores, pagination, changePage } = useContext(PaginatedStoresContext);
+  const { stores, pagination } = useSelector(selectAll);
+  const dispatch = useDispatch();
   const { page } = useParams();
   const containerRef = useRef();
   const offset = useOffsetObserver(containerRef.current);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    changePage(+page);
+    dispatch(loadPaginatedStoresDataAsync(page));
   }, [page]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const children = Array.from(e.target);
-    const [inputField] = children.filter((child) => child.nodeName === 'INPUT');
-
-    const searchTerm = inputField.value;
-
-    navigate(`../search/${searchTerm}`);
-  };
 
   return (
     <Fragment>
-      <SearchForm
-        darkBorder
-        type='search'
-        fieldLabel='Que loja está procurando?'
-        buttonLabel='buscar'
-        onSubmit={submitHandler}
-      />
-
       <Section title='Confira todas as lojas disponíveis'>
         <StoresDisplayContainer offset={offset} ref={containerRef}>
           <StoresDisplayboard stores={stores} />
         </StoresDisplayContainer>
 
-        <PaginationController {...pagination} basePathName='stores' />
+        <PaginationController {...pagination} basePath='stores' />
       </Section>
     </Fragment>
   );

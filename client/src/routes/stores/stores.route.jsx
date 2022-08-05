@@ -1,13 +1,20 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { StoresPaginated, StoresSearch, StoresSingle } from './index';
+import { Routes, Route } from 'react-router-dom';
+import {
+  StoresLayout,
+  StoresPaginated,
+  StoresSearch,
+  StoresSingle
+} from './index';
 
 function StoresRoute() {
   return (
     <Routes>
-      <Route index element={<Navigate to='1' />} />
-      <Route path='/:page' element={<StoresPaginated />} />
-      <Route path='/search/:searchTerm' element={<StoresSearch />} />
-      <Route path='/store/:store' element={<StoresSingle />} />
+      <Route path='/' element={<StoresLayout />}>
+        <Route index element={<StoresPaginated />} />
+        <Route path='/:page' element={<StoresPaginated />} />
+        <Route path='/search/:searchTerm' element={<StoresSearch />} />
+        <Route path='/store/:store' element={<StoresSingle />} />
+      </Route>
     </Routes>
   );
 }

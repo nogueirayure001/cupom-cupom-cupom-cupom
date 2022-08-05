@@ -11,7 +11,7 @@ import { CouponsDisplayboard } from '../../components/coupons-displayboard';
 import { PaginationController } from '../../components/pagination-controller';
 
 function CouponsPaginated() {
-  const { coupons, pagination } = useSelector(selectAll);
+  const { coupons, pagination, isLoading } = useSelector(selectAll);
   const dispatch = useDispatch();
   const { page } = useParams();
 
@@ -21,7 +21,7 @@ function CouponsPaginated() {
 
   return (
     <Section title='Confira todos os cupons disponíveis'>
-      <CouponsDisplayboard coupons={coupons} />
+      <CouponsDisplayboard coupons={coupons} isLoading={isLoading} />
 
       <PaginationController {...pagination} basePath='coupons' />
     </Section>
