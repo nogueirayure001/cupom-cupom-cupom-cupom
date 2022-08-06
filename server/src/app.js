@@ -15,9 +15,10 @@ app.use(cors());
 app.use(json());
 app.use(express.static(join(__dirname, '..', 'public')));
 
-app.use('/coupons', couponsRouter);
-app.use('/stores', storesRouter);
-app.use('/newsletter', newsletterRouter);
+app.use('/api/coupons', couponsRouter);
+app.use('/api/stores', storesRouter);
+app.use('/api/newsletter', newsletterRouter);
+
 app.get('/*', (req, res) => {
   res.sendFile(join(__dirname, '..', 'public', 'index.html'));
 });
