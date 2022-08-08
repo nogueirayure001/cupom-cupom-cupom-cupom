@@ -7,7 +7,7 @@ import {
   createPaginationArray
 } from './index';
 
-function PaginationController({ page, totalPages, basePath }) {
+function PaginationController({ page, numOfPages, basePath }) {
   const navigate = useNavigate();
   const width = useWidthObserver();
 
@@ -15,7 +15,7 @@ function PaginationController({ page, totalPages, basePath }) {
 
   const pagesArray = createPaginationArray(
     page,
-    totalPages,
+    numOfPages,
     paginationControlsQt
   );
 
@@ -56,7 +56,7 @@ function PaginationController({ page, totalPages, basePath }) {
         );
       })}
 
-      <StyledButton onClick={nextPageHandler} disabled={page === totalPages}>
+      <StyledButton onClick={nextPageHandler} disabled={page === numOfPages}>
         &#8680;
       </StyledButton>
     </PaginationContainer>

@@ -1,7 +1,7 @@
-function createPaginationArray(page, totalPages, buttonsQuantity) {
+function createPaginationArray(page, numOfPages, buttonsQuantity) {
   const pagesArray = [];
 
-  if (buttonsQuantity > totalPages) buttonsQuantity = totalPages;
+  if (buttonsQuantity > numOfPages) buttonsQuantity = numOfPages;
 
   let lowerQuantity, upperQuantity;
 
@@ -14,7 +14,7 @@ function createPaginationArray(page, totalPages, buttonsQuantity) {
     lowerQuantity = upperQuantity = Math.floor(buttonsQuantity / 2);
   }
 
-  if (page - lowerQuantity > 0 && page + upperQuantity <= totalPages) {
+  if (page - lowerQuantity > 0 && page + upperQuantity <= numOfPages) {
     if (evenQuantity) {
       for (let i = page - lowerQuantity; i <= page + upperQuantity; i++) {
         pagesArray.push(i);
@@ -26,16 +26,16 @@ function createPaginationArray(page, totalPages, buttonsQuantity) {
     for (let i = page - lowerQuantity; i <= page + upperQuantity; i++) {
       pagesArray.push(i);
     }
-  } else if (page + upperQuantity >= totalPages) {
+  } else if (page + upperQuantity >= numOfPages) {
     if (evenQuantity) {
-      for (let i = totalPages - buttonsQuantity + 1; i <= totalPages; i++) {
+      for (let i = numOfPages - buttonsQuantity + 1; i <= numOfPages; i++) {
         pagesArray.push(i);
       }
 
       return pagesArray;
     }
 
-    for (let i = totalPages - buttonsQuantity + 1; i <= totalPages; i++) {
+    for (let i = numOfPages - buttonsQuantity + 1; i <= numOfPages; i++) {
       pagesArray.push(i);
     }
   } else {
