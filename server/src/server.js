@@ -2,20 +2,17 @@ import { createServer } from 'http';
 import 'dotenv/config';
 
 import app from './app.js';
-import { connectDatabase } from './database.js';
-import { updateCoupons } from './model/coupons.model.js';
-import { updateStores } from './model/stores.model.js';
+import { connectDatabase, updateDatabase } from './database.js';
 
 const PORT = process.env.PORT || 8000;
+const UPDATE_PERIOD = Number(process.env.UPDATE_PERIOD);
 
 const server = createServer(app);
 
 async function startServer() {
   await connectDatabase();
 
-  await updateCoupons();
-
-  await updateStores();
+  await updateDatabase(UPDATE_PERIOD);
 
   server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}...`);

@@ -6,7 +6,6 @@ import couponsSchema from './schemas/coupons.schema.js';
 const couponsModel = mongoose.model('coupon', couponsSchema);
 
 const LOMADEE_COUPONS_URL = process.env.LOMADEE_COUPONS_URL;
-const TIME_LIMIT = 3600000;
 
 let couponsList = [];
 let categories = [];
@@ -56,14 +55,14 @@ async function saveLomadeeCoupons(coupons) {
   ]);
 }
 
-async function deleteOutdatedLomadeeCoupons() {
+async function deleteOutdatedLomadeeCoupons(updatePeriod) {
   const lomadeeCoupons = await couponsModel.find({ source: 'Lomadee' });
 
   const operations = lomadeeCoupons
     .map((coupon) => {
       const timeElapsedSinceUpdate = Date.now() - new Date(coupon.updatedAt);
 
-      if (timeElapsedSinceUpdate > TIME_LIMIT) {
+      if (timeElapsedSinceUpdate > updatePeriod) {
         return {
           deleteOne: {
             filter: { id: coupon.id, code: coupon.code }
@@ -84,12 +83,12 @@ async function cacheAllCoupons() {
   couponsList = coupons;
 }
 
-async function updateCoupons() {
+async function updateCoupons(updatePeriod) {
   const lomadeeCoupons = await getUpdatedLomadeeCoupons();
 
   await saveLomadeeCoupons(lomadeeCoupons);
 
-  await deleteOutdatedLomadeeCoupons();
+  await deleteOutdatedLomadeeCoupons(updatePeriod);
 
   await cacheAllCoupons();
 }

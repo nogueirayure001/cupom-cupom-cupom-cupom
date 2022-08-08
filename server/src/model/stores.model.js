@@ -6,7 +6,6 @@ import storesSchema from './schemas/stores.schema.js';
 const storesModel = mongoose.model('store', storesSchema);
 
 const LOMADEE_STORES_URL = process.env.LOMADEE_STORES_URL;
-const TIME_LIMIT = 3600000;
 
 let storesList = [];
 
@@ -49,14 +48,14 @@ async function saveLomadeeStores(stores) {
   ]);
 }
 
-async function deleteOutdatedLomadeeStores() {
+async function deleteOutdatedLomadeeStores(updatePeriod) {
   const lomadeeStores = await storesModel.find({ source: 'Lomadee' });
 
   const operations = lomadeeStores
     .map((store) => {
       const timeElapsedSinceUpdate = Date.now() - new Date(store.updatedAt);
 
-      if (timeElapsedSinceUpdate > TIME_LIMIT) {
+      if (timeElapsedSinceUpdate > updatePeriod) {
         return {
           deleteOne: {
             filter: { name: store.name }
@@ -77,12 +76,12 @@ async function cacheAllStores() {
   storesList = stores;
 }
 
-async function updateStores() {
+async function updateStores(updatePeriod) {
   const lomadeeStores = await getUpdatedLomadeeStores();
 
   await saveLomadeeStores(lomadeeStores);
 
-  await deleteOutdatedLomadeeStores();
+  await deleteOutdatedLomadeeStores(updatePeriod);
 
   await cacheAllStores();
 }
