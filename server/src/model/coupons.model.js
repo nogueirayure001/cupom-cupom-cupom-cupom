@@ -6,7 +6,7 @@ import couponsSchema from './schemas/coupons.schema.js';
 const couponsModel = mongoose.model('coupon', couponsSchema);
 
 const LOMADEE_COUPONS_URL = process.env.LOMADEE_COUPONS_URL;
-const TIME_LIMIT = 60 * 60 * 1000;
+const TIME_LIMIT = 3600000;
 
 let couponsList = [];
 let categories = [];

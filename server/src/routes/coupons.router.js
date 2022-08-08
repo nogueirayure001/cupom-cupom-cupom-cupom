@@ -6,11 +6,11 @@ import {
   httpGetSearchedCoupons,
   httpGetActiveCouponCategories
 } from '../controllers/coupons.controller.js';
-import paginationFormat from '../middlewares/paginationFormat.middleware.js';
+import validatePagination from '../middlewares/validate-pagination.middleware.js';
 
 const couponsRouter = Router();
 
-couponsRouter.get('/paginated', paginationFormat, httpGetPaginatedCoupons);
+couponsRouter.get('/paginated', validatePagination, httpGetPaginatedCoupons);
 couponsRouter.get('/featured', httpGetFeaturedCoupons);
 couponsRouter.get('/search', httpGetSearchedCoupons);
 couponsRouter.get('/categories', httpGetActiveCouponCategories);

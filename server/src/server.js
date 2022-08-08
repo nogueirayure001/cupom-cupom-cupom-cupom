@@ -2,7 +2,7 @@ import { createServer } from 'http';
 import 'dotenv/config';
 
 import app from './app.js';
-import { connectDatabase } from './services/mongo.service.js';
+import { connectDatabase } from './database.js';
 import { updateCoupons } from './model/coupons.model.js';
 import { updateStores } from './model/stores.model.js';
 

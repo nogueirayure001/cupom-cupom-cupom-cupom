@@ -6,7 +6,7 @@ import storesSchema from './schemas/stores.schema.js';
 const storesModel = mongoose.model('store', storesSchema);
 
 const LOMADEE_STORES_URL = process.env.LOMADEE_STORES_URL;
-const TIME_LIMIT = 60 * 60 * 1000;
+const TIME_LIMIT = 3600000;
 
 let storesList = [];
 

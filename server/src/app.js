@@ -6,6 +6,7 @@ import cors from 'cors';
 import couponsRouter from './routes/coupons.router.js';
 import storesRouter from './routes/stores.router.js';
 import newsletterRouter from './routes/newsletter.router.js';
+import errorHandler from './middlewares/error-handler.middleware.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -18,6 +19,7 @@ app.use(express.static(join(__dirname, '..', 'public')));
 app.use('/api/coupons', couponsRouter);
 app.use('/api/stores', storesRouter);
 app.use('/api/newsletter', newsletterRouter);
+app.use(errorHandler);
 
 app.get('/*', (req, res) => {
   res.sendFile(join(__dirname, '..', 'public', 'index.html'));

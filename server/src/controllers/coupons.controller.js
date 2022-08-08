@@ -1,87 +1,54 @@
 import {
-  getCouponsNumber,
   getPaginatedCoupons,
   getFeaturedCoupons,
   getSearchedCoupons,
   getActiveCouponCategories
 } from '../model/coupons.model.js';
+import DBError from '../errors/db-error.error.js';
 import CouponsDTO from '../views/coupons.view.js';
 
-async function httpGetPaginatedCoupons(req, res) {
-  let { page, limit } = req.query;
-
-  const totalCoupons = getCouponsNumber();
-  const totalPages = Math.ceil(totalCoupons / limit);
-
-  const requestState = {
-    page,
-    limit,
-    totalPages,
-    data: null
-  };
-
-  if (page > totalPages) {
-    return res.status(400).json(new CouponsDTO(requestState));
-  }
+function httpGetPaginatedCoupons(req, res) {
+  const { pagination } = res.locals;
+  const { page, limit } = pagination;
 
   try {
     const data = getPaginatedCoupons(page, limit);
 
-    requestState.data = data;
-
-    return res.status(200).json(new CouponsDTO(requestState));
+    return res.status(200).json(new CouponsDTO({ pagination, data }));
   } catch (e) {
-    return res.status(500).json(new CouponsDTO(requestState));
+    throw new DBError();
   }
 }
 
 async function httpGetFeaturedCoupons(req, res) {
-  const requestState = {
-    data: null
-  };
-
   try {
     const data = await getFeaturedCoupons();
 
-    requestState.data = data;
-
-    return res.status(200).json(new CouponsDTO(requestState));
+    return res.status(200).json(new CouponsDTO({ data }));
   } catch (e) {
-    return res.status(500).json(new CouponsDTO(requestState));
+    next(new DBError());
   }
 }
 
 async function httpGetSearchedCoupons(req, res) {
   const { searchTerm, searchFilters } = req.query;
 
-  const requestState = {
-    data: null
-  };
-
   try {
     const data = await getSearchedCoupons(searchTerm, searchFilters);
 
-    requestState.data = data;
-
-    return res.status(200).json(new CouponsDTO(requestState));
+    return res.status(200).json(new CouponsDTO({ data }));
   } catch (e) {
-    return res.status(500).json(new CouponsDTO(requestState));
+    next(new DBError());
   }
 }
 
 async function httpGetActiveCouponCategories(req, res) {
-  const requestState = {
-    data: null
-  };
-
   try {
     const data = await getActiveCouponCategories();
 
-    requestState.data = data;
-
-    return res.status(200).json(new CouponsDTO(requestState));
+    return res.status(200).json(new CouponsDTO({ data }));
   } catch (e) {
-    return res.status(500).json(new CouponsDTO(requestState));
+    next(new DBError());
   }
 }
 

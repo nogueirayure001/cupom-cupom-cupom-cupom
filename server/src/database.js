@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { wait } from '../utils/wait.utils.js';
+import { wait } from './utils/wait.utils.js';
 
 const MONGODB_URL = process.env.MONGODB_URL;
 const BASE_TIME = 2;

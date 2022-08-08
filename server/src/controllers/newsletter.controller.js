@@ -3,87 +3,60 @@ import {
   unsubscribeFromNewsletter,
   getSubscribers
 } from '../model/newsletter.model.js';
-import newsletterDTO from '../views/newsletter.view.js';
 import Validation from '../utils/validation.utils.js';
+import NewsletterDTO from '../views/newsletter.view.js';
+import FormError from '../errors/form-error.error.js';
+import DBError from '../errors/db-error.error.js';
 
-async function httpSubscribeToNewsletter(req, res) {
+const { MESSAGES: ERROR_MESSAGES } = FormError;
+const { MESSAGES: SUCCESS_MESSAGES } = NewsletterDTO;
+
+async function httpSubscribeToNewsletter(req, res, next) {
   const { email } = req.body;
 
-  const requestState = {
-    action: newsletterDTO.ACTIONS.subscribe,
-    data: email,
-    validEmail: true,
-    operationSuccess: false,
-    previouslySubscribed: false
-  };
+  const validEmail = Validation.validate(Validation.TYPES.email, email);
 
-  const validationType = Validation.TYPES.email;
-  const validEmail = Validation.validate(validationType, email);
-
-  if (!validEmail) {
-    requestState.validEmail = false;
-
-    return res.status(400).json(new newsletterDTO(requestState));
-  }
+  if (!validEmail) return next(new FormError(ERROR_MESSAGES.invalidEmail));
 
   try {
     const subscribed = await subscribeToNewsletter(email);
 
-    if (!subscribed) {
-      requestState.previouslySubscribed = true;
+    if (!subscribed)
+      return next(new FormError(ERROR_MESSAGES.emailAlreadySubscribed));
 
-      return res.status(400).json(new newsletterDTO(requestState));
-    }
-
-    requestState.operationSuccess = true;
-
-    return res.status(201).json(new newsletterDTO(requestState));
+    return res
+      .status(201)
+      .json(new NewsletterDTO({ message: SUCCESS_MESSAGES.subscribe }));
   } catch (e) {
-    return res.status(500).json(new newsletterDTO(requestState));
+    next(new DBError());
   }
 }
 
-async function httpUnsubscribeFromNewsletter(req, res) {
+async function httpUnsubscribeFromNewsletter(req, res, next) {
   const { id, email } = req.query;
-
-  const requestState = {
-    action: newsletterDTO.ACTIONS.unsubscribe,
-    data: email,
-    operationSuccess: true,
-    previouslySubscribed: true
-  };
 
   try {
     const unsubscribed = await unsubscribeFromNewsletter(id, email);
 
-    if (unsubscribed) {
-      return res.status(200).json(new newsletterDTO(requestState));
-    }
+    if (!unsubscribed) return next(new FormError(ERROR_MESSAGES.emailNotFound));
 
-    requestState.previouslySubscribed = false;
-
-    return res.status(404).json(new newsletterDTO(requestState));
+    return res
+      .status(200)
+      .json(new NewsletterDTO({ message: SUCCESS_MESSAGES.unsubscribe }));
   } catch (e) {
-    requestState.operationSuccess = false;
-
-    return res.status(500).json(new newsletterDTO(requestState));
+    next(new DBError());
   }
 }
 
-async function httpGetSubscribers(req, res) {
-  const requestState = {
-    action: newsletterDTO.ACTIONS.fetchSubscribers,
-    data: null
-  };
-
+async function httpGetSubscribers(req, res, next) {
   try {
-    const subscribers = await getSubscribers();
+    const data = await getSubscribers();
 
-    requestState.data = subscribers;
-
-    return res.status(200).json(new newsletterDTO(requestState));
+    return res
+      .status(200)
+      .json(new NewsletterDTO({ message: SUCCESS_MESSAGES.fetch, data }));
   } catch (e) {
-    return res.status(500).json(new newsletterDTO(requestState));
+    next(new DBError());
   }
 }
 
