@@ -133,6 +133,7 @@ export const Content = styled.div`
   align-items: center;
   gap: 16px;
   width: 100%;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
 
   @media screen and (min-width: 768px) {
     flex-direction: row;

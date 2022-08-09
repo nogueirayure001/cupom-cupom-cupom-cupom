@@ -76,7 +76,7 @@ export const SiteTitle = styled.h1`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-family: 'Nunito', sans-serif;
+  font-family: ${({ theme }) => theme.primaryFontFamily};
   font-weight: 700;
   font-size: 1.75rem;
 
@@ -88,6 +88,7 @@ export const SiteTitle = styled.h1`
 export const SubTitle = styled.p`
   margin-top: 16px;
   font-weight: 700;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
   color: ${({ theme }) => theme.neutral_I};
 
   @media screen and (min-width: 425px) {
@@ -147,6 +148,7 @@ export const NavItem = styled.li`
   align-items: center;
   width: 100%;
   font-weight: 700;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
   font-size: 1.1rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;

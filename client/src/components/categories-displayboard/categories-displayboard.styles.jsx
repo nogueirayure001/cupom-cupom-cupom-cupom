@@ -17,6 +17,7 @@ export const StyledLink = styled(Link)`
   border: 2px solid black;
   border-radius: 6px;
   font-weight: 700;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: ${({ theme }) => theme.neutral_II};

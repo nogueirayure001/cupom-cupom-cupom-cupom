@@ -9,7 +9,7 @@ export const Title = styled.h2`
   width: auto;
   padding-bottom: 12px;
   margin-bottom: 32px;
-  font-family: 'Nunito', sans-serif;
+  font-family: ${({ theme }) => theme.primaryFontFamily};
   font-weight: 700;
   font-size: 1.4rem;
   color: ${({ theme }) => theme.neutral_I};
