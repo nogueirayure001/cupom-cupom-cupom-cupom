@@ -20,6 +20,7 @@ export const GlobalStyles = createGlobalStyle`
   *::before,
   *::after {
     box-sizing: border-box;
+    font-family: inherit;
   }
 
   button {
