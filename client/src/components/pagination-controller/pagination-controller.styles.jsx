@@ -7,6 +7,7 @@ export const PaginationContainer = styled.div`
   justify-content: center;
   gap: 6px;
   margin-top: 48px;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
 
   @media screen and (min-width: 768px) {
     margin-top: 64px;

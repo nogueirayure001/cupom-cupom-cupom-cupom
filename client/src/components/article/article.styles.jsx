@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ArticleContainer = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 500px;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
 
   @media screen and (min-width: 768px) {
     width: auto;

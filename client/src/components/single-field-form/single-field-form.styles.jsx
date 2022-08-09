@@ -7,6 +7,7 @@ export const Form = styled.form`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
 `;
 
 export const SingleFieldContainer = styled.div`

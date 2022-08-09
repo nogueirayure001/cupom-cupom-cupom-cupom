@@ -9,7 +9,9 @@ const DEFAULT_THEME = {
   neutral_II: '#f9f7f0',
   alert_I: '#23c552',
   detail_I: '#fff',
-  detail_II: '#ff3131'
+  detail_II: '#ff3131',
+  primaryFontFamily: '"Nunito", sans-serif',
+  secondaryFontFamily: '"Poppins", sans-serif'
 };
 
 function ThemeContextProvider({ children }) {

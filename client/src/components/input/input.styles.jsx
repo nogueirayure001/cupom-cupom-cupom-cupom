@@ -5,5 +5,6 @@ export const InputContainer = styled.div`
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
+    font-family: inherit;
   }
 `;
