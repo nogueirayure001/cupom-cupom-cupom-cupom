@@ -15,6 +15,8 @@ function errorHandler(error, req, res, next) {
   if (error instanceof FormError) {
     return res.status(400).json(new ErrorDTO(error));
   }
+
+  return res.status(400).json(new ErrorDTO(error));
 }
 
 export default errorHandler;
