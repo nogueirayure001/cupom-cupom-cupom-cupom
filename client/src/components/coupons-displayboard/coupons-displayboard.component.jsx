@@ -6,7 +6,7 @@ import { DisplayboardContainer } from './index';
 
 function CouponsDisplayboard({ coupons, isLoading, defaultUnits = 10 }) {
   const loadingCoupons = emptyArrayCreator(defaultUnits).map(() => (
-    <CouponCard showPlaceholder />
+    <CouponCard key={nanoid()} showPlaceholder />
   ));
 
   const loadedCoupons = coupons.map((coupon) => (

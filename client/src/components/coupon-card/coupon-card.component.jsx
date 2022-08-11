@@ -14,30 +14,23 @@ import {
   StoreLink,
   Category
 } from './index';
+import { copyToClipboard } from '../../utils';
 
 function CouponCard({ coupon, showPlaceholder }) {
   const [showCopySuccess, setCopySuccess] = useState(false);
 
-  const blinkSuccessSign = (time) => {
-    setCopySuccess(true);
-
-    setTimeout(() => {
-      setCopySuccess(false);
-    }, time);
-  };
-
-  const copyToClipboardHandler = async (e) => {
+  const copyToClipboardHandler = (e) => {
     const { value } = e.target;
 
-    const clipboard = navigator.clipboard;
+    const successCallback = () => {
+      setCopySuccess(true);
 
-    try {
-      await clipboard.writeText(value);
+      setTimeout(() => {
+        setCopySuccess(false);
+      }, 1000);
+    };
 
-      blinkSuccessSign(1000);
-    } catch (error) {
-      console.error(error);
-    }
+    copyToClipboard(value, successCallback);
   };
 
   if (showPlaceholder) {
@@ -58,7 +51,7 @@ function CouponCard({ coupon, showPlaceholder }) {
         </StoreImage>
 
         <CouponCodeContainer>
-          <CouponCode id={code} onClick={copyToClipboardHandler}>
+          <CouponCode id={code} value={code} onClick={copyToClipboardHandler}>
             {code}
           </CouponCode>
 
