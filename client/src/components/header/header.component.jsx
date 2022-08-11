@@ -12,6 +12,7 @@ import {
   NavList,
   NavItem,
   MenuToggler,
+  StoreNameContainer,
   Contrast
 } from './index';
 
@@ -31,12 +32,12 @@ function Header(props) {
       <SitePresentation>
         <TextWrapper>
           <SiteTitle>
-            <span>
-              CUPOM! <Contrast>CUPOM!</Contrast>
-            </span>
-            <span>
-              <Contrast>CUPOM!</Contrast> CUPOM!
-            </span>
+            <StoreNameContainer>
+              <Contrast>CUPOM!</Contrast> <Contrast>CUPOM!</Contrast>
+            </StoreNameContainer>
+            <StoreNameContainer>
+              <Contrast>CUPOM!</Contrast> <Contrast>CUPOM!</Contrast>
+            </StoreNameContainer>
           </SiteTitle>
 
           <SubTitle>Compre tudo que desejar por um precinho especial.</SubTitle>

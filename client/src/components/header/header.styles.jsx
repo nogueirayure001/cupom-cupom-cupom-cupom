@@ -10,15 +10,14 @@ export const SitePresentation = styled.div`
   position: relative;
   width: 100%;
   padding: 24px 16px;
-  background-image: url(../../assets/images/header-bg.png);
   background-color: ${({ theme }) => theme.primary_II};
-  background-size: 40%;
-  background-position: center;
-  background-repeat: no-repeat;
   overflow: hidden;
 
   @media screen and (min-width: 425px) {
+    background-image: url(../../assets/images/header-bg.png);
+    background-size: 40%;
     background-position: 5% center;
+    background-repeat: no-repeat;
   }
 
   @media screen and (min-width: 768px) {
@@ -27,22 +26,6 @@ export const SitePresentation = styled.div`
 
   @media screen and (min-width: 1024px) {
     background-size: 30%;
-  }
-
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    content: ' ';
-    width: 100%;
-    height: 100%;
-    background-color: hsla(0, 0%, 100%, 30%);
-    backdrop-filter: blur(0.6px);
-
-    @media screen and (min-width: 425px) {
-      display: none;
-    }
   }
 `;
 
@@ -78,10 +61,14 @@ export const SiteTitle = styled.h1`
   gap: 8px;
   font-family: ${({ theme }) => theme.primaryFontFamily};
   font-weight: 700;
-  font-size: 1.75rem;
+  font-size: 2rem;
+
+  @media screen and (min-width: 425px) {
+    font-size: 1.75rem;
+  }
 
   @media screen and (min-width: 768px) {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
 `;
 
@@ -89,11 +76,7 @@ export const SubTitle = styled.p`
   margin-top: 16px;
   font-weight: 700;
   font-family: ${({ theme }) => theme.secondaryFontFamily};
-  color: ${({ theme }) => theme.neutral_I};
-
-  @media screen and (min-width: 425px) {
-    color: ${({ theme }) => theme.neutral_II};
-  }
+  color: ${({ theme }) => theme.neutral_II};
 
   @media screen and (min-width: 768px) {
     font-size: 1.2rem;
@@ -101,7 +84,74 @@ export const SubTitle = styled.p`
 `;
 
 export const Contrast = styled.span`
+  position: relative;
   color: ${({ theme }) => theme.neutral_II};
+`;
+
+export const StoreNameContainer = styled.span`
+  &:nth-of-type(1) {
+    ${Contrast} {
+      &:nth-child(1) {
+        color: ${({ theme }) => theme.neutral_I};
+
+        @media screen and (max-width: 424.999px) {
+          top: -600px;
+          animation: slide-in-top 2s forwards;
+
+          @keyframes slide-in-top {
+            to {
+              top: 0;
+            }
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        @media screen and (max-width: 424.999px) {
+          right: -120%;
+          animation: slide-in-right 2s forwards;
+
+          @keyframes slide-in-right {
+            to {
+              right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &:nth-of-type(2) {
+    ${Contrast} {
+      &:nth-child(1) {
+        @media screen and (max-width: 424.999px) {
+          left: -120%;
+          animation: slide-in-left 2s forwards;
+
+          @keyframes slide-in-left {
+            to {
+              left: 0;
+            }
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        color: ${({ theme }) => theme.neutral_I};
+
+        @media screen and (max-width: 424.999px) {
+          bottom: -600px;
+          animation: slide-in-bottom 2s forwards;
+
+          @keyframes slide-in-bottom {
+            to {
+              bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const Navigation = styled.nav`
