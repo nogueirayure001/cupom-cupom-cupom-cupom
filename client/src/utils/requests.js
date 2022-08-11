@@ -1,4 +1,4 @@
-const API_URL = 'https://cupomcupomcupomcupom.herokuapp.com/api';
+const API_URL = 'http://localhost:8000/api';
 
 const DEFAULT_CONFIGS = {
   method: 'GET'
