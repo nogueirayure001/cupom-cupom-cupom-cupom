@@ -63,6 +63,7 @@ export const Button = styled.button`
   right: 0;
   flex: 0 0 100px;
   width: 100px;
+  height: 100%;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 600;
