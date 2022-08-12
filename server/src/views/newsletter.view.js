@@ -5,7 +5,9 @@ class NewsletterDTO {
     fetch: 'Subscribers fetched successfully'
   };
 
-  constructor({ message, data }) {
+  constructor(args = {}) {
+    const { message, data } = args;
+
     this.requestInfo = {
       success: true,
       message: message
