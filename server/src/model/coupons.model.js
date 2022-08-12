@@ -2,10 +2,19 @@ import axios from 'axios';
 import mongoose from 'mongoose';
 
 import couponsSchema from './schemas/coupons.schema.js';
-
 const couponsModel = mongoose.model('coupon', couponsSchema);
 
 const LOMADEE_COUPONS_URL = process.env.LOMADEE_COUPONS_URL;
+
+const COUPON_VALID_KEYS = [
+  'category',
+  'code',
+  'description',
+  'link',
+  'store',
+  'featured',
+  'source'
+];
 
 let couponsList = [];
 let categories = [];
@@ -17,42 +26,38 @@ async function getUpdatedLomadeeCoupons() {
 
   const { coupons } = response.data;
 
-  return coupons;
+  const sanitizedCoupons = coupons.map((coupon) => {
+    const transformedCoupon = {};
+
+    const couponKeys = Object.keys(coupon);
+
+    couponKeys.forEach((key) => {
+      if (COUPON_VALID_KEYS.includes(key)) {
+        if (coupon[key].hasOwnProperty('name')) {
+          transformedCoupon[key] = coupon[key]['name'];
+          return;
+        }
+
+        transformedCoupon[key] = coupon[key];
+      }
+    });
+
+    return transformedCoupon;
+  });
+
+  return sanitizedCoupons;
 }
 
 async function saveLomadeeCoupons(coupons) {
-  const schemaKeys = Object.keys(couponsSchema.paths);
+  const writes = coupons.map((coupon) => ({
+    updateOne: {
+      filter: { ...coupon, source: 'Lomadee' },
+      update: {},
+      upsert: true
+    }
+  }));
 
-  await couponsModel.bulkWrite([
-    ...coupons.map((coupon) => {
-      const couponKeys = Object.keys(coupon);
-
-      let filters = schemaKeys.reduce((appliedFilters, currentKey) => {
-        if (couponKeys.includes(currentKey)) {
-          return {
-            ...appliedFilters,
-            [currentKey]: coupon[currentKey]
-          };
-        }
-
-        return appliedFilters;
-      }, {});
-
-      filters = {
-        ...filters,
-        store: coupon.store,
-        category: coupon.category
-      };
-
-      return {
-        updateOne: {
-          filter: { ...filters },
-          update: {},
-          upsert: true
-        }
-      };
-    })
-  ]);
+  await couponsModel.bulkWrite(writes);
 }
 
 async function deleteOutdatedLomadeeCoupons(updatePeriod) {
@@ -65,7 +70,7 @@ async function deleteOutdatedLomadeeCoupons(updatePeriod) {
       if (timeElapsedSinceUpdate > updatePeriod) {
         return {
           deleteOne: {
-            filter: { id: coupon.id, code: coupon.code }
+            filter: { _id: coupon._id }
           }
         };
       }
@@ -74,7 +79,7 @@ async function deleteOutdatedLomadeeCoupons(updatePeriod) {
     })
     .filter(Boolean);
 
-  await couponsModel.bulkWrite([...operations]);
+  await couponsModel.bulkWrite(operations);
 }
 
 async function cacheAllCoupons() {
@@ -117,19 +122,19 @@ function getPaginatedCoupons(page, limit) {
 }
 
 async function getSearchedCoupons(searchTerm, searchFilters = '') {
-  const term = new RegExp(searchTerm, 'i');
+  const searchTermRegex = new RegExp(searchTerm, 'i');
 
   const FILTER_VALUES = {
-    store: { 'store.name': term },
-    category: { 'category.name': term },
-    keyword: { description: term }
+    store: { store: searchTermRegex },
+    category: { category: searchTermRegex },
+    keyword: { description: searchTermRegex }
   };
-
-  const searchFiltersArr = searchFilters.toLowerCase().split(',');
 
   const FILTER_KEYS = Object.keys(FILTER_VALUES);
 
-  const appliedFilters = searchFiltersArr
+  const appliedFilters = searchFilters
+    .toLowerCase()
+    .split(',')
     .filter((filter) => FILTER_KEYS.includes(filter))
     .map((filter) => FILTER_VALUES[filter]);
 
@@ -144,7 +149,7 @@ async function getSearchedCoupons(searchTerm, searchFilters = '') {
 async function getActiveCouponCategories() {
   if (categories.length) return categories;
 
-  const result = await couponsModel.distinct('category.name', {});
+  const result = await couponsModel.distinct('category', {});
 
   if (result.length) categories = result;
 

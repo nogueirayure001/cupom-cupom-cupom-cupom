@@ -11,19 +11,15 @@ const couponsSchema = mongoose.Schema(
       required: true
     },
     store: {
-      name: {
-        type: String,
-        required: true
-      },
-      image: {
-        type: String
-      }
+      type: String,
+      required: true
+    },
+    storeImage: {
+      type: String
     },
     category: {
-      name: {
-        type: String,
-        required: true
-      }
+      type: String,
+      required: true
     },
     link: {
       type: String,
