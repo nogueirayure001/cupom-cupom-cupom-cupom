@@ -2,10 +2,11 @@ import mongoose from 'mongoose';
 import axios from 'axios';
 
 import storesSchema from './schemas/stores.schema.js';
-
 const storesModel = mongoose.model('store', storesSchema);
 
 const LOMADEE_STORES_URL = process.env.LOMADEE_STORES_URL;
+
+const STORE_VALID_KEYS = ['name', 'image'];
 
 let storesList = [];
 
@@ -16,36 +17,33 @@ async function getUpdatedLomadeeStores() {
 
   const { stores } = response.data;
 
-  return stores;
+  const sanitizedStores = stores.map((store) => {
+    const transformedStore = {};
+
+    const storeKeys = Object.keys(store);
+
+    storeKeys.forEach((key) => {
+      if (STORE_VALID_KEYS.includes(key)) {
+        transformedStore[key] = store[key];
+      }
+    });
+
+    return transformedStore;
+  });
+
+  return sanitizedStores;
 }
 
 async function saveLomadeeStores(stores) {
-  const schemaKeys = Object.keys(storesSchema.paths);
+  const writes = stores.map((store) => ({
+    updateOne: {
+      filter: store,
+      update: {},
+      upsert: true
+    }
+  }));
 
-  await storesModel.bulkWrite([
-    ...stores.map((store) => {
-      const storeKeys = Object.keys(store);
-
-      let filters = schemaKeys.reduce((appliedFilters, currentKey) => {
-        if (storeKeys.includes(currentKey)) {
-          return {
-            ...appliedFilters,
-            [currentKey]: store[currentKey]
-          };
-        }
-
-        return appliedFilters;
-      }, {});
-
-      return {
-        updateOne: {
-          filter: { ...filters },
-          update: {},
-          upsert: true
-        }
-      };
-    })
-  ]);
+  await storesModel.bulkWrite(writes);
 }
 
 async function deleteOutdatedLomadeeStores(updatePeriod) {
@@ -58,7 +56,7 @@ async function deleteOutdatedLomadeeStores(updatePeriod) {
       if (timeElapsedSinceUpdate > updatePeriod) {
         return {
           deleteOne: {
-            filter: { name: store.name }
+            filter: { _id: store._id }
           }
         };
       }
@@ -67,7 +65,7 @@ async function deleteOutdatedLomadeeStores(updatePeriod) {
     })
     .filter(Boolean);
 
-  await storesModel.bulkWrite([...operations]);
+  await storesModel.bulkWrite(operations);
 }
 
 async function cacheAllStores() {
@@ -110,11 +108,11 @@ function getPaginatedStores(page, limit) {
 }
 
 async function getSearchedStores(searchTerm) {
-  const term = new RegExp(searchTerm, 'i');
+  const searchTermRegex = new RegExp(searchTerm, 'i');
 
   return await storesModel.find(
     {
-      name: term
+      name: searchTermRegex
     },
     { _id: 0, __v: 0 }
   );

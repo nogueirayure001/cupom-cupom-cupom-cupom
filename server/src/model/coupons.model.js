@@ -51,7 +51,7 @@ async function getUpdatedLomadeeCoupons() {
 async function saveLomadeeCoupons(coupons) {
   const writes = coupons.map((coupon) => ({
     updateOne: {
-      filter: { ...coupon, source: 'Lomadee' },
+      filter: coupon,
       update: {},
       upsert: true
     }
