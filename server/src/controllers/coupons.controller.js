@@ -9,10 +9,10 @@ import {
   adminUpdateCoupons
 } from '../model/coupons.model.js';
 import DBError from '../errors/db-error.error.js';
-import FormError from '../errors/form-error.error.js';
+import UserError from '../errors/user-error.error.js';
 import CouponsDTO from '../views/coupons.view.js';
 
-const MESSAGES = FormError.MESSAGES;
+const MESSAGES = UserError.MESSAGES;
 
 function httpGetPaginatedCoupons(req, res) {
   const { pagination } = res.locals;
@@ -75,7 +75,7 @@ async function httpAdminAddCoupon(req, res, next) {
   try {
     const success = await adminAddCoupon(couponToAdd);
 
-    if (!success) return next(new FormError(MESSAGES.invalidDataFormat));
+    if (!success) return next(new UserError(MESSAGES.invalidDataFormat));
 
     return res.status(201).json(new CouponsDTO());
   } catch (e) {
@@ -92,7 +92,7 @@ async function httpAdminDeleteCoupons(req, res, next) {
     } = await adminDeleteCoupons(couponsToDelete);
 
     if (!(ok && nRemoved))
-      return next(new FormError(MESSAGES.invalidResourceId));
+      return next(new UserError(MESSAGES.invalidResourceId));
 
     return res.status(200).json(new CouponsDTO());
   } catch (e) {
@@ -109,7 +109,7 @@ async function httpAdminUpdateCoupons(req, res, next) {
     } = await adminUpdateCoupons(updatedCoupons);
 
     if (!(ok && nModified && nModified === nMatched))
-      return next(new FormError(MESSAGES.invalidResourceId));
+      return next(new UserError(MESSAGES.invalidResourceId));
 
     return res.status(200).json(new CouponsDTO());
   } catch (e) {

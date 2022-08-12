@@ -1,6 +1,8 @@
 import { getStoresNumber } from '../model/stores.model.js';
 import { getCouponsNumber } from '../model/coupons.model.js';
-import QueryError from '../errors/query-error.error.js';
+import UserError from '../errors/user-error.error.js';
+
+const { MESSAGES } = UserError;
 
 const POSSIBLE_URLS = {
   stores: '/api/stores',
@@ -28,9 +30,7 @@ function validatePagination(req, res, next) {
   const numOfItems = getItemsNumber();
   const numOfPages = Math.ceil(numOfItems / limit);
 
-  if (page > numOfPages) {
-    throw new QueryError();
-  }
+  if (page > numOfPages) return next(new UserError(MESSAGES.invalidQuery));
 
   res.locals = {
     ...res.locals,

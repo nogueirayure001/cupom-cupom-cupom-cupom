@@ -5,10 +5,10 @@ import {
 } from '../model/newsletter.model.js';
 import Validation from '../utils/validation.utils.js';
 import NewsletterDTO from '../views/newsletter.view.js';
-import FormError from '../errors/form-error.error.js';
+import UserError from '../errors/user-error.error.js';
 import DBError from '../errors/db-error.error.js';
 
-const { MESSAGES: ERROR_MESSAGES } = FormError;
+const { MESSAGES: ERROR_MESSAGES } = UserError;
 const { MESSAGES: SUCCESS_MESSAGES } = NewsletterDTO;
 
 async function httpSubscribeToNewsletter(req, res, next) {
@@ -16,13 +16,13 @@ async function httpSubscribeToNewsletter(req, res, next) {
 
   const validEmail = Validation.validate(Validation.TYPES.email, email);
 
-  if (!validEmail) return next(new FormError(ERROR_MESSAGES.invalidEmail));
+  if (!validEmail) return next(new UserError(ERROR_MESSAGES.invalidEmail));
 
   try {
     const subscribed = await subscribeToNewsletter(email);
 
     if (!subscribed)
-      return next(new FormError(ERROR_MESSAGES.emailAlreadySubscribed));
+      return next(new UserError(ERROR_MESSAGES.emailAlreadyInUse));
 
     return res
       .status(201)
@@ -38,7 +38,7 @@ async function httpUnsubscribeFromNewsletter(req, res, next) {
   try {
     const unsubscribed = await unsubscribeFromNewsletter(id, email);
 
-    if (!unsubscribed) return next(new FormError(ERROR_MESSAGES.emailNotFound));
+    if (!unsubscribed) return next(new UserError(ERROR_MESSAGES.emailNotFound));
 
     return res
       .status(200)

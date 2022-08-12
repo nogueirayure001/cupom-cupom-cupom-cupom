@@ -6,12 +6,12 @@ import {
   deleteAdmin
 } from '../model/admins.model.js';
 import Validation from '../utils/validation.utils.js';
-import FormError from '../errors/form-error.error.js';
+import UserError from '../errors/user-error.error.js';
 import DBError from '../errors/db-error.error.js';
 import AdminsDTO from '../views/admins.view.js';
 
 const { TYPES } = Validation;
-const { MESSAGES } = FormError;
+const { MESSAGES } = UserError;
 
 async function httpGetAllAdmins(req, res, next) {
   try {
@@ -27,20 +27,20 @@ async function httpCreateNewAdmin(req, res, next) {
   const { userName, email, password, confirmPassword } = req.body;
 
   if (password !== confirmPassword)
-    return next(new FormError(MESSAGES.passwordsDoNotMatch));
+    return next(new UserError(MESSAGES.passwordsDoNotMatch));
 
   if (!Validation.validate(TYPES.password, password))
-    return next(new FormError(MESSAGES.passwordNotSafe));
+    return next(new UserError(MESSAGES.passwordNotSafe));
 
   if (!Validation.validate(TYPES.email, email))
-    return next(new FormError(MESSAGES.invalidEmail));
+    return next(new UserError(MESSAGES.invalidEmail));
 
   if (!Validation.validate(TYPES.userName, userName))
-    return next(new FormError(MESSAGES.invalidUserName));
+    return next(new UserError(MESSAGES.invalidUserName));
 
   try {
     const admin = await getAdmin({ email });
-    if (admin) return next(new FormError(MESSAGES.emailAlreadyInUse));
+    if (admin) return next(new UserError(MESSAGES.emailAlreadyInUse));
 
     const newAdmin = await createNewAdmin({ userName, email, password });
     if (!newAdmin) return next(new DBError());
@@ -56,7 +56,7 @@ async function httpUpdateAdmin(req, res, next) {
 
   try {
     const admin = await getAdmin({ id });
-    if (!admin) return next(new Error('Admin not found'));
+    if (!admin) return next(new UserError(MESSAGES.invalidResourceId));
 
     const { acknowledged, modifiedCount } = await updateAdmin(id, update);
     if (!(acknowledged && modifiedCount)) return next(new DBError());
@@ -70,10 +70,10 @@ async function httpUpdateAdmin(req, res, next) {
 async function httpDeleteAdmin(req, res, next) {
   const { id } = req.body;
 
-  if (!id) return next(new Error('Bad request'));
+  if (!id) return next(new UserError(MESSAGES.invalidDataFormat));
 
   const admin = getAdmin({ id });
-  if (!admin) return next(new Error('Admin not found'));
+  if (!admin) return next(new UserError(MESSAGES.invalidResourceId));
 
   try {
     const { acknowledged, deletedCount } = await deleteAdmin(id);

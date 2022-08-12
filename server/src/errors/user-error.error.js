@@ -1,12 +1,14 @@
-class FormError extends Error {
+class UserError extends Error {
   static MESSAGES = {
     invalidEmail: 'Invalid e-mail address',
-    emailAlreadySubscribed: 'E-mail already in use',
-    emailNotFound: 'E-mail not currently subscribed to the newsletter',
+    emailNotFound: 'E-mail not currently in out database',
     emailAlreadyInUse: 'E-mail already in use',
     passwordsDoNotMatch: 'Passwords do not match',
     passwordNotSafe: 'Password is not safe enough',
     invalidUserName: 'Invalid username',
+    invalidResourceId: 'Invalid resource identifier',
+    invalidDataFormat: 'Did not pass data validation',
+    invalidQuery: 'Invalid query parameters'
   };
 
   constructor(message) {
@@ -16,4 +18,4 @@ class FormError extends Error {
   }
 }
 
-export default FormError;
+export default UserError;
