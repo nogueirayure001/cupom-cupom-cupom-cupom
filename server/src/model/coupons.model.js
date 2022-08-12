@@ -26,6 +26,8 @@ async function getUpdatedLomadeeCoupons() {
 
   const { coupons } = response.data;
 
+  console.log(coupons[0]);
+
   const sanitizedCoupons = coupons.map((coupon) => {
     const transformedCoupon = {};
 
@@ -35,6 +37,11 @@ async function getUpdatedLomadeeCoupons() {
       if (COUPON_VALID_KEYS.includes(key)) {
         if (coupon[key].hasOwnProperty('name')) {
           transformedCoupon[key] = coupon[key]['name'];
+
+          if (coupon[key].hasOwnProperty('image')) {
+            transformedCoupon['image'] = coupon[key]['image'];
+          }
+
           return;
         }
 

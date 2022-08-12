@@ -14,7 +14,7 @@ const couponsSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    storeImage: {
+    image: {
       type: String
     },
     category: {
