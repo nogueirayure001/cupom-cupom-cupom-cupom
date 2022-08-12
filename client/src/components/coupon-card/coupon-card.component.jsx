@@ -41,13 +41,15 @@ function CouponCard({ coupon, showPlaceholder }) {
     );
   }
 
-  const { description, store, code, category } = coupon;
+  const { description, store, image, code, category, link } = coupon;
+
+  console.log(image);
 
   return (
     <StyledArticle title={description}>
       <Content>
         <StoreImage>
-          <img src={store.image} alt={store.name} />
+          <img src={image} alt={store} />
         </StoreImage>
 
         <CouponCodeContainer>
@@ -63,11 +65,11 @@ function CouponCard({ coupon, showPlaceholder }) {
         </CouponCodeContainer>
 
         <OtherInfo>
-          <StoreLink href={store.link} target='_blank'>
+          <StoreLink href={link} target='_blank'>
             Seguir para a loja
           </StoreLink>
 
-          <Category>{category.name}</Category>
+          <Category>{category}</Category>
         </OtherInfo>
       </Content>
     </StyledArticle>
