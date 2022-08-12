@@ -2,10 +2,17 @@ import {
   getPaginatedCoupons,
   getFeaturedCoupons,
   getSearchedCoupons,
-  getActiveCouponCategories
+  getActiveCouponCategories,
+  adminGetCoupons,
+  adminAddCoupon,
+  adminDeleteCoupons,
+  adminUpdateCoupons
 } from '../model/coupons.model.js';
 import DBError from '../errors/db-error.error.js';
+import FormError from '../errors/form-error.error.js';
 import CouponsDTO from '../views/coupons.view.js';
+
+const MESSAGES = FormError.MESSAGES;
 
 function httpGetPaginatedCoupons(req, res) {
   const { pagination } = res.locals;
@@ -52,9 +59,71 @@ async function httpGetActiveCouponCategories(req, res) {
   }
 }
 
+async function httpAdminGetCoupons(req, res, next) {
+  try {
+    const coupons = await adminGetCoupons();
+
+    return res.status(200).json(new CouponsDTO({ data: coupons }));
+  } catch (e) {
+    next(new DBError());
+  }
+}
+
+async function httpAdminAddCoupon(req, res, next) {
+  const { couponToAdd } = req.body;
+
+  try {
+    const success = await adminAddCoupon(couponToAdd);
+
+    if (!success) return next(new FormError(MESSAGES.invalidDataFormat));
+
+    return res.status(201).json(new CouponsDTO());
+  } catch (e) {
+    next(new DBError());
+  }
+}
+
+async function httpAdminDeleteCoupons(req, res, next) {
+  const { couponsToDelete } = req.body;
+
+  try {
+    const {
+      result: { ok, nRemoved }
+    } = await adminDeleteCoupons(couponsToDelete);
+
+    if (!(ok && nRemoved))
+      return next(new FormError(MESSAGES.invalidResourceId));
+
+    return res.status(200).json(new CouponsDTO());
+  } catch (e) {
+    next(new DBError());
+  }
+}
+
+async function httpAdminUpdateCoupons(req, res, next) {
+  const { updatedCoupons } = req.body;
+
+  try {
+    const {
+      result: { ok, nModified, nMatched }
+    } = await adminUpdateCoupons(updatedCoupons);
+
+    if (!(ok && nModified && nModified === nMatched))
+      return next(new FormError(MESSAGES.invalidResourceId));
+
+    return res.status(200).json(new CouponsDTO());
+  } catch (e) {
+    next(new DBError());
+  }
+}
+
 export {
   httpGetPaginatedCoupons,
   httpGetFeaturedCoupons,
   httpGetSearchedCoupons,
-  httpGetActiveCouponCategories
+  httpGetActiveCouponCategories,
+  httpAdminGetCoupons,
+  httpAdminAddCoupon,
+  httpAdminDeleteCoupons,
+  httpAdminUpdateCoupons
 };

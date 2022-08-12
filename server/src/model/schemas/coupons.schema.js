@@ -16,10 +16,6 @@ const couponsSchema = mongoose.Schema(
         required: true
       },
       image: {
-        type: String,
-        required: true
-      },
-      link: {
         type: String
       }
     },
@@ -29,15 +25,9 @@ const couponsSchema = mongoose.Schema(
         required: true
       }
     },
-    vigency: {
-      type: String
-    },
     link: {
       type: String,
       required: true
-    },
-    new: {
-      type: Boolean
     },
     source: {
       type: String,

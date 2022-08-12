@@ -155,16 +155,20 @@ async function adminGetCoupons() {
   return await couponsModel.find({}, { __v: 0 });
 }
 
-async function adminAddCoupons(coupons) {
-  const writes = coupons.map((coupon) => ({
-    updateOne: {
-      filter: coupon,
-      update: {},
-      upsert: true
-    }
-  }));
+async function adminAddCoupon(coupon) {
+  const newCoupon = new couponsModel(coupon);
 
-  return await couponsModel.bulkWrite(writes);
+  try {
+    await newCoupon.save();
+
+    return true;
+  } catch (e) {
+    if (e._message === 'coupon validation failed') {
+      return false;
+    }
+
+    throw new Error();
+  }
 }
 
 async function adminDeleteCoupons(couponsIds) {
@@ -174,18 +178,26 @@ async function adminDeleteCoupons(couponsIds) {
     }
   }));
 
-  return await couponsModel.bulkWrite(writes);
+  const result = await couponsModel.bulkWrite(writes);
+
+  cacheAllCoupons();
+
+  return result;
 }
 
-async function adminUpdateCoupons(updateData) {
-  const writes = updateData.map(({ id, update }) => ({
+async function adminUpdateCoupons(updatedCoupons) {
+  const writes = updatedCoupons.map(({ id, ...update }) => ({
     updateOne: {
       filter: { _id: id },
       update: update
     }
   }));
 
-  return await couponsModel.bulkWrite(writes);
+  const result = await couponsModel.bulkWrite(writes);
+
+  cacheAllCoupons();
+
+  return result;
 }
 
 export {
@@ -194,5 +206,9 @@ export {
   getFeaturedCoupons,
   getPaginatedCoupons,
   getSearchedCoupons,
-  getActiveCouponCategories
+  getActiveCouponCategories,
+  adminGetCoupons,
+  adminAddCoupon,
+  adminDeleteCoupons,
+  adminUpdateCoupons
 };

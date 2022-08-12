@@ -4,7 +4,11 @@ import {
   httpGetPaginatedCoupons,
   httpGetFeaturedCoupons,
   httpGetSearchedCoupons,
-  httpGetActiveCouponCategories
+  httpGetActiveCouponCategories,
+  httpAdminGetCoupons,
+  httpAdminAddCoupon,
+  httpAdminDeleteCoupons,
+  httpAdminUpdateCoupons
 } from '../controllers/coupons.controller.js';
 import validatePagination from '../middlewares/validate-pagination.middleware.js';
 
@@ -14,5 +18,9 @@ couponsRouter.get('/paginated', validatePagination, httpGetPaginatedCoupons);
 couponsRouter.get('/featured', httpGetFeaturedCoupons);
 couponsRouter.get('/search', httpGetSearchedCoupons);
 couponsRouter.get('/categories', httpGetActiveCouponCategories);
+couponsRouter.get('/admin/all', httpAdminGetCoupons);
+couponsRouter.post('/admin/add', httpAdminAddCoupon);
+couponsRouter.delete('/admin/delete', httpAdminDeleteCoupons);
+couponsRouter.patch('/admin/update', httpAdminUpdateCoupons);
 
 export default couponsRouter;
