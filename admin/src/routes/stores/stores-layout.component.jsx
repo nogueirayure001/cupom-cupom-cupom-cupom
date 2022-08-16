@@ -4,12 +4,12 @@ import { Link, Outlet } from 'react-router-dom';
 import { Button } from '../../components/button';
 import { ButtonsContainer } from './index';
 
-function CouponsLayout(props) {
+function StoresLayout(props) {
   return (
     <Fragment>
       <ButtonsContainer>
         <Button>
-          <Link to='/'>Criar novo</Link>
+          <Link to='/'>Criar nova</Link>
         </Button>
 
         <Button>
@@ -22,4 +22,4 @@ function CouponsLayout(props) {
   );
 }
 
-export default CouponsLayout;
+export default StoresLayout;
