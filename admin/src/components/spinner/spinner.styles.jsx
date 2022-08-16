@@ -10,6 +10,7 @@ const fullPageSpinner = css`
 
 const miniSpinnerContainer = css`
   height: 100%;
+  background-color: transparent;
 `;
 
 const miniSpinner = css`

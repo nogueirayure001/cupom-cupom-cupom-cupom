@@ -8,6 +8,7 @@ export const StyledButton = styled.button`
   font-family: inherit;
   font-size: 1.2rem;
   font-weight: 700;
+  text-transform: uppercase;
   letter-spacing: 1.5px;
   color: ${({ theme, selected }) =>
     selected ? theme.primary_II : theme.neutral_II};

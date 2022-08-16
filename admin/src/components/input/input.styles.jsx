@@ -6,5 +6,7 @@ export const InputContainer = styled.div`
     -webkit-appearance: none;
     appearance: none;
     font-family: inherit;
+    font-size: 1rem;
+    margin: 0;
   }
 `;
