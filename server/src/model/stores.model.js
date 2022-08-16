@@ -98,6 +98,14 @@ async function getFeaturedStores() {
   );
 }
 
+async function getAllStores() {
+  if (storesList.length) return storesList;
+
+  await cacheAllStores();
+
+  return storesList;
+}
+
 function getPaginatedStores(page, limit) {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
@@ -118,10 +126,63 @@ async function getSearchedStores(searchTerm) {
   );
 }
 
+async function adminGetStores() {
+  return await storesModel.find({}, { __v: 0 });
+}
+
+async function adminAddStore(store) {
+  const newStore = new storesModel(store);
+
+  try {
+    await newStore.save();
+
+    return true;
+  } catch (e) {
+    if (e._message === 'store validation failed') {
+      return false;
+    }
+
+    throw new Error();
+  }
+}
+
+async function adminDeleteStores(storesIds) {
+  const writes = storesIds.map((id) => ({
+    deleteOne: {
+      filter: { _id: id }
+    }
+  }));
+
+  const result = await storesModel.bulkWrite(writes);
+
+  cacheAllStores();
+
+  return result;
+}
+
+async function adminUpdateStores(updatedStores) {
+  const writes = updatedStores.map(({ id, ...update }) => ({
+    updateOne: {
+      filter: { _id: id },
+      update: update
+    }
+  }));
+
+  const result = await couponsModel.bulkWrite(writes);
+
+  cacheAllStores();
+
+  return result;
+}
+
 export {
   updateStores,
   getStoresNumber,
   getFeaturedStores,
   getPaginatedStores,
-  getSearchedStores
+  getSearchedStores,
+  adminGetStores,
+  adminAddStore,
+  adminDeleteStores,
+  adminUpdateStores
 };
