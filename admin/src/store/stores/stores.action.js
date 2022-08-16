@@ -2,7 +2,7 @@ import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
 async function getStores() {
-  const path = '/stores/all';
+  const path = '/stores/admin/all';
 
   const configs = {
     method: 'get',

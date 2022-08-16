@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   selectCreationState,
-  createCouponAsync
+  createCouponAsync,
+  clearPreviousState
 } from '../../store/create-coupon';
-import { validate } from '../../utils';
 import { selectStores, loadStoresAsync } from '../../store/stores';
+import { validate } from '../../utils';
 import { Section } from '../../components/section';
 import { Form } from '../../components/form';
 import { Select } from '../../components/select';
@@ -112,6 +113,13 @@ function CouponsCreation(props) {
     if (error || success) setShowModal(true);
   }, [error, success]);
 
+  useEffect(() => {
+    if (success) {
+      setFields(DEFAULT_FORM_STATE);
+      dispatch(clearPreviousState());
+    }
+  }, [success]);
+
   return (
     <Section title='Adicionar Cupom'>
       <Form onChange={changeHandler} onSubmit={submitHandler}>
@@ -119,6 +127,7 @@ function CouponsCreation(props) {
           <Select
             label='Loja'
             name='store'
+            clear={fields.store.value === ''}
             options={stores.map((store) => store.name)}
             changeHandler={changeHandler}
             error={!fields.store.valid && fields.store.blurred}

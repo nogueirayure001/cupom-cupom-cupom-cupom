@@ -16,15 +16,15 @@ async function requestCouponCreation(coupon) {
   return await httpRequest(path, {}, configs);
 }
 
-export function createCouponStart() {
+function createCouponStart() {
   return createAction(ACTION_TYPES.CREATE_COUPON_START);
 }
 
-export function createCouponSuccess() {
+function createCouponSuccess() {
   return createAction(ACTION_TYPES.CREATE_COUPON_SUCCESS);
 }
 
-export function createCouponFail(payload) {
+function createCouponFail(payload) {
   return createAction(ACTION_TYPES.CREATE_COUPON_FAIL, payload);
 }
 
@@ -46,4 +46,8 @@ export function createCouponAsync(coupon) {
       dispatch(createCouponFail('Could not send request'));
     }
   };
+}
+
+export function clearPreviousState() {
+  return createAction(ACTION_TYPES.CLEAR_STATE);
 }

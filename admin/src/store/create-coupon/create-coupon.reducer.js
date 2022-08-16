@@ -19,6 +19,9 @@ function createCouponReducer(state = DEFAULT_STATE, action = {}) {
     case ACTION_TYPES.CREATE_COUPON_FAIL:
       return { ...state, error: payload, success: false, isLoading: false };
 
+    case ACTION_TYPES.CLEAR_STATE:
+      return { isLoading: false, error: null, success: false };
+
     default:
       return state;
   }

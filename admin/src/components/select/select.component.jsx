@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { useOutsideClickCloser } from '../../hooks';
 import { SelectContainer, StyledSelect, OptionsList, Option } from './index';
 
-function Select({ options, name, changeHandler, ...otherProps }) {
+function Select({ options, name, changeHandler, clear, ...otherProps }) {
   const [selectActive, setSelectActive] = useState(false);
   const [selectValue, setSelectValue] = useState('');
   const optionsListRef = useRef();
@@ -63,6 +63,10 @@ function Select({ options, name, changeHandler, ...otherProps }) {
 
     setSelectValue(value);
   };
+
+  useEffect(() => {
+    if (clear) setSelectValue('');
+  }, [clear]);
 
   return (
     <SelectContainer
