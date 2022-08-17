@@ -1,14 +1,14 @@
-class AdminsDTO {
+class UsersDTO {
   constructor(args = {}) {
     this.requestInfo = {
       success: true,
       message: 'Request was successful'
     };
 
-    const { admin, data } = args;
+    const { user, data } = args;
 
-    if (admin) {
-      const { userName, email, isMaster, _id } = admin;
+    if (user) {
+      const { userName, email, isMaster, _id } = user;
 
       this.data = {
         userName,
@@ -24,4 +24,4 @@ class AdminsDTO {
   }
 }
 
-export default AdminsDTO;
+export default UsersDTO;

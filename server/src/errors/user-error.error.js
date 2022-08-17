@@ -8,7 +8,8 @@ class UserError extends Error {
     invalidUserName: 'Invalid username',
     invalidResourceId: 'Invalid resource identifier',
     invalidDataFormat: 'Did not pass data validation',
-    invalidQuery: 'Invalid query parameters'
+    invalidQuery: 'Invalid query parameters',
+    invalidCredentials: 'Credentials do not match with any users'
   };
 
   constructor(message) {

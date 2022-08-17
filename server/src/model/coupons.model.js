@@ -26,8 +26,6 @@ async function getUpdatedLomadeeCoupons() {
 
   const { coupons } = response.data;
 
-  console.log(coupons[0]);
-
   const sanitizedCoupons = coupons.map((coupon) => {
     const transformedCoupon = {};
 

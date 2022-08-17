@@ -1,29 +1,29 @@
 import {
-  getAdmin,
-  getAllAdmins,
-  createNewAdmin,
-  updateAdmin,
-  deleteAdmin
-} from '../model/admins.model.js';
+  getUser,
+  getAllUsers,
+  createNewUser,
+  updateUser,
+  deleteUser
+} from '../model/users.model.js';
 import Validation from '../utils/validation.utils.js';
 import UserError from '../errors/user-error.error.js';
 import DBError from '../errors/db-error.error.js';
-import AdminsDTO from '../views/admins.view.js';
+import UsersDTO from '../views/users.view.js';
 
 const { TYPES } = Validation;
 const { MESSAGES } = UserError;
 
-async function httpGetAllAdmins(req, res, next) {
+async function httpGetAllUsers(req, res, next) {
   try {
-    const admins = await getAllAdmins();
+    const users = await getAllUsers();
 
-    return res.status(200).json(new AdminsDTO({ data: admins }));
+    return res.status(200).json(new UsersDTO({ data: users }));
   } catch (e) {
     next(new DBError());
   }
 }
 
-async function httpCreateNewAdmin(req, res, next) {
+async function httpCreateNewUser(req, res, next) {
   const { userName, email, password, confirmPassword } = req.body;
 
   if (password !== confirmPassword)
@@ -39,56 +39,51 @@ async function httpCreateNewAdmin(req, res, next) {
     return next(new UserError(MESSAGES.invalidUserName));
 
   try {
-    const admin = await getAdmin({ email });
+    const admin = await getUser({ email });
     if (admin) return next(new UserError(MESSAGES.emailAlreadyInUse));
 
-    const newAdmin = await createNewAdmin({ userName, email, password });
-    if (!newAdmin) return next(new DBError());
+    const newUser = await createNewUser({ userName, email, password });
+    if (!newUser) return next(new DBError());
 
-    return res.status(201).json(new AdminsDTO({ admin: newAdmin }));
+    return res.status(201).json(new UsersDTO({ admin: newUser }));
   } catch (e) {
     next(new DBError());
   }
 }
 
-async function httpUpdateAdmin(req, res, next) {
+async function httpUpdateUser(req, res, next) {
   const { id, update } = req.body;
 
   try {
-    const admin = await getAdmin({ id });
+    const admin = await getUser({ id });
     if (!admin) return next(new UserError(MESSAGES.invalidResourceId));
 
-    const { acknowledged, modifiedCount } = await updateAdmin(id, update);
+    const { acknowledged, modifiedCount } = await updateUser(id, update);
     if (!(acknowledged && modifiedCount)) return next(new DBError());
 
-    return res.status(200).json(new AdminsDTO());
+    return res.status(200).json(new UsersDTO());
   } catch (e) {
     next(new DBError());
   }
 }
 
-async function httpDeleteAdmin(req, res, next) {
+async function httpDeleteUser(req, res, next) {
   const { id } = req.body;
 
   if (!id) return next(new UserError(MESSAGES.invalidDataFormat));
 
-  const admin = getAdmin({ id });
+  const admin = getUser({ id });
   if (!admin) return next(new UserError(MESSAGES.invalidResourceId));
 
   try {
-    const { acknowledged, deletedCount } = await deleteAdmin(id);
+    const { acknowledged, deletedCount } = await deleteUser(id);
 
     if (!(acknowledged && deletedCount)) return next(new DBError());
 
-    return res.status(200).json(new AdminsDTO());
+    return res.status(200).json(new UsersDTO());
   } catch (e) {
     next(new DBError());
   }
 }
 
-export {
-  httpGetAllAdmins,
-  httpCreateNewAdmin,
-  httpUpdateAdmin,
-  httpDeleteAdmin
-};
+export { httpGetAllUsers, httpCreateNewUser, httpUpdateUser, httpDeleteUser };
