@@ -87,6 +87,7 @@ export const StoreName = styled.span`
   padding: 8px 6px;
   text-align: center;
   font-weight: 600;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
 `;
 
 export const StoreNamePlaceholder = styled.span`
