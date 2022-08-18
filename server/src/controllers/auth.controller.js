@@ -9,6 +9,8 @@ const { MESSAGES } = UserError;
 async function httpLogUserIn(req, res, next) {
   const { email, password } = req.body;
 
+  //validar email e password
+
   try {
     const user = await getUser({ email, password });
     if (!user) return next(new UserError(MESSAGES.invalidCredentials));

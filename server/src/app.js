@@ -26,6 +26,7 @@ app.use('/auth', authRouter);
 app.use(errorHandler);
 
 app.get('/*', (req, res) => {
+  console.log(req.url);
   res.sendFile(join(__dirname, '..', 'public', 'index.html'));
 });
 

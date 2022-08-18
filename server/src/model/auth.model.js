@@ -5,7 +5,11 @@ import authSchema from './schemas/auth.schema.js';
 const authModel = mongoose.model('auth', authSchema);
 
 async function getTokenData(userId) {
-  return authModel.findOne({ user: userId }).populate('user');
+  return await authModel.findOne({ user: userId }).populate('user');
+}
+
+async function verifyTokenValidity(token) {
+  return (await authModel.findOne({ token })) ? true : false;
 }
 
 async function createToken(userId) {
@@ -26,4 +30,4 @@ async function deleteToken(token) {
   return authModel.deleteOne({ token });
 }
 
-export { getTokenData, createToken, deleteToken };
+export { getTokenData, verifyTokenValidity, createToken, deleteToken };
