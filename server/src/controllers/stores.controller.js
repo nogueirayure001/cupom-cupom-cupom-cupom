@@ -1,7 +1,6 @@
 import {
+  getStores,
   getPaginatedStores,
-  getFeaturedStores,
-  getSearchedStores,
   adminGetStores,
   adminAddStore,
   adminDeleteStores,
@@ -25,9 +24,9 @@ function httpGetPaginatedStores(req, res) {
 
 async function httpGetFeaturedStores(req, res, next) {
   try {
-    const data = await getFeaturedStores();
+    const stores = await getStores({ featured: true });
 
-    return res.status(200).json(new StoresDTO({ data }));
+    return res.status(200).json(new StoresDTO({ data: stores }));
   } catch (e) {
     next(new DBError());
   }
@@ -36,10 +35,12 @@ async function httpGetFeaturedStores(req, res, next) {
 async function httpGetSearchedStores(req, res) {
   const { searchTerm } = req.query;
 
-  try {
-    const data = await getSearchedStores(searchTerm);
+  const searchTermRegex = new RegExp(searchTerm, 'i');
 
-    return res.status(200).json(new StoresDTO({ data }));
+  try {
+    const stores = await getStores({ name: searchTermRegex });
+
+    return res.status(200).json(new StoresDTO({ data: stores }));
   } catch (e) {
     next(new DBError());
   }

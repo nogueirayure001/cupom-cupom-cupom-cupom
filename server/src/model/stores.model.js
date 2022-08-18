@@ -88,22 +88,10 @@ function getStoresNumber() {
   return storesList.length;
 }
 
-async function getFeaturedStores() {
-  return await storesModel.find(
-    { featured: true },
-    {
-      _id: 0,
-      __v: 0
-    }
-  );
-}
+async function getStores(filters) {
+  const projection = { _id: 0, __v: 0 };
 
-async function getAllStores() {
-  if (storesList.length) return storesList;
-
-  await cacheAllStores();
-
-  return storesList;
+  return await storesModel.find(filters, projection);
 }
 
 function getPaginatedStores(page, limit) {
@@ -112,17 +100,6 @@ function getPaginatedStores(page, limit) {
 
   return storesList.filter(
     (_, index) => index >= startIndex && index < endIndex
-  );
-}
-
-async function getSearchedStores(searchTerm) {
-  const searchTermRegex = new RegExp(searchTerm, 'i');
-
-  return await storesModel.find(
-    {
-      name: searchTermRegex
-    },
-    { _id: 0, __v: 0 }
   );
 }
 
@@ -178,9 +155,8 @@ async function adminUpdateStores(updatedStores) {
 export {
   updateStores,
   getStoresNumber,
-  getFeaturedStores,
+  getStores,
   getPaginatedStores,
-  getSearchedStores,
   adminGetStores,
   adminAddStore,
   adminDeleteStores,
