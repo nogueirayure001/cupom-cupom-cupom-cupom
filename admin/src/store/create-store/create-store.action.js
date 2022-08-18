@@ -1,15 +1,17 @@
 import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
-async function requestStoreCreation(store) {
-  const path = '/stores/admin/add';
+async function requestStoreCreation(store, token) {
+  const path = '/api/stores/admin/add';
+
+  const headers = new Headers();
+  headers.append('content-type', 'application/json');
+  headers.append('accept', 'application/json');
+  headers.append('authorization', `Bearer ${token}`);
 
   const configs = {
     method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
+    headers,
     body: JSON.stringify(store)
   };
 
@@ -28,14 +30,14 @@ function createStoreFail(payload) {
   return createAction(ACTION_TYPES.CREATE_STORE_FAIL, payload);
 }
 
-export function createStoreAsync(store) {
+export function createStoreAsync(store, token) {
   return async (dispatch) => {
     dispatch(createStoreStart());
 
     try {
       const {
         requestInfo: { success, message }
-      } = await requestStoreCreation(store);
+      } = await requestStoreCreation(store, token);
 
       if (!success) {
         dispatch(createStoreFail(message));

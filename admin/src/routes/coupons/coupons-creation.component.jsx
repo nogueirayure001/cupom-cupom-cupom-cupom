@@ -6,6 +6,7 @@ import {
   createCouponAsync,
   clearPreviousState
 } from '../../store/create-coupon';
+import { selectToken } from '../../store/auth';
 import { selectStores, loadStoresAsync } from '../../store/stores';
 import { validate } from '../../utils';
 import { Section } from '../../components/section';
@@ -45,6 +46,7 @@ function CouponsCreation(props) {
   const [showValidationMessage, setShowValidationMessage] = useState(false);
   const { isLoading, error, success } = useSelector(selectCreationState);
   const stores = useSelector(selectStores);
+  const token = useSelector(selectToken);
   const dispatch = useDispatch();
 
   const changeHandler = (e) => {
@@ -90,7 +92,7 @@ function CouponsCreation(props) {
       coupon[field] = values['value'];
     }
 
-    dispatch(createCouponAsync({ couponToAdd: coupon }));
+    dispatch(createCouponAsync({ couponToAdd: coupon }, token));
 
     return;
   };
@@ -100,7 +102,7 @@ function CouponsCreation(props) {
   };
 
   useEffect(() => {
-    dispatch(loadStoresAsync);
+    dispatch(loadStoresAsync(token));
   }, []);
 
   useEffect(() => {

@@ -1,12 +1,11 @@
-import { Fragment } from 'react';
-
 import { Section } from '../../components/section';
 import { ActionCard } from '../../components/action-card';
 import { ActionsContainer } from './index';
+import { ProtectRoute } from '../../components/protect-route';
 
 function Homepage(props) {
   return (
-    <Fragment>
+    <ProtectRoute>
       <Section title='Menu de Ações'>
         <ActionsContainer>
           <ActionCard
@@ -22,7 +21,7 @@ function Homepage(props) {
           />
         </ActionsContainer>
       </Section>
-    </Fragment>
+    </ProtectRoute>
   );
 }
 

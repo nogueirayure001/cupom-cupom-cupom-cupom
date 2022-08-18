@@ -6,6 +6,7 @@ import {
   createStoreAsync,
   clearPreviousState
 } from '../../store/create-store';
+import { selectToken } from '../../store/auth';
 import { validate } from '../../utils';
 import { Section } from '../../components/section';
 import { Form } from '../../components/form';
@@ -36,6 +37,7 @@ function StoresCreation(props) {
   const [showModal, setShowModal] = useState(false);
   const [showValidationMessage, setShowValidationMessage] = useState(false);
   const { isLoading, error, success } = useSelector(selectCreationState);
+  const token = useSelector(selectToken);
   const dispatch = useDispatch();
 
   const changeHandler = (e) => {
@@ -81,7 +83,7 @@ function StoresCreation(props) {
       store[field] = values['value'];
     }
 
-    dispatch(createStoreAsync({ storeToAdd: store }));
+    dispatch(createStoreAsync({ storeToAdd: store }, token));
 
     return;
   };

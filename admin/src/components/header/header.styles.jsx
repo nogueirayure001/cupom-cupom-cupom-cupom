@@ -150,7 +150,7 @@ export const NavList = styled.ul`
   width: 220px;
   padding: 0 30px;
   margin: 0 auto;
-  height: ${({ menuOpen }) => (menuOpen ? '186px' : '0')};
+  height: ${({ menuOpen }) => (menuOpen ? '146.8px' : '0')};
   overflow: hidden;
   transition: height 300ms ease;
 
@@ -201,6 +201,14 @@ export const NavItem = styled.li`
     width: 100%;
     text-align: center;
   }
+`;
+
+export const LogoutButton = styled.span`
+  display: block;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
 `;
 
 const HorizontalBar = styled.div`

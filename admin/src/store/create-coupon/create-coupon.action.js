@@ -1,15 +1,17 @@
 import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
-async function requestCouponCreation(coupon) {
-  const path = '/coupons/admin/add';
+async function requestCouponCreation(coupon, token) {
+  const path = '/api/coupons/admin/add';
+
+  const headers = new Headers();
+  headers.append('content-type', 'application/json');
+  headers.append('accept', 'application/json');
+  headers.append('authorization', `Bearer ${token}`);
 
   const configs = {
     method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
+    headers,
     body: JSON.stringify(coupon)
   };
 
@@ -28,14 +30,14 @@ function createCouponFail(payload) {
   return createAction(ACTION_TYPES.CREATE_COUPON_FAIL, payload);
 }
 
-export function createCouponAsync(coupon) {
+export function createCouponAsync(coupon, token) {
   return async (dispatch) => {
     dispatch(createCouponStart());
 
     try {
       const {
         requestInfo: { success, message }
-      } = await requestCouponCreation(coupon);
+      } = await requestCouponCreation(coupon, token);
 
       if (!success) {
         dispatch(createCouponFail(message));

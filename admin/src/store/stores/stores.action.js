@@ -1,14 +1,17 @@
 import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
-async function getStores() {
-  const path = '/stores/admin/all';
+async function getStores(token) {
+  const path = '/api/stores/admin/all';
+
+  const headers = new Headers();
+  headers.append('content-type', 'application/json');
+  headers.append('accept', 'application/json');
+  headers.append('authorization', `Bearer ${token}`);
 
   const configs = {
     method: 'get',
-    headers: {
-      Accept: 'application/json'
-    }
+    headers
   };
 
   return await httpRequest(path, {}, configs);
@@ -26,22 +29,24 @@ function loadStoresFail(error) {
   return createAction(ACTION_TYPES.FETCH_STORES_FAIL, error);
 }
 
-export async function loadStoresAsync(dispatch) {
-  dispatch(loadStoresStart());
+export function loadStoresAsync(token) {
+  return async (dispatch) => {
+    dispatch(loadStoresStart());
 
-  try {
-    const {
-      requestInfo: { success, message },
-      data: stores
-    } = await getStores();
+    try {
+      const {
+        requestInfo: { success, message },
+        data: stores
+      } = await getStores(token);
 
-    if (!success) {
-      dispatch(loadStoresFail(message));
-      return;
+      if (!success) {
+        dispatch(loadStoresFail(message));
+        return;
+      }
+
+      dispatch(loadStoresSuccess(stores));
+    } catch (e) {
+      dispatch(loadStoresFail('Não foi possível enviar a requisição'));
     }
-
-    dispatch(loadStoresSuccess(stores));
-  } catch (e) {
-    dispatch(loadStoresFail('Não foi possível enviar a requisição'));
-  }
+  };
 }

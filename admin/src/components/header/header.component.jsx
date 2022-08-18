@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import useOutsideClickCloser from '../../hooks/useOutsideClickCloser';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { selectAuthState, logoutAsync } from '../../store/auth';
+import useOutsideClickCloser from '../../hooks/useOutsideClickCloser';
 import {
   HeaderContainer,
   SitePresentation,
@@ -11,6 +13,7 @@ import {
   Navigation,
   NavList,
   NavItem,
+  LogoutButton,
   MenuToggler,
   StoreNameContainer,
   Contrast
@@ -18,6 +21,8 @@ import {
 
 function Header(props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, token } = useSelector(selectAuthState);
+  const dispatch = useDispatch();
   const navRef = useRef();
   const { pathname } = useLocation();
 
@@ -25,6 +30,10 @@ function Header(props) {
 
   const menuToggleHandler = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const logoutHandler = () => {
+    dispatch(logoutAsync(token));
   };
 
   return (
@@ -52,12 +61,12 @@ function Header(props) {
             <Link to='/'>Inicio</Link>
           </NavItem>
 
-          <NavItem active={pathname.startsWith('/content')}>
-            <Link to='/content'>Conteúdo</Link>
-          </NavItem>
-
           <NavItem active={pathname.startsWith('/auth')}>
-            <Link to='/auth'>Autenticar</Link>
+            {user ? (
+              <LogoutButton onClick={logoutHandler}>logout</LogoutButton>
+            ) : (
+              <Link to='/login'>Autenticar</Link>
+            )}
           </NavItem>
         </NavList>
       </Navigation>
