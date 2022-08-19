@@ -48,13 +48,15 @@ async function saveLomadeeStores(stores) {
 }
 
 async function deleteOutdatedLomadeeStores(updatePeriod) {
-  const lomadeeStores = await storesModel.find({ source: 'Lomadee' });
+  const filter = { source: 'Lomadee' };
+
+  const lomadeeStores = await storesModel.find(filter);
 
   const operations = lomadeeStores
     .map((store) => {
-      const timeElapsedSinceUpdate = Date.now() - new Date(store.updatedAt);
+      const timeSinceUpdate = Date.now() - new Date(store.updatedAt);
 
-      if (timeElapsedSinceUpdate > updatePeriod) {
+      if (timeSinceUpdate > updatePeriod) {
         return {
           deleteOne: {
             filter: { _id: store._id }
@@ -66,10 +68,12 @@ async function deleteOutdatedLomadeeStores(updatePeriod) {
     })
     .filter(Boolean);
 
-  await storesModel.bulkWrite(operations);
+  return await storesModel.bulkWrite(operations);
 }
 
-async function cacheAllStores() {
+async function refreshCaching() {
+  const filter = {};
+
   const projection = {
     _id: 0,
     __v: 0,
@@ -77,7 +81,9 @@ async function cacheAllStores() {
     updatedAt: 0
   };
 
-  const stores = await storesModel.find({}, projection);
+  const stores = await storesModel.find(filter, projection);
+
+  cache.clear();
 
   cache.set('all', stores);
 }
@@ -89,7 +95,7 @@ async function updateStores(updatePeriod) {
 
   await deleteOutdatedLomadeeStores(updatePeriod);
 
-  await cacheAllStores();
+  await refreshCaching();
 }
 
 function getNumberOfStores() {
@@ -120,12 +126,12 @@ function getPaginatedStores(page, limit) {
 
   if (cache.has(key)) return cache.get(key);
 
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+  const start = (page - 1) * limit;
+  const end = page * limit;
 
   const storesPage = cache
     .get('all')
-    .filter((_, index) => index >= startIndex && index < endIndex);
+    .filter((_, index) => index >= start && index < end);
 
   cache.set(key, storesPage);
 
@@ -133,13 +139,23 @@ function getPaginatedStores(page, limit) {
 }
 
 async function adminGetStores() {
+  const key = 'adminAll';
+
+  if (cache.has(key)) return cache.get(key);
+
+  const filter = {};
+
   const projection = {
     __v: 0,
     createdAt: 0,
     updatedAt: 0
   };
 
-  return await storesModel.find({}, projection);
+  const stores = await storesModel.find(filter, projection);
+
+  cache.set(key, stores);
+
+  return stores;
 }
 
 async function adminAddStore(store) {
@@ -147,6 +163,8 @@ async function adminAddStore(store) {
 
   try {
     await newStore.save();
+
+    refreshCaching();
 
     return true;
   } catch (e) {
@@ -158,31 +176,23 @@ async function adminAddStore(store) {
   }
 }
 
-async function adminDeleteStores(storesIds) {
-  const writes = storesIds.map((id) => ({
-    deleteOne: {
-      filter: { _id: id }
-    }
-  }));
+async function adminDeleteStore(id) {
+  filter = { _id: id };
 
-  const result = await storesModel.bulkWrite(writes);
+  const result = await storesModel.deleteOne(filter);
 
-  cacheAllStores();
+  refreshCaching();
 
   return result;
 }
 
-async function adminUpdateStores(updatedStores) {
-  const writes = updatedStores.map(({ id, ...update }) => ({
-    updateOne: {
-      filter: { _id: id },
-      update: update
-    }
-  }));
+async function adminUpdateStore(id, update) {
+  const filter = { _id: id };
+  const update = update;
 
-  const result = await couponsModel.bulkWrite(writes);
+  const result = await storesModel.updateOne(filter, update);
 
-  cacheAllStores();
+  refreshCaching();
 
   return result;
 }

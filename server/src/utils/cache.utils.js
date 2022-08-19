@@ -22,6 +22,10 @@ class Cache {
 
     return this.cache.has(strKey);
   }
+
+  clear() {
+    this.cache.clear();
+  }
 }
 
 export default Cache;
