@@ -158,6 +158,25 @@ async function adminGetStores() {
   return stores;
 }
 
+async function adminGetPaginatedStores(page, limit) {
+  const key = { level: 'admin', page, limit };
+
+  if (cache.has(key)) return cache.get(key);
+
+  const stores = cache.has('adminAll')
+    ? cache.get('adminAll')
+    : await adminGetStores();
+
+  const start = (page - 1) * limit;
+  const end = page * limit;
+
+  const storesPage = stores.filter((_, index) => index >= start && index < end);
+
+  cache.set(key, storesPage);
+
+  return storesPage;
+}
+
 async function adminAddStore(store) {
   const newStore = new storesModel(store);
 
@@ -177,24 +196,40 @@ async function adminAddStore(store) {
 }
 
 async function adminDeleteStore(id) {
-  filter = { _id: id };
+  const filter = { _id: id };
 
-  const result = await storesModel.deleteOne(filter);
+  const validId = mongoose.Types.ObjectId.isValid(id);
 
-  refreshCaching();
+  if (!validId) return false;
 
-  return result;
+  const { acknowledged, deletedCount } = await storesModel.deleteOne(filter);
+
+  if (!acknowledged) throw new Error();
+
+  if (deletedCount) refreshCaching();
+
+  return deletedCount && true;
 }
 
 async function adminUpdateStore(id, update) {
   const filter = { _id: id };
-  const update = update;
 
-  const result = await storesModel.updateOne(filter, update);
+  const validId = mongoose.Types.ObjectId.isValid(id);
+
+  if (!validId) return false;
+
+  const { acknowledged, modifiedCount, matchedCount } =
+    await storesModel.updateOne(filter, update);
+
+  if (!acknowledged) throw new Error();
+
+  if (!matchedCount) return false;
+
+  if (!modifiedCount) throw new Error();
 
   refreshCaching();
 
-  return result;
+  return true;
 }
 
 export {
@@ -203,7 +238,8 @@ export {
   getStores,
   getPaginatedStores,
   adminGetStores,
+  adminGetPaginatedStores,
   adminAddStore,
-  adminDeleteStores,
-  adminUpdateStores
+  adminDeleteStore,
+  adminUpdateStore
 };

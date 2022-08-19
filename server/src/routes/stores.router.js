@@ -5,9 +5,10 @@ import {
   httpGetFeaturedStores,
   httpGetSearchedStores,
   httpAdminGetStores,
+  httpAdminGetPaginatedStores,
   httpAdminAddStore,
-  httpAdminDeleteStores,
-  httpAdminUpdateStores
+  httpAdminDeleteStore,
+  httpAdminUpdateStore
 } from '../controllers/stores.controller.js';
 import validatePagination from '../middlewares/validate-pagination.middleware.js';
 import authentication from '../middlewares/authentication.middleware.js';
@@ -20,8 +21,13 @@ storesRouter.get('/search', httpGetSearchedStores);
 
 storesRouter.use(authentication);
 storesRouter.get('/admin/all', httpAdminGetStores);
+storesRouter.get(
+  '/admin/paginated',
+  validatePagination,
+  httpAdminGetPaginatedStores
+);
 storesRouter.post('/admin/add', httpAdminAddStore);
-storesRouter.delete('/admin/delete', httpAdminDeleteStores);
-storesRouter.patch('/admin/update', httpAdminUpdateStores);
+storesRouter.delete('/admin/delete', httpAdminDeleteStore);
+storesRouter.patch('/admin/update', httpAdminUpdateStore);
 
 export default storesRouter;
