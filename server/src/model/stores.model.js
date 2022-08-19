@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import axios from 'axios';
 
+import Cache from '../utils/cache.utils.js';
 import storesSchema from './schemas/stores.schema.js';
 const storesModel = mongoose.model('store', storesSchema);
 
@@ -8,7 +9,7 @@ const LOMADEE_STORES_URL = process.env.LOMADEE_STORES_URL;
 
 const STORE_VALID_KEYS = ['name', 'image'];
 
-let storesList = [];
+const cache = new Cache();
 
 async function getUpdatedLomadeeStores() {
   const response = await axios.get(LOMADEE_STORES_URL, {
@@ -69,9 +70,16 @@ async function deleteOutdatedLomadeeStores(updatePeriod) {
 }
 
 async function cacheAllStores() {
-  const stores = await storesModel.find({}, { _id: 0, __v: 0 });
+  const projection = {
+    _id: 0,
+    __v: 0,
+    createdAt: 0,
+    updatedAt: 0
+  };
 
-  storesList = stores;
+  const stores = await storesModel.find({}, projection);
+
+  cache.set('all', stores);
 }
 
 async function updateStores(updatePeriod) {
@@ -84,27 +92,54 @@ async function updateStores(updatePeriod) {
   await cacheAllStores();
 }
 
-function getStoresNumber() {
-  return storesList.length;
+function getNumberOfStores() {
+  return cache.get('all').length;
 }
 
 async function getStores(filters) {
-  const projection = { _id: 0, __v: 0 };
+  const key = filters;
 
-  return await storesModel.find(filters, projection);
+  if (cache.has(key)) return cache.get(key);
+
+  const projection = {
+    _id: 0,
+    __v: 0,
+    createdAt: 0,
+    updatedAt: 0
+  };
+
+  const stores = await storesModel.find(filters, projection);
+
+  cache.set(key, stores);
+
+  return stores;
 }
 
 function getPaginatedStores(page, limit) {
+  const key = { page, limit };
+
+  if (cache.has(key)) return cache.get(key);
+
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
-  return storesList.filter(
-    (_, index) => index >= startIndex && index < endIndex
-  );
+  const storesPage = cache
+    .get('all')
+    .filter((_, index) => index >= startIndex && index < endIndex);
+
+  cache.set(key, storesPage);
+
+  return storesPage;
 }
 
 async function adminGetStores() {
-  return await storesModel.find({}, { __v: 0 });
+  const projection = {
+    __v: 0,
+    createdAt: 0,
+    updatedAt: 0
+  };
+
+  return await storesModel.find({}, projection);
 }
 
 async function adminAddStore(store) {
@@ -154,7 +189,7 @@ async function adminUpdateStores(updatedStores) {
 
 export {
   updateStores,
-  getStoresNumber,
+  getNumberOfStores,
   getStores,
   getPaginatedStores,
   adminGetStores,
