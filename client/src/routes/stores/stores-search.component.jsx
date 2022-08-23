@@ -21,7 +21,7 @@ function StoresSearch() {
 
   const loadingContent = <Spinner fullpage />;
 
-  const loadedContent = <StoresDisplayboard stores={stores} />;
+  const loadedContent = <StoresDisplayboard lazy stores={stores} />;
 
   return (
     <Fragment>

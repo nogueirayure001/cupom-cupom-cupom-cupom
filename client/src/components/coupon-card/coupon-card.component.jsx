@@ -43,8 +43,6 @@ function CouponCard({ coupon, showPlaceholder }) {
 
   const { description, store, image, code, category, link } = coupon;
 
-  console.log(image);
-
   return (
     <StyledArticle title={description}>
       <Content>
