@@ -12,9 +12,10 @@ import { Section } from '../../components/section';
 import { Form } from '../../components/form';
 import { TextField } from '../../components/text-field';
 import { Checkbox } from '../../components/checkbox';
+import { Group } from '../../components/group';
 import { Spinner } from '../../components/spinner';
 import { Modal } from '../../components/modal';
-import { CreateButton, ErrorMessage } from './index';
+import { DisplayBoard, CreateButton, ErrorMessage } from './index';
 
 const MESSAGES = {
   'Could not send request': 'Não foi possível enviar a requisição',
@@ -111,46 +112,49 @@ function StoresCreation(props) {
 
   return (
     <Section title='Adicionar Loja'>
-      <Form onChange={changeHandler} onSubmit={submitHandler}>
-        <TextField
-          label='Nome'
-          value={fields.name.value}
-          type='text'
-          name='name'
-          error={!fields.name.valid && fields.name.blurred}
-        />
+      <DisplayBoard>
+        <Form onChange={changeHandler} onSubmit={submitHandler}>
+          <TextField
+            label='Nome'
+            value={fields.name.value}
+            type='text'
+            name='name'
+            error={!fields.name.valid && fields.name.blurred}
+          />
 
-        <TextField
-          label='Imagem'
-          value={fields.image.value}
-          type='text'
-          name='image'
-          error={!fields.image.valid && fields.image.blurred}
-        />
+          <TextField
+            label='Imagem'
+            value={fields.image.value}
+            type='text'
+            name='image'
+            error={!fields.image.valid && fields.image.blurred}
+          />
 
-        <TextField
-          label='Fonte'
-          value={fields.source.value}
-          type='text'
-          name='source'
-          error={!fields.source.valid && fields.source.blurred}
-        />
+          <Group>
+            <TextField
+              label='Fonte'
+              value={fields.source.value}
+              type='text'
+              name='source'
+              error={!fields.source.valid && fields.source.blurred}
+            />
+            <Checkbox
+              label='Destacar'
+              value={fields.featured.value}
+              name='featured'
+              checked={fields.featured.value}
+            />
+          </Group>
 
-        <Checkbox
-          label='Destacar'
-          value={fields.featured.value}
-          name='featured'
-          checked={fields.featured.value}
-        />
+          <ErrorMessage show={showValidationMessage}>
+            Todos os campos devem estar preenchidos
+          </ErrorMessage>
 
-        <ErrorMessage show={showValidationMessage}>
-          Todos os campos devem estar preenchidos
-        </ErrorMessage>
-
-        <CreateButton type='submit'>
-          {isLoading ? <Spinner mini /> : 'Criar'}
-        </CreateButton>
-      </Form>
+          <CreateButton type='submit'>
+            {isLoading ? <Spinner mini /> : 'Criar'}
+          </CreateButton>
+        </Form>
+      </DisplayBoard>
 
       <Modal
         show={showModal}

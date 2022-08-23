@@ -20,3 +20,10 @@ export const CreateButton = styled(Button)`
   height: 60px;
   background-color: ${({ theme }) => theme.neutral_I};
 `;
+
+export const DisplayBoard = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+`;

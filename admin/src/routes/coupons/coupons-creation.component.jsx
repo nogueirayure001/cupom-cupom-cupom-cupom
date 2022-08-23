@@ -18,7 +18,7 @@ import { Checkbox } from '../../components/checkbox';
 import { Group } from '../../components/group';
 import { Spinner } from '../../components/spinner';
 import { Modal } from '../../components/modal';
-import { CreateButton, ErrorMessage } from './index';
+import { DisplayBoard, CreateButton, ErrorMessage } from './index';
 
 const MESSAGES = {
   'Could not send request': 'Não foi possível enviar a requisição',
@@ -124,82 +124,84 @@ function CouponsCreation(props) {
 
   return (
     <Section title='Adicionar Cupom'>
-      <Form onChange={changeHandler} onSubmit={submitHandler}>
-        <Group>
-          <Select
-            label='Loja'
-            name='store'
-            clear={fields.store.value === ''}
-            options={stores.map((store) => store.name)}
-            changeHandler={changeHandler}
-            error={!fields.store.valid && fields.store.blurred}
+      <DisplayBoard>
+        <Form onChange={changeHandler} onSubmit={submitHandler}>
+          <Group>
+            <Select
+              label='Loja'
+              name='store'
+              clear={fields.store.value === ''}
+              options={stores.map((store) => store.name)}
+              changeHandler={changeHandler}
+              error={!fields.store.valid && fields.store.blurred}
+            />
+
+            <TextField
+              label='Fonte'
+              value={fields.source.value}
+              type='text'
+              name='source'
+              error={!fields.source.valid && fields.source.blurred}
+            />
+          </Group>
+
+          <Group>
+            <TextField
+              label='Código'
+              value={fields.code.value}
+              type='text'
+              name='code'
+              error={!fields.code.valid && fields.code.blurred}
+            />
+
+            <TextField
+              label='Categoria'
+              value={fields.category.value}
+              type='text'
+              name='category'
+              error={!fields.category.valid && fields.category.blurred}
+            />
+          </Group>
+
+          <TextField
+            label='Link'
+            value={fields.link.value}
+            type='text'
+            name='link'
+            error={!fields.link.valid && fields.link.blurred}
           />
 
           <TextField
-            label='Fonte'
-            value={fields.source.value}
+            label='Imagem'
+            value={fields.image.value}
             type='text'
-            name='source'
-            error={!fields.source.valid && fields.source.blurred}
-          />
-        </Group>
-
-        <Group>
-          <TextField
-            label='Código'
-            value={fields.code.value}
-            type='text'
-            name='code'
-            error={!fields.code.valid && fields.code.blurred}
+            name='image'
+            error={!fields.image.valid && fields.image.blurred}
           />
 
-          <TextField
-            label='Categoria'
-            value={fields.category.value}
-            type='text'
-            name='category'
-            error={!fields.category.valid && fields.category.blurred}
+          <TextArea
+            label='Descrição'
+            value={fields.description.value}
+            name='description'
+            error={!fields.description.valid && fields.description.blurred}
           />
-        </Group>
 
-        <TextField
-          label='Link'
-          value={fields.link.value}
-          type='text'
-          name='link'
-          error={!fields.link.valid && fields.link.blurred}
-        />
+          <Checkbox
+            label='Destacar'
+            value={fields.featured.value}
+            name='featured'
+            checked={fields.featured.value}
+          />
 
-        <TextField
-          label='Imagem'
-          value={fields.image.value}
-          type='text'
-          name='image'
-          error={!fields.image.valid && fields.image.blurred}
-        />
+          <ErrorMessage show={showValidationMessage}>
+            Todos os campos devem estar preenchidos
+          </ErrorMessage>
 
-        <TextArea
-          label='Descrição'
-          value={fields.description.value}
-          name='description'
-          error={!fields.description.valid && fields.description.blurred}
-        />
-
-        <Checkbox
-          label='Destacar'
-          value={fields.featured.value}
-          name='featured'
-          checked={fields.featured.value}
-        />
-
-        <ErrorMessage show={showValidationMessage}>
-          Todos os campos devem estar preenchidos
-        </ErrorMessage>
-
-        <CreateButton type='submit'>
-          {isLoading ? <Spinner mini /> : 'Criar'}
-        </CreateButton>
-      </Form>
+          <CreateButton type='submit'>
+            {isLoading ? <Spinner mini /> : 'Criar'}
+          </CreateButton>
+        </Form>
+      </DisplayBoard>
 
       <Modal
         show={showModal}

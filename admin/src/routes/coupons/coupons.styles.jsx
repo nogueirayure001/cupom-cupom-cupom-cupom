@@ -2,6 +2,13 @@ import styled from 'styled-components';
 
 import { Button } from '../../components/button';
 
+export const DisplayBoard = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+`;
+
 export const ButtonsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;

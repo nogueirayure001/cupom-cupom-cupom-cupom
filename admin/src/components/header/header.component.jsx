@@ -63,9 +63,9 @@ function Header(props) {
 
           <NavItem active={pathname.startsWith('/auth')}>
             {user ? (
-              <LogoutButton onClick={logoutHandler}>logout</LogoutButton>
+              <LogoutButton onClick={logoutHandler}>Sair</LogoutButton>
             ) : (
-              <Link to='/login'>Autenticar</Link>
+              <Link to='/login'>Fazer Login</Link>
             )}
           </NavItem>
         </NavList>

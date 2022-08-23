@@ -1,22 +1,23 @@
 import { ACTION_TYPES } from './index';
 
 const DEFAULT_STATE = {
+  target: '',
   isLoading: false,
   error: null,
   success: false
 };
 
-function createCouponReducer(state = DEFAULT_STATE, action = {}) {
+function updateStoreReducer(state = DEFAULT_STATE, action = {}) {
   const { type, payload } = action;
 
   switch (type) {
-    case ACTION_TYPES.CREATE_COUPON_START:
-      return { ...state, isLoading: true };
+    case ACTION_TYPES.UPDATE_STORE_START:
+      return { ...state, target: payload, isLoading: true };
 
-    case ACTION_TYPES.CREATE_COUPON_SUCCESS:
+    case ACTION_TYPES.UPDATE_STORE_SUCCESS:
       return { ...state, error: null, success: true, isLoading: false };
 
-    case ACTION_TYPES.CREATE_COUPON_FAIL:
+    case ACTION_TYPES.UPDATE_STORE_FAIL:
       return { ...state, error: payload, success: false, isLoading: false };
 
     case ACTION_TYPES.CLEAR_STATE:
@@ -27,4 +28,4 @@ function createCouponReducer(state = DEFAULT_STATE, action = {}) {
   }
 }
 
-export default createCouponReducer;
+export default updateStoreReducer;

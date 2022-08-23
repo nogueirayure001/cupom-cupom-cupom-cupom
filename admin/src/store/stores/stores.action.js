@@ -1,9 +1,7 @@
 import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
-async function getStores(token) {
-  const path = '/api/stores/admin/all';
-
+async function getStores(token, query, path) {
   const headers = new Headers();
   headers.append('content-type', 'application/json');
   headers.append('accept', 'application/json');
@@ -14,7 +12,7 @@ async function getStores(token) {
     headers
   };
 
-  return await httpRequest(path, {}, configs);
+  return await httpRequest(path, query, configs);
 }
 
 function loadStoresStart() {
@@ -30,6 +28,8 @@ function loadStoresFail(error) {
 }
 
 export function loadStoresAsync(token) {
+  const path = '/api/stores/admin/all';
+
   return async (dispatch) => {
     dispatch(loadStoresStart());
 
@@ -37,7 +37,7 @@ export function loadStoresAsync(token) {
       const {
         requestInfo: { success, message },
         data: stores
-      } = await getStores(token);
+      } = await getStores(token, {}, path);
 
       if (!success) {
         dispatch(loadStoresFail(message));
@@ -47,6 +47,45 @@ export function loadStoresAsync(token) {
       dispatch(loadStoresSuccess(stores));
     } catch (e) {
       dispatch(loadStoresFail('Não foi possível enviar a requisição'));
+    }
+  };
+}
+
+function loadPaginatedStoresStart() {
+  return createAction(ACTION_TYPES.FETCH_PAGINATED_STORES_START, null);
+}
+
+function loadPaginatedStoresSuccess(stores) {
+  return createAction(ACTION_TYPES.FETCH_PAGINATED_STORES_SUCCESS, stores);
+}
+
+function loadPaginatedStoresFail(error) {
+  return createAction(ACTION_TYPES.FETCH_PAGINATED_STORES_FAIL, error);
+}
+
+export function loadPaginatedStoresAsync(token, query) {
+  const path = '/api/stores/admin/paginated';
+
+  return async (dispatch) => {
+    dispatch(loadPaginatedStoresStart());
+
+    try {
+      const {
+        requestInfo: { success, message },
+        pagination,
+        data: stores
+      } = await getStores(token, query, path);
+
+      if (!success) {
+        dispatch(loadPaginatedStoresFail(message));
+        return;
+      }
+
+      const payload = { pagination, paginatedStores: stores };
+
+      dispatch(loadPaginatedStoresSuccess(payload));
+    } catch (e) {
+      dispatch(loadPaginatedStoresFail('Não foi possível enviar a requisição'));
     }
   };
 }

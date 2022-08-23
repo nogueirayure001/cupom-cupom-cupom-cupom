@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { StoresLayout, StoresCreation } from './index';
+import { StoresLayout, StoresCreation, StoresEdition } from './index';
 import { ProtectRoute } from '../../components/protect-route';
 
 function StoresRoute() {
@@ -9,6 +9,8 @@ function StoresRoute() {
       <Routes>
         <Route path='/' element={<StoresLayout />}>
           <Route index element={<StoresCreation />} />
+          <Route path='edition' element={<StoresEdition />} />
+          <Route path='edition/:page' element={<StoresEdition />} />
         </Route>
       </Routes>
     </ProtectRoute>

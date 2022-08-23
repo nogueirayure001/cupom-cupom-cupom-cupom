@@ -10,6 +10,7 @@ const shrinkLabel = css`
 `;
 
 export const StyledInput = styled(Input)`
+  width: 100%;
   position: relative;
 
   &:focus-within {

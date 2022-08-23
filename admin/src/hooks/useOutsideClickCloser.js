@@ -6,7 +6,7 @@ function useOutsideClickCloser(elRef, setterFunction) {
 
     const element = elRef.current;
 
-    if (!element.contains(e.target)) {
+    if (!element?.contains(e.target)) {
       setterFunction(false);
     }
   };

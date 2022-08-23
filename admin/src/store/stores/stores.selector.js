@@ -1,8 +1,11 @@
-import { createSelector } from 'reselect';
+export function selectStoresState(state) {
+  return state.stores;
+}
 
-export const selectStoresState = (state) => state.stores;
+export function selectStores(state) {
+  return state.stores.stores;
+}
 
-export const selectStores = createSelector(
-  selectStoresState,
-  (storesState) => storesState.stores
-);
+export function selectPaginatedStores(state) {
+  return state.stores.paginatedStores;
+}

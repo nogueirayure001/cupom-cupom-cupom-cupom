@@ -9,11 +9,11 @@ function StoresLayout(props) {
     <Fragment>
       <ButtonsContainer>
         <Button>
-          <Link to='/'>Criar nova</Link>
+          <Link to='./'>Adicionar</Link>
         </Button>
 
         <Button>
-          <Link to='/'>Editar</Link>
+          <Link to='./edition'>Editar</Link>
         </Button>
       </ButtonsContainer>
 

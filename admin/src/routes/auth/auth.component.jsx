@@ -87,7 +87,7 @@ function Authenticate(props) {
   }, [user]);
 
   return (
-    <Section title='Adicionar Loja'>
+    <Section title='AUTENTIQUE-SE'>
       <Form onChange={changeHandler} onSubmit={submitHandler} noValidate>
         <TextField
           label='E-mail'

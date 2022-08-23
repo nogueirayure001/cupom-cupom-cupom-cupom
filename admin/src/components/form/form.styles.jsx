@@ -8,7 +8,6 @@ export const StyledForm = styled.form`
   width: 100%;
   max-width: 560px;
   padding: 32px 16px;
-  margin: 0 auto;
   border: 2px solid ${({ theme }) => theme.neutral_I};
   border-radius: 6px;
   background: rgb(2, 0, 36);
