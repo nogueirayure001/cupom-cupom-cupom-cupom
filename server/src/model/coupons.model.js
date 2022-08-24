@@ -1,6 +1,7 @@
 import axios from 'axios';
 import mongoose from 'mongoose';
 
+import Cache from '../utils/cache.utils.js';
 import couponsSchema from './schemas/coupons.schema.js';
 const couponsModel = mongoose.model('coupon', couponsSchema);
 
@@ -16,8 +17,7 @@ const COUPON_VALID_KEYS = [
   'source'
 ];
 
-let couponsList = [];
-let categories = [];
+const cache = new Cache();
 
 async function getUpdatedLomadeeCoupons() {
   const response = await axios.get(LOMADEE_COUPONS_URL, {
@@ -66,7 +66,9 @@ async function saveLomadeeCoupons(coupons) {
 }
 
 async function deleteOutdatedLomadeeCoupons(updatePeriod) {
-  const lomadeeCoupons = await couponsModel.find({ source: 'Lomadee' });
+  const filter = { source: 'Lomadee' };
+
+  const lomadeeCoupons = await couponsModel.find(filter);
 
   const operations = lomadeeCoupons
     .map((coupon) => {
@@ -87,10 +89,16 @@ async function deleteOutdatedLomadeeCoupons(updatePeriod) {
   await couponsModel.bulkWrite(operations);
 }
 
-async function cacheAllCoupons() {
-  const coupons = await couponsModel.find({}, { _id: 0, __v: 0 });
+async function refreshCaching() {
+  const filter = {};
 
-  couponsList = coupons;
+  const projection = { _id: 0, __v: 0 };
+
+  const coupons = await couponsModel.find(filter, projection);
+
+  cache.clear();
+
+  cache.set('all', coupons);
 }
 
 async function updateCoupons(updatePeriod) {
@@ -100,33 +108,50 @@ async function updateCoupons(updatePeriod) {
 
   await deleteOutdatedLomadeeCoupons(updatePeriod);
 
-  await cacheAllCoupons();
+  await refreshCaching();
 }
 
-function getCouponsNumber() {
-  return couponsList.length;
+// getCouponsNumber
+function getNumberOfCoupons() {
+  return cache.get('all').length;
 }
 
 async function getFeaturedCoupons() {
-  return await couponsModel.find(
-    { featured: true },
-    {
-      _id: 0,
-      __v: 0
-    }
-  );
+  const filter = { featured: true };
+
+  const projection = { _id: 0, __v: 0 };
+
+  if (cache.has('featured')) return cache.get('featured');
+
+  const coupons = await couponsModel.find(filter, projection);
+
+  cache.set('featured', coupons);
+
+  return coupons;
 }
 
 function getPaginatedCoupons(page, limit) {
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+  const key = { page, limit };
 
-  return couponsList.filter(
-    (_, index) => index >= startIndex && index < endIndex
-  );
+  if (cache.has(key)) return cache.get(key);
+
+  const start = (page - 1) * limit;
+  const end = page * limit;
+
+  const couponsPage = cache
+    .get('all')
+    .filter((_, index) => index >= start && index < end);
+
+  cache.set(key, couponsPage);
+
+  return couponsPage;
 }
 
 async function getSearchedCoupons(searchTerm, searchFilters = '') {
+  const key = { searchTerm, searchFilters };
+
+  if (cache.has(key)) return cache.get(key);
+
   const searchTermRegex = new RegExp(searchTerm, 'i');
 
   const FILTER_VALUES = {
@@ -143,26 +168,45 @@ async function getSearchedCoupons(searchTerm, searchFilters = '') {
     .filter((filter) => FILTER_KEYS.includes(filter))
     .map((filter) => FILTER_VALUES[filter]);
 
-  return await couponsModel.find(
-    {
-      $or: appliedFilters.length ? appliedFilters : Object.values(FILTER_VALUES)
-    },
-    { _id: 0, __v: 0 }
-  );
+  const filter = {
+    $or: appliedFilters.length ? appliedFilters : Object.values(FILTER_VALUES)
+  };
+
+  const projection = { _id: 0, __v: 0 };
+
+  const searchResults = await couponsModel.find(filter, projection);
+
+  cache.set(key, searchResults);
+
+  return searchResults;
 }
 
-async function getActiveCouponCategories() {
-  if (categories.length) return categories;
+async function getCategories() {
+  if (cache.has('categories')) return cache.get('categories');
 
-  const result = await couponsModel.distinct('category', {});
+  const field = 'category';
 
-  if (result.length) categories = result;
+  const filter = {};
 
-  return result;
+  const categories = await couponsModel.distinct(field, filter);
+
+  cache.set('categories', categories);
+
+  return categories;
 }
 
 async function adminGetCoupons() {
-  return await couponsModel.find({}, { __v: 0 });
+  if (cache.has('adminAll')) return cache.get('adminAll');
+
+  const filter = {};
+
+  const projection = { __v: 0 };
+
+  const coupons = await couponsModel.find(filter, projection);
+
+  cache.set('adminAll', coupons);
+
+  return coupons;
 }
 
 async function adminAddCoupon(coupon) {
@@ -170,6 +214,8 @@ async function adminAddCoupon(coupon) {
 
   try {
     await newCoupon.save();
+
+    refreshCaching();
 
     return true;
   } catch (e) {
@@ -181,44 +227,52 @@ async function adminAddCoupon(coupon) {
   }
 }
 
-async function adminDeleteCoupons(couponsIds) {
-  const writes = couponsIds.map((id) => ({
-    deleteOne: {
-      filter: { _id: id }
-    }
-  }));
+async function adminDeleteCoupon(id) {
+  const filter = { _id: id };
 
-  const result = await couponsModel.bulkWrite(writes);
+  const validId = mongoose.Types.ObjectId.isValid(id);
 
-  cacheAllCoupons();
+  if (!validId) return false;
 
-  return result;
+  const { acknowledged, deletedCount } = await couponsModel.deleteOne(filter);
+
+  if (!acknowledged) throw new Error();
+
+  if (deletedCount) refreshCaching();
+
+  return deletedCount && true;
 }
 
-async function adminUpdateCoupons(updatedCoupons) {
-  const writes = updatedCoupons.map(({ id, ...update }) => ({
-    updateOne: {
-      filter: { _id: id },
-      update: update
-    }
-  }));
+async function adminUpdateCoupon(id, update) {
+  const filter = { _id: id };
+  const update = update;
 
-  const result = await couponsModel.bulkWrite(writes);
+  const validId = mongoose.Types.ObjectId.isValid(id);
+  if (!validId) return false;
 
-  cacheAllCoupons();
+  const { acknowledged, modifiedCount, matchedCount } =
+    await couponsModel.updateOne(filter, update);
 
-  return result;
+  if (!acknowledged) throw new Error();
+
+  if (!matchedCount) return false;
+
+  if (!modifiedCount) throw new Error();
+
+  refreshCaching();
+
+  return true;
 }
 
 export {
   updateCoupons,
-  getCouponsNumber,
+  getNumberOfCoupons,
   getFeaturedCoupons,
   getPaginatedCoupons,
   getSearchedCoupons,
-  getActiveCouponCategories,
+  getCategories,
   adminGetCoupons,
   adminAddCoupon,
-  adminDeleteCoupons,
-  adminUpdateCoupons
+  adminDeleteCoupon,
+  adminUpdateCoupon
 };
