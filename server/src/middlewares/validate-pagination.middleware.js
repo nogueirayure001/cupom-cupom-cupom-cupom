@@ -1,5 +1,5 @@
-import { getNumberOfStores } from '../model/stores.model.js';
-import { getNumberOfCoupons } from '../model/coupons.model.js';
+import { getNumberOfStores } from '../models/stores.model.js';
+import { getNumberOfCoupons } from '../models/coupons.model.js';
 import UserError from '../errors/user-error.error.js';
 
 const { MESSAGES } = UserError;

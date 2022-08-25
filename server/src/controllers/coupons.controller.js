@@ -7,7 +7,7 @@ import {
   adminAddCoupon,
   adminDeleteCoupon,
   adminUpdateCoupon
-} from '../model/coupons.model.js';
+} from '../models/coupons.model.js';
 import DBError from '../errors/db-error.error.js';
 import UserError from '../errors/user-error.error.js';
 import CouponsDTO from '../views/coupons.view.js';

@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 import { wait } from './utils/wait.utils.js';
-import { updateCoupons } from './model/coupons.model.js';
-import { updateStores } from './model/stores.model.js';
+import { updateCoupons } from './models/coupons.model.js';
+import { updateStores } from './models/stores.model.js';
 
 const MONGODB_URL = process.env.MONGODB_URL;
 const BASE_TIME = 2;

@@ -2,7 +2,7 @@ import axios from 'axios';
 import mongoose from 'mongoose';
 
 import Cache from '../utils/cache.utils.js';
-import couponsSchema from './schemas/coupons.schema.js';
+import couponsSchema from '../schemas/coupons.schema.js';
 const couponsModel = mongoose.model('coupon', couponsSchema);
 
 const LOMADEE_COUPONS_URL = process.env.LOMADEE_COUPONS_URL;

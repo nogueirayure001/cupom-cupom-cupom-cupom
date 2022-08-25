@@ -4,7 +4,7 @@ import {
   createNewUser,
   updateUser,
   deleteUser
-} from '../model/users.model.js';
+} from '../models/users.model.js';
 import Validation from '../utils/validation.utils.js';
 import UserError from '../errors/user-error.error.js';
 import DBError from '../errors/db-error.error.js';

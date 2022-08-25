@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import axios from 'axios';
 
 import Cache from '../utils/cache.utils.js';
-import storesSchema from './schemas/stores.schema.js';
+import storesSchema from '../schemas/stores.schema.js';
 const storesModel = mongoose.model('store', storesSchema);
 
 const LOMADEE_STORES_URL = process.env.LOMADEE_STORES_URL;

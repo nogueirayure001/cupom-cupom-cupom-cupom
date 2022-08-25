@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-import newsletterSchema from './schemas/newsletter.schema.js';
-
+import newsletterSchema from '../schemas/newsletter.schema.js';
 const newsletterModel = mongoose.model('newsletterEmail', newsletterSchema);
 
 async function subscribeToNewsletter(email) {

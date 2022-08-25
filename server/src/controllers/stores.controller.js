@@ -6,7 +6,7 @@ import {
   adminAddStore,
   adminDeleteStore,
   adminUpdateStore
-} from '../model/stores.model.js';
+} from '../models/stores.model.js';
 import StoresDTO from '../views/stores.view.js';
 import DBError from '../errors/db-error.error.js';
 import UserError from '../errors/user-error.error.js';

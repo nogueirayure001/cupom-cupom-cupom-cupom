@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-import authSchema from './schemas/auth.schema.js';
-
+import authSchema from '../schemas/auth.schema.js';
 const authModel = mongoose.model('auth', authSchema);
 
 async function getTokenData(userId) {

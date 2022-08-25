@@ -1,5 +1,9 @@
-import { getUser } from '../model/users.model.js';
-import { getTokenData, createToken, deleteToken } from '../model/auth.model.js';
+import { getUser } from '../models/users.model.js';
+import {
+  getTokenData,
+  createToken,
+  deleteToken
+} from '../models/auth.model.js';
 import UserError from '../errors/user-error.error.js';
 import DBError from '../errors/db-error.error.js';
 import AuthDTO from '../views/auth.view.js';

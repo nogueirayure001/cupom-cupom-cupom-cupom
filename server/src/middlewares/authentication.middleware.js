@@ -1,5 +1,5 @@
 import AuthError from '../errors/auth-error.error.js';
-import { verifyTokenValidity } from '../model/auth.model.js';
+import { verifyTokenValidity } from '../models/auth.model.js';
 
 const allowedAuthSchemes = ['Bearer', 'Basic'];
 

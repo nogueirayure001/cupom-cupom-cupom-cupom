@@ -2,7 +2,7 @@ import {
   subscribeToNewsletter,
   unsubscribeFromNewsletter,
   getSubscribers
-} from '../model/newsletter.model.js';
+} from '../models/newsletter.model.js';
 import Validation from '../utils/validation.utils.js';
 import NewsletterDTO from '../views/newsletter.view.js';
 import UserError from '../errors/user-error.error.js';
