@@ -92,7 +92,12 @@ async function deleteOutdatedLomadeeCoupons(updatePeriod) {
 async function refreshCaching() {
   const filter = {};
 
-  const projection = { _id: 0, __v: 0 };
+  const projection = {
+    _id: 0,
+    __v: 0,
+    createdAt: 0,
+    updatedAt: 0
+  };
 
   const coupons = await couponsModel.find(filter, projection);
 
@@ -111,7 +116,6 @@ async function updateCoupons(updatePeriod) {
   await refreshCaching();
 }
 
-// getCouponsNumber
 function getNumberOfCoupons() {
   return cache.get('all').length;
 }
@@ -119,7 +123,12 @@ function getNumberOfCoupons() {
 async function getFeaturedCoupons() {
   const filter = { featured: true };
 
-  const projection = { _id: 0, __v: 0 };
+  const projection = {
+    _id: 0,
+    __v: 0,
+    createdAt: 0,
+    updatedAt: 0
+  };
 
   if (cache.has('featured')) return cache.get('featured');
 
@@ -172,7 +181,12 @@ async function getSearchedCoupons(searchTerm, searchFilters = '') {
     $or: appliedFilters.length ? appliedFilters : Object.values(FILTER_VALUES)
   };
 
-  const projection = { _id: 0, __v: 0 };
+  const projection = {
+    _id: 0,
+    __v: 0,
+    createdAt: 0,
+    updatedAt: 0
+  };
 
   const searchResults = await couponsModel.find(filter, projection);
 
@@ -200,7 +214,11 @@ async function adminGetCoupons() {
 
   const filter = {};
 
-  const projection = { __v: 0 };
+  const projection = {
+    __v: 0,
+    createdAt: 0,
+    updatedAt: 0
+  };
 
   const coupons = await couponsModel.find(filter, projection);
 
@@ -245,7 +263,6 @@ async function adminDeleteCoupon(id) {
 
 async function adminUpdateCoupon(id, update) {
   const filter = { _id: id };
-  const update = update;
 
   const validId = mongoose.Types.ObjectId.isValid(id);
   if (!validId) return false;

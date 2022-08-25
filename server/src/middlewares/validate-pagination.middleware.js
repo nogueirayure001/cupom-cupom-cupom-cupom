@@ -1,5 +1,5 @@
 import { getNumberOfStores } from '../model/stores.model.js';
-import { getCouponsNumber } from '../model/coupons.model.js';
+import { getNumberOfCoupons } from '../model/coupons.model.js';
 import UserError from '../errors/user-error.error.js';
 
 const { MESSAGES } = UserError;
@@ -25,7 +25,9 @@ function validatePagination(req, res, next) {
   }
 
   const getItemsNumber =
-    req.baseUrl === POSSIBLE_URLS.stores ? getNumberOfStores : getCouponsNumber;
+    req.baseUrl === POSSIBLE_URLS.stores
+      ? getNumberOfStores
+      : getNumberOfCoupons;
 
   const numOfItems = getItemsNumber();
   const numOfPages = Math.ceil(numOfItems / limit);

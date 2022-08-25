@@ -7,8 +7,8 @@ import {
   httpGetActiveCouponCategories,
   httpAdminGetCoupons,
   httpAdminAddCoupon,
-  httpAdminDeleteCoupons,
-  httpAdminUpdateCoupons
+  httpAdminDeleteCoupon,
+  httpAdminUpdateCoupon
 } from '../controllers/coupons.controller.js';
 import validatePagination from '../middlewares/validate-pagination.middleware.js';
 import authentication from '../middlewares/authentication.middleware.js';
@@ -23,7 +23,7 @@ couponsRouter.get('/categories', httpGetActiveCouponCategories);
 couponsRouter.use(authentication);
 couponsRouter.get('/admin/all', httpAdminGetCoupons);
 couponsRouter.post('/admin/add', httpAdminAddCoupon);
-couponsRouter.delete('/admin/delete', httpAdminDeleteCoupons);
-couponsRouter.patch('/admin/update', httpAdminUpdateCoupons);
+couponsRouter.delete('/admin/delete', httpAdminDeleteCoupon);
+couponsRouter.patch('/admin/update', httpAdminUpdateCoupon);
 
 export default couponsRouter;

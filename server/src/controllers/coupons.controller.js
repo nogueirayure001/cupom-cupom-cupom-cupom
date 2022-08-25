@@ -2,11 +2,11 @@ import {
   getPaginatedCoupons,
   getFeaturedCoupons,
   getSearchedCoupons,
-  getActiveCouponCategories,
+  getCategories,
   adminGetCoupons,
   adminAddCoupon,
-  adminDeleteCoupons,
-  adminUpdateCoupons
+  adminDeleteCoupon,
+  adminUpdateCoupon
 } from '../model/coupons.model.js';
 import DBError from '../errors/db-error.error.js';
 import UserError from '../errors/user-error.error.js';
@@ -51,7 +51,7 @@ async function httpGetSearchedCoupons(req, res) {
 
 async function httpGetActiveCouponCategories(req, res) {
   try {
-    const data = await getActiveCouponCategories();
+    const data = await getCategories();
 
     return res.status(200).json(new CouponsDTO({ data }));
   } catch (e) {
@@ -83,16 +83,13 @@ async function httpAdminAddCoupon(req, res, next) {
   }
 }
 
-async function httpAdminDeleteCoupons(req, res, next) {
-  const { couponsToDelete } = req.body;
+async function httpAdminDeleteCoupon(req, res, next) {
+  const { couponId } = req.body;
 
   try {
-    const {
-      result: { ok, nRemoved }
-    } = await adminDeleteCoupons(couponsToDelete);
+    const success = await adminDeleteCoupon(couponId);
 
-    if (!(ok && nRemoved))
-      return next(new UserError(MESSAGES.invalidResourceId));
+    if (!success) return next(new UserError(MESSAGES.invalidResourceId));
 
     return res.status(200).json(new CouponsDTO());
   } catch (e) {
@@ -100,16 +97,13 @@ async function httpAdminDeleteCoupons(req, res, next) {
   }
 }
 
-async function httpAdminUpdateCoupons(req, res, next) {
-  const { updatedCoupons } = req.body;
+async function httpAdminUpdateCoupon(req, res, next) {
+  const { couponId, update } = req.body;
 
   try {
-    const {
-      result: { ok, nModified, nMatched }
-    } = await adminUpdateCoupons(updatedCoupons);
+    const success = await adminUpdateCoupon(couponId, update);
 
-    if (!(ok && nModified && nModified === nMatched))
-      return next(new UserError(MESSAGES.invalidResourceId));
+    if (!success) return next(new UserError(MESSAGES.invalidResourceId));
 
     return res.status(200).json(new CouponsDTO());
   } catch (e) {
@@ -124,6 +118,6 @@ export {
   httpGetActiveCouponCategories,
   httpAdminGetCoupons,
   httpAdminAddCoupon,
-  httpAdminDeleteCoupons,
-  httpAdminUpdateCoupons
+  httpAdminDeleteCoupon,
+  httpAdminUpdateCoupon
 };
