@@ -1,3 +1,3 @@
 export function selectDeleteState(state) {
-  return state.deleteStore;
+  return state.deleteCoupon;
 }

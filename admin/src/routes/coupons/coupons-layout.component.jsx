@@ -9,11 +9,11 @@ function CouponsLayout(props) {
     <Fragment>
       <ButtonsContainer>
         <Button>
-          <Link to='/'>Criar novo</Link>
+          <Link to='./'>Criar novo</Link>
         </Button>
 
         <Button>
-          <Link to='/'>Editar</Link>
+          <Link to='./edition'>Editar</Link>
         </Button>
       </ButtonsContainer>
 

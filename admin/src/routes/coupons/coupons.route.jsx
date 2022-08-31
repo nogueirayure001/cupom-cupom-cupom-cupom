@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { CouponsLayout, CouponsCreation } from './index';
+import { CouponsLayout, CouponsCreation, CouponsEdition } from './index';
 import { ProtectRoute } from '../../components/protect-route';
 
 function CouponsRoute() {
@@ -9,6 +9,8 @@ function CouponsRoute() {
       <Routes>
         <Route path='/' element={<CouponsLayout />}>
           <Route index element={<CouponsCreation />} />
+          <Route path='edition' element={<CouponsEdition />} />
+          <Route path='edition/:page' element={<CouponsEdition />} />
         </Route>
       </Routes>
     </ProtectRoute>

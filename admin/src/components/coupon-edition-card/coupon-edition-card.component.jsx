@@ -3,20 +3,23 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  updateStoreAsync,
+  updateCouponAsync,
   selectUpdateState,
   clearPreviousState as clearPreviousStateUpdate
-} from '../../store/update-store';
+} from '../../store/update-coupon';
 import {
-  deleteStoreAsync,
+  deleteCouponAsync,
   selectDeleteState,
   clearPreviousState as clearPreviousStateDel
-} from '../../store/delete-store';
-import { loadPaginatedStoresAsync } from '../../store/stores';
+} from '../../store/delete-coupon';
+import { loadPaginatedCouponsAsync } from '../../store/coupons';
+import { selectStores } from '../../store/stores';
 import { selectToken } from '../../store/auth';
 import { useCreateDefaultValues } from '../../hooks';
 import { TextField } from '../text-field';
+import { TextArea } from '../text-area';
 import { Checkbox } from '../checkbox';
+import { Select } from '../select';
 import { Group } from '../group';
 import { Spinner } from '../spinner';
 import { Modal } from '../modal';
@@ -31,11 +34,20 @@ const MESSAGES = {
     'O servidor falhou e não conseguiu completar a requisição. Porfavor tente novamente'
 };
 
-const validFields = ['name', 'image', 'source', 'featured'];
+const validFields = [
+  'category',
+  'code',
+  'description',
+  'featured',
+  'image',
+  'link',
+  'source',
+  'store'
+];
 
-function StoreEditionCard({ store }) {
-  const { _id: id, ...storeFields } = store;
-  const DEFAULT_FIELDS = useCreateDefaultValues(storeFields, validFields);
+function CouponEditionCard({ coupon }) {
+  const { _id: id, ...couponFields } = coupon;
+  const DEFAULT_FIELDS = useCreateDefaultValues(couponFields, validFields);
   const [fields, setFields] = useState(DEFAULT_FIELDS);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [showModalDel, setShowModalDel] = useState(false);
@@ -52,6 +64,7 @@ function StoreEditionCard({ store }) {
     error: errorDel,
     success: successDel
   } = useSelector(selectDeleteState);
+  const stores = useSelector(selectStores);
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
   const { page } = useParams();
@@ -91,17 +104,17 @@ function StoreEditionCard({ store }) {
 
     let shouldSendRequest = false;
     for (const key of Object.keys(update)) {
-      if (update[key] !== storeFields[key]) {
+      if (update[key] !== couponFields[key]) {
         shouldSendRequest = true;
         break;
       }
     }
 
-    if (shouldSendRequest) dispatch(updateStoreAsync(id, update, token));
+    if (shouldSendRequest) dispatch(updateCouponAsync(id, update, token));
   };
 
   const deleteHandler = async () => {
-    dispatch(deleteStoreAsync(id, token));
+    dispatch(deleteCouponAsync(id, token));
   };
 
   const cancelHandler = async () => {
@@ -129,7 +142,7 @@ function StoreEditionCard({ store }) {
 
     const query = { page };
 
-    dispatch(loadPaginatedStoresAsync(token, query));
+    dispatch(loadPaginatedCouponsAsync(token, query));
 
     dispatch(clearPreviousStateUpdate());
   }, [successUpdate]);
@@ -141,36 +154,27 @@ function StoreEditionCard({ store }) {
 
     const query = { page };
 
-    dispatch(loadPaginatedStoresAsync(token, query));
+    dispatch(loadPaginatedCouponsAsync(token, query));
 
     dispatch(clearPreviousStateDel());
   }, [successDel]);
 
   useEffect(() => {
     setFields(DEFAULT_FIELDS);
-  }, [store]);
+  }, [coupon]);
 
   return (
     <StyledForm onChange={changeHandler} onSubmit={submitHandler} noValidate>
-      <TextField
-        label='Nome'
-        type='text'
-        pattern={'^\\S.*\\S$'}
-        value={fields['name']['value']}
-        name='name'
-        error={!fields['name']['valid'] && fields['name']['blurred']}
-      />
-
-      <TextField
-        label='Imagem'
-        type='text'
-        pattern={'^\\S+$'}
-        value={fields['image']['value']}
-        name='image'
-        error={!fields['image']['valid'] && fields['image']['blurred']}
-      />
-
       <Group>
+        <Select
+          label='Loja'
+          name='store'
+          initialValue={fields['store']['value']}
+          options={stores.map((store) => store.name)}
+          changeHandler={changeHandler}
+          error={!fields['store']['valid'] && fields['store']['blurred']}
+        />
+
         <TextField
           label='Fonte'
           type='text'
@@ -179,14 +183,61 @@ function StoreEditionCard({ store }) {
           name='source'
           error={!fields['source']['valid'] && fields['source']['blurred']}
         />
+      </Group>
 
-        <Checkbox
-          label='Destacar'
-          value={fields['featured'].value}
-          name='featured'
-          defaultChecked={fields['featured'].value}
+      <Group>
+        <TextField
+          label='Código'
+          type='text'
+          pattern={'^\\S.*\\S$'}
+          value={fields['code']['value']}
+          name='code'
+          error={!fields['code']['valid'] && fields['code']['blurred']}
+        />
+
+        <TextField
+          label='Categoria'
+          type='text'
+          pattern={'^\\S.*\\S$'}
+          value={fields['category']['value']}
+          name='category'
+          error={!fields['category']['valid'] && fields['category']['blurred']}
         />
       </Group>
+
+      <TextField
+        label='Link'
+        type='text'
+        pattern={'^\\S.*\\S$'}
+        value={fields['link']['value']}
+        name='link'
+        error={!fields['link']['valid'] && fields['link']['blurred']}
+      />
+
+      <TextField
+        label='Imagem'
+        type='text'
+        pattern={'^\\S.*\\S$'}
+        value={fields['image']['value']}
+        name='image'
+        error={!fields['image']['valid'] && fields['image']['blurred']}
+      />
+
+      <TextArea
+        label='Descrição'
+        value={fields['description']['value']}
+        name='description'
+        error={
+          !fields['description']['valid'] && fields['description']['blurred']
+        }
+      />
+
+      <Checkbox
+        label='Destacar'
+        value={fields['featured']['value']}
+        name='featured'
+        checked={fields['featured']['value']}
+      />
 
       <ErrorMessage show={showValidationMessage}>
         Preencha todos os campos corretamente
@@ -225,4 +276,4 @@ function StoreEditionCard({ store }) {
   );
 }
 
-export default StoreEditionCard;
+export default CouponEditionCard;

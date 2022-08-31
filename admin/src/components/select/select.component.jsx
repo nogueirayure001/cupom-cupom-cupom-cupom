@@ -3,9 +3,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useOutsideClickCloser } from '../../hooks';
 import { SelectContainer, StyledSelect, OptionsList, Option } from './index';
 
-function Select({ options, name, changeHandler, clear, ...otherProps }) {
+function Select(props) {
+  const { options, name, initialValue, changeHandler, clear, ...otherProps } =
+    props;
   const [selectActive, setSelectActive] = useState(false);
-  const [selectValue, setSelectValue] = useState('');
+  const [selectValue, setSelectValue] = useState(initialValue || '');
   const optionsListRef = useRef();
   const selectorRef = useRef();
   useOutsideClickCloser(selectorRef, setSelectActive);
