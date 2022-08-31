@@ -26,6 +26,8 @@ async function httpLogUserIn(req: Request, res: Response, next: NextFunction) {
 
     const tokenData = await getTokenData(user._id);
 
+    console.log(new AuthDTO(tokenData));
+
     return res.status(200).json(new AuthDTO(tokenData));
   } catch (e) {
     next(new DBError());
