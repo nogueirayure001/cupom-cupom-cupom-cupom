@@ -6,6 +6,7 @@ import {
   httpGetSearchedCoupons,
   httpGetActiveCouponCategories,
   httpAdminGetCoupons,
+  httpAdminGetPaginatedCoupons,
   httpAdminAddCoupon,
   httpAdminDeleteCoupon,
   httpAdminUpdateCoupon
@@ -22,6 +23,11 @@ couponsRouter.get('/categories', httpGetActiveCouponCategories);
 
 couponsRouter.use(authentication);
 couponsRouter.get('/admin/all', httpAdminGetCoupons);
+couponsRouter.get(
+  '/admin/paginated', 
+  validatePagination, 
+  httpAdminGetPaginatedCoupons
+);
 couponsRouter.post('/admin/add', httpAdminAddCoupon);
 couponsRouter.delete('/admin/delete', httpAdminDeleteCoupon);
 couponsRouter.patch('/admin/update', httpAdminUpdateCoupon);

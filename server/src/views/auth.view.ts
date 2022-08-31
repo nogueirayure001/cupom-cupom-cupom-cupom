@@ -11,8 +11,6 @@ class AuthDTO {
       message: 'Request was successful'
     };
 
-    console.log('args', args);
-
     const { token, user } = args as { token: string, user: User };
 
     if (!user) return;

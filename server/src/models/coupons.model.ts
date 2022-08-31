@@ -237,6 +237,27 @@ async function adminGetCoupons() {
   return coupons;
 }
 
+async function adminGetPaginatedCoupons(page: number, limit: number) {
+  const key = { level: 'admin', page, limit };
+
+  if (cache.has(key)) return cache.get(key);
+
+  const coupons = cache.has('adminAll')
+    ? cache.get('adminAll')
+    : await adminGetCoupons();
+
+  if (!coupons || !Array.isArray(coupons)) throw new Error();
+
+  const start = (page - 1) * limit;
+  const end = page * limit;
+
+  const couponsPage = coupons.filter((_, index) => index >= start && index < end);
+
+  cache.set(key, couponsPage);
+
+  return couponsPage;
+}
+
 async function adminAddCoupon(coupon: Coupon) {
   const newCoupon = new couponsModel(coupon);
 
@@ -299,6 +320,7 @@ export {
   getSearchedCoupons,
   getCategories,
   adminGetCoupons,
+  adminGetPaginatedCoupons,
   adminAddCoupon,
   adminDeleteCoupon,
   adminUpdateCoupon

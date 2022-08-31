@@ -6,6 +6,7 @@ import {
   getSearchedCoupons,
   getCategories,
   adminGetCoupons,
+  adminGetPaginatedCoupons,
   adminAddCoupon,
   adminDeleteCoupon,
   adminUpdateCoupon
@@ -74,6 +75,24 @@ async function httpAdminGetCoupons(req: Request, res: Response, next: NextFuncti
   }
 }
 
+async function httpAdminGetPaginatedCoupons(req: Request, res: Response, next: NextFunction) {
+  const { pagination } = res.locals;
+  const { page, limit } = pagination;
+
+  try {
+    const coupons = await adminGetPaginatedCoupons(page, limit);
+
+    const DTO = {
+      pagination,
+      data: coupons
+    };
+
+    return res.status(200).json(new CouponsDTO(DTO));
+  } catch (e) {
+    next(new DBError());
+  }
+}
+
 async function httpAdminAddCoupon(req: Request, res: Response, next: NextFunction) {
   const { couponToAdd } = req.body;
 
@@ -122,6 +141,7 @@ export {
   httpGetSearchedCoupons,
   httpGetActiveCouponCategories,
   httpAdminGetCoupons,
+  httpAdminGetPaginatedCoupons,
   httpAdminAddCoupon,
   httpAdminDeleteCoupon,
   httpAdminUpdateCoupon
