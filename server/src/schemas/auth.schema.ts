@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { Auth } from './auth.schema.d.js'
+import { Auth } from './auth.schema.d'
 
 const authSchema = new mongoose.Schema<Auth>(
   {

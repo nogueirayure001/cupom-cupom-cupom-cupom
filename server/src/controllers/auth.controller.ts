@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
+import mongoose from 'mongoose';
 
-import { getUser } from '../models/users.model.js';
+import { getUser, verifyUser } from '../models/users.model';
 import {
   getTokenData,
   createToken,
   deleteToken
-} from '../models/auth.model.js';
-import UserError from '../errors/user-error.error.js';
-import DBError from '../errors/db-error.error.js';
-import AuthDTO from '../views/auth.view.js';
+} from '../models/auth.model';
+import UserError from '../errors/user-error.error';
+import DBError from '../errors/db-error.error';
+import AuthDTO from '../views/auth.view';
+import { User } from '../schemas/users.schema.d';
 
 const { MESSAGES } = UserError;
 
@@ -18,13 +20,16 @@ async function httpLogUserIn(req: Request, res: Response, next: NextFunction) {
   //validar email e password
 
   try {
-    const user = await getUser({ email, password });
-    if (!user || !user._id) return next(new UserError(MESSAGES.invalidCredentials));
+    const verifiedUser = await verifyUser(email, password);
+    if (!verifiedUser) return next(new UserError(MESSAGES.invalidCredentials));
 
-    const { upsertedCount, modifiedCount } = await createToken(user._id);
+    const user = await getUser({ email }) as User;
+    const userId = user._id as mongoose.Types.ObjectId;
+
+    const { upsertedCount, modifiedCount } = await createToken(userId);
     if (!(upsertedCount || modifiedCount)) return next(new DBError());
 
-    const tokenData = await getTokenData(user._id);
+    const tokenData = await getTokenData(userId);
 
     return res.status(200).json(new AuthDTO(tokenData));
   } catch (e) {

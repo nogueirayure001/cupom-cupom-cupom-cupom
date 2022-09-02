@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 
-import AuthError from '../errors/auth-error.error.js';
-import { verifyTokenValidity } from '../models/auth.model.js';
+import AuthError from '../errors/auth-error.error';
+import { verifyTokenValidity } from '../models/auth.model';
 
 const allowedAuthSchemes = ['Bearer', 'Basic'];
 

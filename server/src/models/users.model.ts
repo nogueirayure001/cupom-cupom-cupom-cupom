@@ -1,16 +1,13 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
-import usersSchema from '../schemas/users.schema.js';
-import { User } from '../schemas/users.schema.d.js';
+import usersSchema from '../schemas/users.schema';
+import { User } from '../schemas/users.schema.d';
 
 const usersModel = mongoose.model<User>('user', usersSchema);
 
 async function getUser(user: User): Promise<User | null> {
-  const { email, password } = user;
-
-  const filter = { email, password };
-
-  return await usersModel.findOne(filter, {
+  return await usersModel.findOne(user, {
     __v: 0,
     createdAt: 0,
     updatedAt: 0,
@@ -33,18 +30,28 @@ async function getAllUsers() {
 }
 
 async function createNewUser(user: User) {
-  const { userName, email, password } = user;
+  const { userName, email, password } = user as {
+    userName: string, 
+    email: string, 
+    password: string
+  };
+
+  const hash = await bcrypt.hash(password, 12);
 
   const newUser = new usersModel({
     userName,
     email,
-    password
+    password: hash
   });
 
   return await newUser.save();
 }
 
 async function updateUser(userId: mongoose.ObjectId, update: User ) {
+  if (update.password) {
+    update.password = await bcrypt.hash(update.password, 12);
+  }
+
   return await usersModel.updateOne({ _id: userId }, update);
 }
 
@@ -52,4 +59,14 @@ async function deleteUser(userId: mongoose.ObjectId) {
   return await usersModel.deleteOne({ _id: userId });
 }
 
-export { getUser, getAllUsers, createNewUser, updateUser, deleteUser };
+async function verifyUser(email: string, password: string) {
+  const filter = { email };
+
+  const user = await usersModel.findOne(filter); 
+  
+  if (!user) return false;
+
+  return bcrypt.compare(password, user.password as string);
+}
+
+export { getUser, getAllUsers, createNewUser, updateUser, deleteUser, verifyUser };

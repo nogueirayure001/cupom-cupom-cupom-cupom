@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-import authSchema from '../schemas/auth.schema.js';
-import { Auth } from '../schemas/auth.schema.d.js'; 
+import authSchema from '../schemas/auth.schema';
+import { Auth } from '../schemas/auth.schema.d'; 
 
 const authModel = mongoose.model<Auth>('auth', authSchema);
 

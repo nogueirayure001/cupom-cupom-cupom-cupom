@@ -6,11 +6,11 @@ import {
   createNewUser,
   updateUser,
   deleteUser
-} from '../models/users.model.js';
-import Validation from '../utils/validation.utils.js';
-import UserError from '../errors/user-error.error.js';
-import DBError from '../errors/db-error.error.js';
-import UsersDTO from '../views/users.view.js';
+} from '../models/users.model';
+import Validation from '../utils/validation.utils';
+import UserError from '../errors/user-error.error';
+import DBError from '../errors/db-error.error';
+import UsersDTO from '../views/users.view';
 
 const { TYPES } = Validation;
 const { MESSAGES } = UserError;
@@ -41,8 +41,8 @@ async function httpCreateNewUser(req: Request, res: Response, next: NextFunction
     return next(new UserError(MESSAGES.invalidUserName));
 
   try {
-    const admin = await getUser({ email });
-    if (admin) return next(new UserError(MESSAGES.emailAlreadyInUse));
+    const user = await getUser({ email });
+    if (user) return next(new UserError(MESSAGES.emailAlreadyInUse));
 
     const newUser = await createNewUser({ userName, email, password });
     if (!newUser) return next(new DBError());
@@ -57,8 +57,8 @@ async function httpUpdateUser(req: Request, res: Response, next: NextFunction) {
   const { id, update } = req.body;
 
   try {
-    const admin = await getUser({ _id: id });
-    if (!admin) return next(new UserError(MESSAGES.invalidResourceId));
+    const user = await getUser({ _id: id });
+    if (!user) return next(new UserError(MESSAGES.invalidResourceId));
 
     const { acknowledged, modifiedCount } = await updateUser(id, update);
     if (!(acknowledged && modifiedCount)) return next(new DBError());
@@ -74,8 +74,8 @@ async function httpDeleteUser(req: Request, res: Response, next: NextFunction) {
 
   if (!id) return next(new UserError(MESSAGES.invalidDataFormat));
 
-  const admin = getUser({ _id: id });
-  if (!admin) return next(new UserError(MESSAGES.invalidResourceId));
+  const user = getUser({ _id: id });
+  if (!user) return next(new UserError(MESSAGES.invalidResourceId));
 
   try {
     const { acknowledged, deletedCount } = await deleteUser(id);

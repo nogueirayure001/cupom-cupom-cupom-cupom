@@ -3,7 +3,7 @@ import { Router } from 'express';
 import {
   httpLogUserIn,
   httpLogUserOut
-} from '../controllers/auth.controller.js';
+} from '../controllers/auth.controller';
 
 const authRouter = Router();
 

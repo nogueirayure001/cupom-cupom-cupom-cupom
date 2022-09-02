@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { User } from './users.schema.d.js'
+import { User } from './users.schema.d'
 
 const usersSchema = new mongoose.Schema<User>(
   {
