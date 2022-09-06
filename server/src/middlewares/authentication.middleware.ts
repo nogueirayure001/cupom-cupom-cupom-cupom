@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 
 import AuthError from '../errors/auth-error.error';
-import { verifyTokenValidity } from '../models/auth.model';
+import { verifyToken } from '../models/auth.model';
 
 const allowedAuthSchemes = ['Bearer', 'Basic'];
 
@@ -21,13 +21,15 @@ async function authentication(req: Request, res: Response, next: NextFunction) {
     return next(new AuthError());
   }
 
-  const validToken = await verifyTokenValidity(token);
+  try {
+    verifyToken(token);
+    
+    req.headers['authorization'] = token;
 
-  if (!validToken) return next(new AuthError());
-
-  req.headers['authorization'] = token;
-
-  next();
+    next();
+  } catch (e) {
+    return next(new AuthError());
+  }
 }
 
 export default authentication;

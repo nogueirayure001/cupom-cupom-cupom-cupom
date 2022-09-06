@@ -1,12 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
 
 import { getUser, verifyUser } from '../models/users.model';
-import {
-  getTokenData,
-  createToken,
-  deleteToken
-} from '../models/auth.model';
+import { createToken, verifyToken } from '../models/auth.model';
 import UserError from '../errors/user-error.error';
 import DBError from '../errors/db-error.error';
 import AuthDTO from '../views/auth.view';
@@ -24,14 +19,12 @@ async function httpLogUserIn(req: Request, res: Response, next: NextFunction) {
     if (!verifiedUser) return next(new UserError(MESSAGES.invalidCredentials));
 
     const user = await getUser({ email }) as User;
-    const userId = user._id as mongoose.Types.ObjectId;
 
-    const { upsertedCount, modifiedCount } = await createToken(userId);
-    if (!(upsertedCount || modifiedCount)) return next(new DBError());
+    const token = await createToken(user) as string;
 
-    const tokenData = await getTokenData(userId);
+    const DTO = { token, user };
 
-    return res.status(200).json(new AuthDTO(tokenData));
+    return res.status(200).json(new AuthDTO(DTO));
   } catch (e) {
     next(new DBError());
   }
@@ -43,7 +36,7 @@ async function httpLogUserOut(req: Request, res: Response, next: NextFunction) {
   if (!token) return next(new UserError(MESSAGES.invalidCredentials));
 
   try {
-    await deleteToken(token);
+    // to do
 
     return res.status(200).json(new AuthDTO());
   } catch (e) {

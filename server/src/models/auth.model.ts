@@ -1,34 +1,43 @@
-import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 
-import authSchema from '../schemas/auth.schema';
-import { Auth } from '../schemas/auth.schema.d'; 
+import { User } from '../schemas/users.schema.d';
 
-const authModel = mongoose.model<Auth>('auth', authSchema);
+const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
-async function getTokenData(userId: mongoose.Types.ObjectId): Promise<Auth | null> {
-  return await authModel.findOne({ user: userId }).populate('user');
+type SignType = Promise<string | Error | null | undefined>;
+type VerifyType = Promise<string | jwt.JwtPayload | jwt.VerifyErrors | undefined | null>;
+
+function sign(payload: object, secret: string, options: object): SignType {
+  return new Promise((resolve, reject) => {
+    jwt.sign(payload, secret, options, (err, encoded) => {
+      if (err) reject(err);
+
+      resolve(encoded);
+    })
+  })
 }
 
-async function verifyTokenValidity(token: string) {
-  return (await authModel.findOne({ token })) ? true : false;
+function verify(token: string, secret: string): VerifyType {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) reject(err);
+
+      resolve(decoded);
+    })
+  })
 }
 
-async function createToken(userId: mongoose.Types.ObjectId) {
-  const filter = { token: userId };
+async function createToken(user: User) {
+  const { _id, isMaster } = user;
+  const payload: User = { _id, isMaster };
 
-  const update = {
-    token: userId,
-    expireAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    user: userId
-  };
-
-  const options = { upsert: true };
-
-  return await authModel.updateOne(filter, update, options);
+  return await sign(payload, JWT_PRIVATE_KEY, {
+    expiresIn: '1d'
+  });
 }
 
-async function deleteToken(token: string) {
-  return authModel.deleteOne({ token });
+async function verifyToken(token: string) {
+  return await verify(token, JWT_PRIVATE_KEY);
 }
 
-export { getTokenData, verifyTokenValidity, createToken, deleteToken };
+export { createToken, verifyToken };
