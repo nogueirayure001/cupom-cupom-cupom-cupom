@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import axios from 'axios';
 
-import { config } from '../../config/config';
-import Cache from '../utils/cache.utils';
-import storesSchema from '../schemas/stores.schema';
-import { Store } from '../schemas/stores.schema.d'
+import { config } from '../../config/config.js';
+import Cache from '../utils/cache.utils.js';
+import storesSchema from '../schemas/stores.schema.js';
+import { Store } from '../schemas/stores.schema.d.js';
 
 const storesModel = mongoose.model<Store>('store', storesSchema);
 

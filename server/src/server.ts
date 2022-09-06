@@ -1,8 +1,8 @@
 import { createServer } from 'http';
 
-import { config } from '../config/config';
-import app from './app';
-import { connectDatabase, updateDatabase } from './database';
+import { config } from '../config/config.js';
+import app from './app.js';
+import { connectDatabase, updateDatabase } from './database.js';
 
 const PORT = config.app.PORT;
 const UPDATE_PERIOD = config.app.UPDATE_PERIOD;

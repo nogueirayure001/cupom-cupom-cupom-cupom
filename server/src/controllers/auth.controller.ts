@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { getUser, verifyUser } from '../models/users.model';
-import { createToken, verifyToken } from '../models/auth.model';
-import UserError from '../errors/user-error.error';
-import DBError from '../errors/db-error.error';
-import AuthDTO from '../views/auth.view';
-import { User } from '../schemas/users.schema.d';
+import { getUser, verifyUser } from '../models/users.model.js';
+import { createToken, verifyToken } from '../models/auth.model.js';
+import UserError from '../errors/user-error.error.js';
+import DBError from '../errors/db-error.error.js';
+import AuthDTO from '../views/auth.view.js';
+import { User } from '../schemas/users.schema.d.js';
 
 const { MESSAGES } = UserError;
 

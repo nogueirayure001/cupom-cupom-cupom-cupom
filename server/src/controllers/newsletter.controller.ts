@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
+import mongoose from 'mongoose';
 
 import {
   subscribeToNewsletter,
@@ -9,7 +10,6 @@ import Validation from '../utils/validation.utils.js';
 import NewsletterDTO from '../views/newsletter.view.js';
 import UserError from '../errors/user-error.error.js';
 import DBError from '../errors/db-error.error.js';
-import mongoose from 'mongoose';
 
 const { MESSAGES: ERROR_MESSAGES } = UserError;
 const { MESSAGES: SUCCESS_MESSAGES } = NewsletterDTO;

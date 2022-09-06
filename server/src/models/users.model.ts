@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-import usersSchema from '../schemas/users.schema';
-import { User } from '../schemas/users.schema.d';
+import usersSchema from '../schemas/users.schema.js';
+import { User } from '../schemas/users.schema.d.js';
 
 const usersModel = mongoose.model<User>('user', usersSchema);
 

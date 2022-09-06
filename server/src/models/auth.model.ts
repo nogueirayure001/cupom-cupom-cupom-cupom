@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-import { config } from '../../config/config';
-import { User } from '../schemas/users.schema.d';
+import { config } from '../../config/config.js';
+import { User } from '../schemas/users.schema.d.js';
 
 const JWT_PRIVATE_KEY = config.app.JWT_PRIVATE_KEY;
 

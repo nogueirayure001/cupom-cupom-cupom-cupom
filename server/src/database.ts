@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-import { config } from '../config/config';
-import { wait } from './utils/wait.utils';
-import { updateCoupons } from './models/coupons.model';
-import { updateStores } from './models/stores.model';
+import { config } from '../config/config.js';
+import { wait } from './utils/wait.utils.js';
+import { updateCoupons } from './models/coupons.model.js';
+import { updateStores } from './models/stores.model.js';
 
 const MONGODB_URL = config.db.MONGODB_URL;
 const BASE_TIME = config.app.BASE_TIME;

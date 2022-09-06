@@ -1,10 +1,10 @@
 import axios from 'axios';
 import mongoose from 'mongoose';
 
-import { config } from '../../config/config';
-import Cache from '../utils/cache.utils';
-import couponsSchema from '../schemas/coupons.schema';
-import { Coupon } from '../schemas/coupons.schema.d';
+import { config } from '../../config/config.js';
+import Cache from '../utils/cache.utils.js';
+import couponsSchema from '../schemas/coupons.schema.js';
+import { Coupon } from '../schemas/coupons.schema.d.js';
 
 const couponsModel = mongoose.model<Coupon>('coupon', couponsSchema);
 

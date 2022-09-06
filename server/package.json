@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/server.js",
+    "build": "tsc",
+    "start": "node dist/src/server.js",
     "watch": "nodemon src/server.ts"
   },
   "keywords": [],

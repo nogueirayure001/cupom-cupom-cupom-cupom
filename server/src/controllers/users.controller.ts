@@ -6,11 +6,11 @@ import {
   createNewUser,
   updateUser,
   deleteUser
-} from '../models/users.model';
-import Validation from '../utils/validation.utils';
-import UserError from '../errors/user-error.error';
-import DBError from '../errors/db-error.error';
-import UsersDTO from '../views/users.view';
+} from '../models/users.model.js';
+import Validation from '../utils/validation.utils.js';
+import UserError from '../errors/user-error.error.js';
+import DBError from '../errors/db-error.error.js';
+import UsersDTO from '../views/users.view.js';
 
 const { TYPES } = Validation;
 const { MESSAGES } = UserError;
