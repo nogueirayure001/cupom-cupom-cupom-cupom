@@ -1,13 +1,14 @@
 import axios from 'axios';
 import mongoose from 'mongoose';
 
-import Cache from '../utils/cache.utils.js';
-import couponsSchema from '../schemas/coupons.schema.js';
-import { Coupon } from '../schemas/coupons.schema.d.js';
+import { config } from '../../config/config';
+import Cache from '../utils/cache.utils';
+import couponsSchema from '../schemas/coupons.schema';
+import { Coupon } from '../schemas/coupons.schema.d';
 
 const couponsModel = mongoose.model<Coupon>('coupon', couponsSchema);
 
-const LOMADEE_COUPONS_URL = process.env.LOMADEE_COUPONS_URL as string;
+const LOMADEE_COUPONS_URL = config.dataSource.LOMADEE_COUPONS_URL;
 
 const COUPON_VALID_KEYS = [
   'category',

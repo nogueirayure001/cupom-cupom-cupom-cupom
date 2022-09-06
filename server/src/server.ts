@@ -1,11 +1,11 @@
 import { createServer } from 'http';
-import 'dotenv/config';
 
-import app from './app.js';
-import { connectDatabase, updateDatabase } from './database.js';
+import { config } from '../config/config';
+import app from './app';
+import { connectDatabase, updateDatabase } from './database';
 
-const PORT = Number(process.env.PORT) || 8000;
-const UPDATE_PERIOD = Number(process.env.UPDATE_PERIOD);
+const PORT = config.app.PORT;
+const UPDATE_PERIOD = config.app.UPDATE_PERIOD;
 
 const server = createServer(app);
 

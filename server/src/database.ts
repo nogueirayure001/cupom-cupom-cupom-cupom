@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 
-import { wait } from './utils/wait.utils.js';
-import { updateCoupons } from './models/coupons.model.js';
-import { updateStores } from './models/stores.model.js';
+import { config } from '../config/config';
+import { wait } from './utils/wait.utils';
+import { updateCoupons } from './models/coupons.model';
+import { updateStores } from './models/stores.model';
 
-const MONGODB_URL = process.env.MONGODB_URL;
-const BASE_TIME = 2;
+const MONGODB_URL = config.db.MONGODB_URL;
+const BASE_TIME = config.app.BASE_TIME;
 
 async function connectDatabase(tries = 1): Promise<void> {
   if (!MONGODB_URL) return;

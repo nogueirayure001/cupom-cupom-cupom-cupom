@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 import axios from 'axios';
 
-import Cache from '../utils/cache.utils.js';
-import storesSchema from '../schemas/stores.schema.js';
-import { Store } from '../schemas/stores.schema.d.js'
+import { config } from '../../config/config';
+import Cache from '../utils/cache.utils';
+import storesSchema from '../schemas/stores.schema';
+import { Store } from '../schemas/stores.schema.d'
 
 const storesModel = mongoose.model<Store>('store', storesSchema);
 
-const LOMADEE_STORES_URL = process.env.LOMADEE_STORES_URL as string;
+const LOMADEE_STORES_URL = config.dataSource.LOMADEE_STORES_URL;
 
 const STORE_VALID_KEYS = ['name', 'image'];
 

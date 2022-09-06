@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 
+import { config } from '../../config/config';
 import { User } from '../schemas/users.schema.d';
 
-const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
+const JWT_PRIVATE_KEY = config.app.JWT_PRIVATE_KEY;
 
 type SignType = Promise<string | Error | null | undefined>;
 type VerifyType = Promise<string | jwt.JwtPayload | jwt.VerifyErrors | undefined | null>;
