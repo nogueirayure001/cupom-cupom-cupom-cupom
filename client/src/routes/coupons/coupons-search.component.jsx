@@ -29,7 +29,7 @@ function CouponsSearch() {
       {isLoading ? (
         <Spinner fullpage />
       ) : (
-        <CouponsDisplayboard coupons={coupons} />
+        <CouponsDisplayboard lazy coupons={coupons} />
       )}
     </Section>
   );
