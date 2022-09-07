@@ -5,7 +5,7 @@ export const StyledButton = styled.button`
   top: 0;
   left: 0;
   padding: 12px 16px;
-  font-family: inherit;
+  font-family: ${({ theme }) => theme.secondaryFontFamily};
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 1.5px;

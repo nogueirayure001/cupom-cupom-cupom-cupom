@@ -6,10 +6,7 @@ export const config = {
     UPDATE_PERIOD: Number(process.env.UPDATE_PERIOD),
     BASE_TIME: Number(process.env.BASE_TIME) || 2,
     JWT_PRIVATE_KEY: process.env.JWT_PRIVATE_KEY as string,
-    API_BASE_URL:
-    process.env.ENV === 'production'
-      ? 'https://cupomcupomcupomcupom.herokuapp.com/'
-      : 'localhost:8000/api',
+    API_BASE_URL: 'localhost:8000/api',
   },
   db: {
     MONGODB_PWD: process.env.MONGODB_PWD,

@@ -20,8 +20,6 @@ async function httpFetchAPIResource(
     ? `${API_URL}${resourcePath}?${queryString}`
     : `${API_URL}${resourcePath}`;
 
-  console.log(URL);
-
   const response = await fetch(URL, configs);
 
   return await response.json();

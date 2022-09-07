@@ -9,21 +9,26 @@ function CategoriesDisplayboard(props) {
   const { categories, isLoading } = useSelector(selectAll);
   const dispatch = useDispatch();
 
+  console.log(categories);
+
   useEffect(() => {
     dispatch(loadCategoriesAsync);
   }, []);
 
-  const loadingContent = <Spinner />;
-
-  const loadedContent = categories.map((category) => (
-    <StyledLink to={`/coupons/search/${category.replace('/', '%2F')}`}>
-      {category}
-    </StyledLink>
-  ));
+  if (isLoading)
+    return (
+      <CategoriesDisplayboardContainer>
+        <Spinner />
+      </CategoriesDisplayboardContainer>
+    );
 
   return (
     <CategoriesDisplayboardContainer>
-      {isLoading ? loadingContent : loadedContent}
+      {categories.map((category) => (
+        <StyledLink to={`/coupons/search/${category.replace('/', '%2F')}`}>
+          {category}
+        </StyledLink>
+      ))}
     </CategoriesDisplayboardContainer>
   );
 }
