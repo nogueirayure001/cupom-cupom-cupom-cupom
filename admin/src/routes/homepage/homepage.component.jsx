@@ -10,13 +10,13 @@ function Homepage(props) {
         <ActionsContainer>
           <ActionCard
             name='Cupons'
-            to='/coupons'
+            to='coupons'
             image='../../assets/images/coupon.png'
           />
 
           <ActionCard
             name='Lojas'
-            to='/stores'
+            to='stores'
             image='../../assets/images/store.png'
           />
         </ActionsContainer>

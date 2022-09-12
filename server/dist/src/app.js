@@ -9,18 +9,23 @@ import usersRouter from './routes/users.router.js';
 import authRouter from './routes/auth.router.js';
 import errorHandler from './middlewares/error-handler.middleware.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const staticFilesPath = join(__dirname, '..', 'public');
+const clientPath = join(__dirname, '..', 'public', 'client');
+const adminPath = join(__dirname, '..', 'public', 'admin');
 const app = express();
 app.use(cors());
 app.use(json());
-app.use(express.static(staticFilesPath));
+app.use(express.static(clientPath));
+app.use(express.static(adminPath));
 app.use('/api/coupons', couponsRouter);
 app.use('/api/stores', storesRouter);
 app.use('/api/newsletter', newsletterRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use(errorHandler);
+app.get('/admin*', (req, res) => {
+    res.sendFile(join(adminPath, 'index.html'));
+});
 app.get('/*', (req, res) => {
-    res.sendFile(join(__dirname, '..', 'public', 'index.html'));
+    res.sendFile(join(clientPath, 'index.html'));
 });
 export default app;

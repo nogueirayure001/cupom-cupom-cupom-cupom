@@ -10,7 +10,7 @@ import { ProtectRoute } from './components/protect-route';
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
+      <Route path='admin/' element={<Layout />}>
         <Route index element={<Homepage />} />
         <Route path='coupons/*' element={<CouponsRoute />} />
         <Route path='stores/*' element={<StoresRoute />} />

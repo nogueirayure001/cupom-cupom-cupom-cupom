@@ -10,8 +10,6 @@ const DEFAULT_STATE = {
 function couponsReducer(state = DEFAULT_STATE, action = {}) {
   const { type, payload } = action;
 
-  console.log(payload);
-
   switch (type) {
     case ACTION_TYPES.FETCH_PAGINATED_COUPONS_START:
       return {

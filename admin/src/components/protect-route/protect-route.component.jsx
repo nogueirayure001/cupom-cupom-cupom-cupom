@@ -7,7 +7,7 @@ import { selectUser } from '../../store/auth';
 function ProtectRoute({ children }) {
   const user = useSelector(selectUser);
 
-  if (!user) return <Navigate to='/login' />;
+  if (!user) return <Navigate to='/admin/login' />;
 
   return <Fragment>{children}</Fragment>;
 }

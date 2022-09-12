@@ -83,7 +83,7 @@ function Authenticate(props) {
   }, [fields]);
 
   useEffect(() => {
-    if (user) navigate('/', { replace: true });
+    if (user) navigate('/admin', { replace: true });
   }, [user]);
 
   return (

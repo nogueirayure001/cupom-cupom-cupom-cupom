@@ -57,15 +57,15 @@ function Header(props) {
         <MenuToggler menuOpen={menuOpen} onClick={menuToggleHandler} />
 
         <NavList menuOpen={menuOpen}>
-          <NavItem active={pathname === '/'}>
-            <Link to='/'>Inicio</Link>
+          <NavItem active={pathname === '/admin'}>
+            <Link to=''>Inicio</Link>
           </NavItem>
 
-          <NavItem active={pathname.startsWith('/auth')}>
+          <NavItem active={pathname.startsWith('/admin/login')}>
             {user ? (
               <LogoutButton onClick={logoutHandler}>Sair</LogoutButton>
             ) : (
-              <Link to='/login'>Fazer Login</Link>
+              <Link to='login'>Fazer Login</Link>
             )}
           </NavItem>
         </NavList>
