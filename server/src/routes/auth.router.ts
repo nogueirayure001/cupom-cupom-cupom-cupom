@@ -5,9 +5,11 @@ import {
   httpLogUserOut
 } from '../controllers/auth.controller.js';
 
-const authRouter = Router();
+const router = Router();
 
-authRouter.post('/login', httpLogUserIn);
-authRouter.delete('/logout', httpLogUserOut);
+router
+  .route('/')
+  .post(httpLogUserIn)
+  .delete(httpLogUserOut);
 
-export default authRouter;
+export default router;

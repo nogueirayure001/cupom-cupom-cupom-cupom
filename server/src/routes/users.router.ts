@@ -7,11 +7,13 @@ import {
   httpDeleteUser
 } from '../controllers/users.controller.js';
 
-const usersRouter = Router();
+const router = Router();
 
-usersRouter.get('/all', httpGetAllUsers);
-usersRouter.post('/create', httpCreateNewUser);
-usersRouter.patch('/update', httpUpdateUser);
-usersRouter.delete('/delete', httpDeleteUser);
+router
+  .route("/")
+  .get(httpGetAllUsers)
+  .post(httpCreateNewUser)
+  .patch(httpUpdateUser)
+  .delete(httpDeleteUser);
 
-export default usersRouter;
+export default router;

@@ -14,22 +14,26 @@ import {
 import validatePagination from '../middlewares/validate-pagination.middleware.js';
 import authentication from '../middlewares/authentication.middleware.js';
 
-const couponsRouter = Router();
+const router = Router();
 
-couponsRouter.get('/paginated', validatePagination, httpGetPaginatedCoupons);
-couponsRouter.get('/featured', httpGetFeaturedCoupons);
-couponsRouter.get('/search', httpGetSearchedCoupons);
-couponsRouter.get('/categories', httpGetActiveCouponCategories);
+// CLIENT ROUTES
+router.get('/paginated', validatePagination, httpGetPaginatedCoupons);
+router.get('/featured', httpGetFeaturedCoupons);
+router.get('/search', httpGetSearchedCoupons);
+router.get('/categories', httpGetActiveCouponCategories);
 
-couponsRouter.use(authentication);
-couponsRouter.get('/admin/all', httpAdminGetCoupons);
-couponsRouter.get(
-  '/admin/paginated', 
-  validatePagination, 
-  httpAdminGetPaginatedCoupons
-);
-couponsRouter.post('/admin/add', httpAdminAddCoupon);
-couponsRouter.delete('/admin/delete', httpAdminDeleteCoupon);
-couponsRouter.patch('/admin/update', httpAdminUpdateCoupon);
+// AUTHENTICATED ROUTES
+// ADMIN ROUTES
+router.use(authentication);
 
-export default couponsRouter;
+router
+  .route('/admin')
+  .get(httpAdminGetCoupons)
+  .post( httpAdminAddCoupon)
+  .delete(httpAdminDeleteCoupon)
+  .patch( httpAdminUpdateCoupon);
+
+router
+  .get('/admin/paginated', validatePagination, httpAdminGetPaginatedCoupons);
+
+export default router;

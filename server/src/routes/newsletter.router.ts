@@ -6,10 +6,17 @@ import {
   httpGetSubscribers
 } from '../controllers/newsletter.controller.js';
 
-const newsletterRouter = Router();
+const router = Router();
 
-newsletterRouter.post('/subscribe', httpSubscribeToNewsletter);
-newsletterRouter.post('/unsubscribe', httpUnsubscribeFromNewsletter);
-newsletterRouter.get('/subscribers', httpGetSubscribers);
+router
+  .route('/')
+  .get(httpGetSubscribers)
+  .post(httpSubscribeToNewsletter)
+  .delete(httpUnsubscribeFromNewsletter);
 
-export default newsletterRouter;
+// TODO
+// router.post('/subscribe', httpSubscribeToNewsletter);
+// router.post('/unsubscribe', httpUnsubscribeFromNewsletter);
+// router.get('/subscribers', httpGetSubscribers);
+
+export default router;

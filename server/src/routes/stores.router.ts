@@ -13,21 +13,25 @@ import {
 import validatePagination from '../middlewares/validate-pagination.middleware.js';
 import authentication from '../middlewares/authentication.middleware.js';
 
-const storesRouter = Router();
+const router = Router();
 
-storesRouter.get('/paginated', validatePagination, httpGetPaginatedStores);
-storesRouter.get('/featured', httpGetFeaturedStores);
-storesRouter.get('/search', httpGetSearchedStores);
+// CLIENT ROUTES
+router.get('/paginated', validatePagination, httpGetPaginatedStores);
+router.get('/featured', httpGetFeaturedStores);
+router.get('/search', httpGetSearchedStores);
 
-storesRouter.use(authentication);
-storesRouter.get('/admin/all', httpAdminGetStores);
-storesRouter.get(
-  '/admin/paginated',
-  validatePagination,
-  httpAdminGetPaginatedStores
-);
-storesRouter.post('/admin/add', httpAdminAddStore);
-storesRouter.delete('/admin/delete', httpAdminDeleteStore);
-storesRouter.patch('/admin/update', httpAdminUpdateStore);
+// AUTHENTICATED ROUTES
+// ADMIN ROUTES
+router.use(authentication);
 
-export default storesRouter;
+router
+  .route('/admin')
+  .get(httpAdminGetStores)
+  .post(httpAdminAddStore)
+  .delete(httpAdminDeleteStore)
+  .patch(httpAdminUpdateStore);
+
+router
+  .get('/admin/paginated', validatePagination, httpAdminGetPaginatedStores);
+
+export default router;
