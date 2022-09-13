@@ -9,8 +9,6 @@ function CategoriesDisplayboard(props) {
   const { categories, isLoading } = useSelector(selectAll);
   const dispatch = useDispatch();
 
-  console.log(categories);
-
   useEffect(() => {
     dispatch(loadCategoriesAsync);
   }, []);

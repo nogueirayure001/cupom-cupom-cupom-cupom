@@ -28,7 +28,7 @@ function loadStoresFail(error) {
 }
 
 export function loadStoresAsync(token) {
-  const path = '/api/stores/admin/all';
+  const path = '/api/stores/admin';
 
   return async (dispatch) => {
     dispatch(loadStoresStart());

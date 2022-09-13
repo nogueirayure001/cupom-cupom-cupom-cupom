@@ -2,7 +2,7 @@ import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
 async function requestLogin(credentials) {
-  const path = '/auth/login';
+  const path = '/auth';
 
   const configs = {
     method: 'post',
@@ -17,7 +17,7 @@ async function requestLogin(credentials) {
 }
 
 async function requestLogout(token) {
-  const path = '/auth/logout';
+  const path = '/auth';
 
   const headers = new Headers();
   headers.append('content-type', 'application/json');

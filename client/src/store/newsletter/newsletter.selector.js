@@ -2,11 +2,6 @@ import { createSelector } from 'reselect';
 
 export const selectAll = (store) => store.newsletter;
 
-export const selectNewsletter = createSelector(
-  selectAll,
-  (newsletter) => newsletter.newsletter
-);
-
 export const selectShowModal = createSelector(
   selectAll,
   (newsletter) => newsletter.showModal

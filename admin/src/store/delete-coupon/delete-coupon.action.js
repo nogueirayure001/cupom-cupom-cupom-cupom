@@ -2,7 +2,7 @@ import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
 async function requestCouponDelete(couponId, token) {
-  const path = '/api/coupons/admin/delete';
+  const path = '/api/coupons/admin';
 
   const headers = new Headers();
   headers.append('content-type', 'application/json');

@@ -2,7 +2,7 @@ import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
 async function requestStoreCreation(store, token) {
-  const path = '/api/stores/admin/add';
+  const path = '/api/stores/admin';
 
   const headers = new Headers();
   headers.append('content-type', 'application/json');

@@ -2,7 +2,7 @@ import { createAction, httpRequest } from '../../utils';
 import { ACTION_TYPES } from './index';
 
 async function requestCouponUpdate(couponId, update, token) {
-  const path = '/api/coupons/admin/update';
+  const path = '/api/coupons/admin';
 
   const headers = new Headers();
   headers.append('content-type', 'application/json');

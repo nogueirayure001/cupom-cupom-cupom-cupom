@@ -2,7 +2,7 @@ import { ACTION_TYPES } from './index';
 import { createAction, httpFetchAPIResource } from '../../utils';
 
 const subscribeToNewsletter = async (email) => {
-  const resourcePath = '/newsletter/subscribe';
+  const resourcePath = '/newsletter';
 
   const requestConfigs = {
     method: 'POST',
