@@ -19,6 +19,9 @@
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
+  "engines": {
+    "node": "18.4"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "BUILD_PATH=../server/dist/public/admin react-scripts build",
