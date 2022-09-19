@@ -38,7 +38,7 @@ function StoresEdition() {
           ))}
         </DisplayBoard>
 
-        <PaginationController {...pagination} basePath='stores/edition' />
+        <PaginationController {...pagination} basePath='admin/stores/edition' />
       </Section>
     </Fragment>
   );

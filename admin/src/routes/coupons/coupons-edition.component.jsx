@@ -38,7 +38,10 @@ function CouponsEdition() {
           ))}
         </DisplayBoard>
 
-        <PaginationController {...pagination} basePath='coupons/edition' />
+        <PaginationController
+          {...pagination}
+          basePath='admin/coupons/edition'
+        />
       </Section>
     </Fragment>
   );
