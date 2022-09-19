@@ -1,7 +1,10 @@
 import { Router } from 'express';
-import { httpSubscribeToNewsletter, httpUnsubscribeFromNewsletter, httpGetSubscribers } from '../controllers/newsletter.controller.js';
-const newsletterRouter = Router();
-newsletterRouter.post('/subscribe', httpSubscribeToNewsletter);
-newsletterRouter.post('/unsubscribe', httpUnsubscribeFromNewsletter);
-newsletterRouter.get('/subscribers', httpGetSubscribers);
-export default newsletterRouter;
+import { httpSubscribeToNewsletter, httpUnsubscribeFromNewsletter, httpAdminSendNewsletter } from '../controllers/newsletter.controller.js';
+const router = Router();
+router
+    .route('/')
+    .post(httpSubscribeToNewsletter)
+    .delete(httpUnsubscribeFromNewsletter);
+router
+    .post('/admin', httpAdminSendNewsletter);
+export default router;

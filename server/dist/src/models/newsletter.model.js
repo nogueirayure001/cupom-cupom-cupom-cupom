@@ -31,7 +31,9 @@ function unsubscribeFromNewsletter(id, email) {
 }
 function getSubscribers() {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield newsletterModel.distinct('email');
+        const filter = {};
+        const projection = { createdAt: 0, updatedAt: 0 };
+        return yield newsletterModel.find(filter, projection);
     });
 }
 export { subscribeToNewsletter, unsubscribeFromNewsletter, getSubscribers };

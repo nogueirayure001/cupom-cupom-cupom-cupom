@@ -4,7 +4,7 @@ class NewsletterDTO {
   static MESSAGES = {
     subscribe: 'User subscribed to newsletter successfully',
     unsubscribe: 'User unsubscribed from newsletter successfully',
-    fetch: 'Subscribers fetched successfully'
+    send: 'Messages successfully sent to subscribers'
   };
 
   public requestInfo: object;

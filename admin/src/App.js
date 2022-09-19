@@ -5,7 +5,7 @@ import { Homepage } from './routes/homepage';
 import { CouponsRoute } from './routes/coupons';
 import { StoresRoute } from './routes/stores';
 import { Authenticate } from './routes/auth';
-import { ProtectRoute } from './components/protect-route';
+import { Newsletter } from './routes/newsletter';
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
         <Route path='coupons/*' element={<CouponsRoute />} />
         <Route path='stores/*' element={<StoresRoute />} />
         <Route path='login' element={<Authenticate />} />
+        <Route path='newsletter' element={<Newsletter />} />
       </Route>
     </Routes>
   );

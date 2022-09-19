@@ -1,8 +1,8 @@
 import { StyledForm } from './index';
 
-function Form({ children, ...otherProps }) {
+function Form({ children, innerRef, ...otherProps }) {
   return (
-    <StyledForm className='form' {...otherProps}>
+    <StyledForm ref={innerRef} {...otherProps}>
       {children}
     </StyledForm>
   );

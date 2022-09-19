@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:8000';
+const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://cupomcupomcupomcupom.herokuapp.com'
+    : 'http://localhost:8000';
 
 const DEFAULT_CONFIGS = {
   method: 'GET'

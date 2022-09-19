@@ -7,13 +7,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import sgMail from '@sendgrid/mail';
 import { subscribeToNewsletter, unsubscribeFromNewsletter, getSubscribers } from '../models/newsletter.model.js';
 import Validation from '../utils/validation.utils.js';
 import NewsletterDTO from '../views/newsletter.view.js';
 import UserError from '../errors/user-error.error.js';
 import DBError from '../errors/db-error.error.js';
+import addUnsubscribeLink from '../utils/add-unsubscribe.utils.js';
+import { config } from '../../config/config.js';
 const { MESSAGES: ERROR_MESSAGES } = UserError;
 const { MESSAGES: SUCCESS_MESSAGES } = NewsletterDTO;
+sgMail.setApiKey(config.emailer.SENDGRID_API_KEY);
 function httpSubscribeToNewsletter(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const { email } = req.body;
@@ -49,17 +53,35 @@ function httpUnsubscribeFromNewsletter(req, res, next) {
         }
     });
 }
-function httpGetSubscribers(req, res, next) {
+function httpAdminSendNewsletter(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        const { files } = req;
+        const { subject } = req.body;
+        if (!files)
+            throw new UserError(ERROR_MESSAGES.invalidFile);
+        if (!subject)
+            throw new UserError(ERROR_MESSAGES.invalidSubject);
+        const newsletterHTML = files.newsletter.data.toString();
         try {
-            const data = yield getSubscribers();
+            const subscribers = yield getSubscribers();
+            subscribers.forEach((subscriber) => {
+                const { _id, email } = subscriber;
+                const html = addUnsubscribeLink(newsletterHTML, _id, email);
+                const msg = {
+                    to: email,
+                    from: config.emailer.SENDER,
+                    subject,
+                    html
+                };
+                sgMail.send(msg);
+            });
             return res
                 .status(200)
-                .json(new NewsletterDTO({ message: SUCCESS_MESSAGES.fetch, data }));
+                .json(new NewsletterDTO({ message: SUCCESS_MESSAGES.send }));
         }
         catch (e) {
             next(new DBError());
         }
     });
 }
-export { httpSubscribeToNewsletter, httpUnsubscribeFromNewsletter, httpGetSubscribers };
+export { httpSubscribeToNewsletter, httpUnsubscribeFromNewsletter, httpAdminSendNewsletter };

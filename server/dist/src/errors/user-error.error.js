@@ -14,6 +14,8 @@ UserError.MESSAGES = {
     invalidResourceId: 'Invalid resource identifier',
     invalidDataFormat: 'Did not pass data validation',
     invalidQuery: 'Invalid query parameters',
-    invalidCredentials: 'Credentials do not match with any users'
+    invalidCredentials: 'Credentials do not match with any users',
+    invalidFile: 'No file was sent',
+    invalidSubject: 'Invalid subject'
 };
 export default UserError;

@@ -30,7 +30,7 @@ function Homepage(props) {
             image='../../assets/images/newsletter.png'
           />
 
-          {user.isMaster && (
+          {user && user?.isMaster && (
             <ActionCard
               name='Admin'
               to='admin'

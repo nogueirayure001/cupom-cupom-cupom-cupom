@@ -15,5 +15,9 @@ export const config = {
   dataSource: {
     LOMADEE_COUPONS_URL: process.env.LOMADEE_COUPONS_URL as string,
     LOMADEE_STORES_URL: process.env.LOMADEE_STORES_URL as string,
+  },
+  emailer: {
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY as string,
+    SENDER: process.env.SENDER as string
   }
 };

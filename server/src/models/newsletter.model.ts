@@ -29,8 +29,11 @@ async function unsubscribeFromNewsletter(id: mongoose.Types.ObjectId, email: str
   return false;
 }
 
-async function getSubscribers(): Promise<Array<string>> {
-  return await newsletterModel.distinct('email');
+async function getSubscribers(): Promise<Array<Newsletter>> {
+  const filter = {};
+  const projection = { createdAt: 0, updatedAt: 0 };
+
+  return await newsletterModel.find(filter, projection);
 }
 
 export { subscribeToNewsletter, unsubscribeFromNewsletter, getSubscribers };

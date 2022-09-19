@@ -1,7 +1,8 @@
-import express, { json } from 'express';
+import express, { json, urlencoded } from 'express';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 
 import couponsRouter from './routes/coupons.router.js';
 import storesRouter from './routes/stores.router.js';
@@ -21,6 +22,7 @@ const app = express();
 // PRE-ROUTES MIDDLEWARE
 app.use(cors());
 app.use(json());
+app.use(fileUpload({ limits: { fieldSize: 2 * 1024 * 1024 } }));
 app.use(express.static(clientPath));
 app.use(express.static(adminPath));
 

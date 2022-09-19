@@ -6,6 +6,7 @@ import { updateCouponReducer } from './update-coupon';
 import { updateStoreReducer } from './update-store';
 import { deleteCouponReducer } from './delete-coupon';
 import { deleteStoreReducer } from './delete-store';
+import { newsletterReducer } from './newsletter';
 import { couponsReducer } from './coupons';
 import { storesReducer } from './stores';
 import { authReducer } from './auth';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   updateStore: updateStoreReducer,
   deleteCoupon: deleteCouponReducer,
   deleteStore: deleteStoreReducer,
+  newsletter: newsletterReducer,
   coupons: couponsReducer,
   stores: storesReducer,
   auth: authReducer

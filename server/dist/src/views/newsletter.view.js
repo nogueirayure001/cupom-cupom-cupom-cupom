@@ -12,6 +12,6 @@ class NewsletterDTO {
 NewsletterDTO.MESSAGES = {
     subscribe: 'User subscribed to newsletter successfully',
     unsubscribe: 'User unsubscribed from newsletter successfully',
-    fetch: 'Subscribers fetched successfully'
+    send: 'Messages successfully sent to subscribers'
 };
 export default NewsletterDTO;
