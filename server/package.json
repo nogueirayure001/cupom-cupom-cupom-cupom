@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": "18.4"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/server.js",
