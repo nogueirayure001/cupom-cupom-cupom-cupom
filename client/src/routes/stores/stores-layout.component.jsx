@@ -14,7 +14,7 @@ function StoresLayout() {
 
     const searchTerm = inputField.value;
 
-    navigate(`../search/${searchTerm}`);
+    navigate(`search/${searchTerm}`);
   };
 
   return (

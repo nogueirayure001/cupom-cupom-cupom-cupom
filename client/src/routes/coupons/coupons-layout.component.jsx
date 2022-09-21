@@ -29,7 +29,7 @@ function CouponsLayout(props) {
 
     const searchTerm = inputField.value;
 
-    const relativePath = `../search/${searchTerm}`;
+    const relativePath = `search/${searchTerm}`;
 
     navigate(relativePath);
   };
