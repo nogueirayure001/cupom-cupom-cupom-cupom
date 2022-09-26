@@ -1,4 +1,4 @@
-import express, { json, urlencoded } from 'express';
+import express, { json } from 'express';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
@@ -14,8 +14,8 @@ import authentication from './middlewares/authentication.middleware.js';
 
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const clientPath = join(__dirname, '..', 'dist', 'public', 'client');
-const adminPath = join(__dirname, '..', 'dist', 'public', 'admin');
+const clientPath = join(__dirname, '..', 'public', 'client');
+const adminPath = join(__dirname, '..', 'public', 'admin');
 
 const app = express();
 
